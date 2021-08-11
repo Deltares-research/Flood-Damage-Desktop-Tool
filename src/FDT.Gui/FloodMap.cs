@@ -6,7 +6,18 @@ namespace FDT.Gui
 {
     public class FloodMap:IFloodMap
     {
-        public string MapPath { get; set; }
+        private string _mapPath;
+
+        public string MapPath
+        {
+            get => _mapPath;
+            set
+            {
+                _mapPath = value;
+                OnPropertyChanged();
+            } 
+        }
+
         public virtual bool HasReturnPeriod => false;
         public int ReturnPeriod { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;

@@ -33,8 +33,5 @@
     <Page Update="UserControls\ScenarioControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserControls\StyleDictionary.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 </Project>

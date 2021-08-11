@@ -22,9 +22,10 @@
             <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0" Content="Flood map"  Margin="{StaticResource RightMargin}"/>
-        <TextBox Grid.Column="1" Margin="{StaticResource RightMargin}" IsEnabled="False"/>
+        <TextBox Grid.Column="1" 
+                 Text="{Binding MapPath}"  Margin="{StaticResource RightMargin}" IsEnabled="False"/>
         <Button Grid.Column="2" Content="..." Margin="{StaticResource RightMargin}"/>
         <Label Grid.Column="3" Content="Return Period" Width="90" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
-        <TextBox Grid.Column="4" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
+        <TextBox Grid.Column="4" Text="{Binding ReturnPeriod}" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
     </Grid>
 </UserControl>

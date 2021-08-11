@@ -11,7 +11,7 @@ namespace FDT.Gui.Test.CustomFields
     {
         [Test]
         [STAThread]
-        public void TestInputFieldAsGui()
+        public void TestGivenInputFieldReturnPeriodOnlyWithRisk()
         {
             InputFieldFloodMap inputField = new InputFieldFloodMap();
             const string eventFloodMapStr = "Event Flood Map";
@@ -30,9 +30,30 @@ namespace FDT.Gui.Test.CustomFields
             };
             var listMaps = new[] {eventFloodMap, riskFloodMap};
             inputField.FloodMap = listMaps[0];
-            WpfTestHelper testHelper = new WpfTestHelper(inputField, "Test", () =>
+            WpfTestHelper testHelper = new WpfTestHelper(inputField, "Switching Scenario Type", () =>
             {
                 inputField.FloodMap = inputField.FloodMap == eventFloodMap ? riskFloodMap : eventFloodMap;
+            });
+            testHelper.ShowDialog();
+        }
+
+        [Test]
+        [STAThread]
+        public void TestGivenInputFieldSetPathUpdatesField()
+        {
+            InputFieldFloodMap inputField = new InputFieldFloodMap();
+            const string someValue = "We/Just/Set/Some/Path";
+            const int riskReturnPeriod = 42;
+            var eventFloodMap = new FloodMap()
+            {
+                MapPath = someValue,
+                ReturnPeriod = riskReturnPeriod,
+            };
+            inputField.FloodMap = eventFloodMap;
+
+            WpfTestHelper testHelper = new WpfTestHelper(inputField, "Setting Map Path Value", () =>
+            {
+                eventFloodMap.MapPath = eventFloodMap.MapPath == someValue ? string.Empty : someValue;
             });
             testHelper.ShowDialog();
         }
