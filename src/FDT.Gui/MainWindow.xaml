@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:FDT.Gui"
+        xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
         xmlns:fields="clr-namespace:FDT.Gui.CustomFields"
         mc:Ignorable="d"
         Title="Deltares Flood Damage Desktop Tool 2021" MinHeight="600" MinWidth="800">
@@ -36,23 +36,19 @@
             </Grid>
             <StackPanel Orientation="Vertical" Margin="10">
                 <!-- Event scenario -->
-                <StackPanel Orientation="Vertical" Margin="10">
-                    <CheckBox Content="Event"/>
-                    <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                            <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
-                        </StackPanel>
-                        <Button Content="Add event +" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"  Margin="{StaticResource TopDownMargin}"/>
-                    </StackPanel>
-                    <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
-                </StackPanel>
+                <ItemsControl
+                    x:Name="eventScenariosControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <userControls:BasinScenarioControl/>
+                            <!--
+                        FloodMap="{Binding }"/>
+                    -->
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <!-- Risk scenario-->
+                <!--
                 <StackPanel Orientation="Vertical" Margin="10">
                     <CheckBox Content="Risk"/>
                     <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
@@ -78,6 +74,7 @@
                     </StackPanel>
                     <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
                 </StackPanel>
+                -->
             </StackPanel>
         </StackPanel>
     </Grid>

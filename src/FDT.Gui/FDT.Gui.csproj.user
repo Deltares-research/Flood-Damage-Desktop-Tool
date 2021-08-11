@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="CustomFields\InputFieldRiskFloodMap.xaml.cs">
+    <Compile Update="CustomFields\InputFieldFloodMap.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\BasinScenarioControl.xaml.cs">
@@ -18,7 +18,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="CustomFields\InputFieldRiskFloodMap.xaml">
+    <Page Update="CustomFields\InputFieldFloodMap.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

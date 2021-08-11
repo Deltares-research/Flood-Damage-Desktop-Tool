@@ -1,5 +1,6 @@
 using NUnit.Framework;
 
+
 namespace FDT.Gui.Test
 {
     public class Tests
@@ -9,10 +10,5 @@ namespace FDT.Gui.Test
         {
         }
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
     }
 }

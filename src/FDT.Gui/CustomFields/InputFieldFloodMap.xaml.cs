@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FDT.Gui.CustomFields
 {
     /// <summary>
-    /// Interaction logic for InputFieldRiskFloodMap.xaml
+    /// Interaction logic for InputFieldFloodMap.xaml
     /// </summary>
-    public partial class InputFieldRiskFloodMap : UserControl
+    public partial class InputFieldFloodMap : UserControl
     {
-        public InputFieldRiskFloodMap()
+        public InputFieldFloodMap()
         {
             InitializeComponent();
         }
