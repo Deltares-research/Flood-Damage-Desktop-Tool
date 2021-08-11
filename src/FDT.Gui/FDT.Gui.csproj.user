@@ -10,6 +10,12 @@
     <Compile Update="CustomFields\InputFieldRiskFloodMap.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\BasinScenarioControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ScenarioControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomFields\InputFieldRiskFloodMap.xaml">
@@ -22,6 +28,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\BasinScenarioControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ScenarioControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\StyleDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

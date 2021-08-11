@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="FDT.Gui.UserControls.BasinScenarioControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FDT.Gui.UserControls"
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControls/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical" Margin="10">
+        <CheckBox Content="Risk"/>
+        <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
+                <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+                <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
+                <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+                <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
+                <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
+                <Label Content="Return Period" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+                <TextBox Width="{StaticResource ReturnPeriodLength}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
+                <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+                <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
+                <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
+                <Label Content="Return Period" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+                <TextBox Width="{StaticResource ReturnPeriodLength}"/>
+            </StackPanel>
+            <Button Content="Add RP +" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Margin="{StaticResource TopDownMargin}"/>
+        </StackPanel>
+        <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
+    </StackPanel>
+</UserControl>

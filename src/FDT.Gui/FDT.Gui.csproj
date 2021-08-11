@@ -11,8 +11,4 @@
     <OutputPath>..\..\bin\</OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="UserControls\" />
-  </ItemGroup>
-
 </Project>

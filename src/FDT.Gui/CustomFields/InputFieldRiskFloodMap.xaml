@@ -7,28 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="800">
     <UserControl.Resources>
-        <GridLength x:Key ="LabelLength">140</GridLength>
-        <GridLength x:Key ="FilePathLength">140</GridLength>
-        <GridLength x:Key ="BrowseButtonLength">40</GridLength>
-        <GridLength x:Key ="ReturnPeriodLength">40</GridLength>        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControls/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-        <Grid Margin="0,0,2,0"/>
-        <Grid Margin="0,0,2,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{StaticResource LabelLength}"/>
-                <ColumnDefinition Width="{StaticResource FilePathLength}"/>
-                <ColumnDefinition Width="{StaticResource BrowseButtonLength}"/>
-                <ColumnDefinition Width="{StaticResource LabelLength}"/>
-                <ColumnDefinition Width="{StaticResource ReturnPeriodLength}"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"/>
-            <TextBlock Grid.Column="1"/>
-            <Button Grid.Column="2">...</Button>
-            <Label Grid.Column="3"/>
-            <TextBlock Grid.Column="4"/>
-        </Grid>
+    <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
+        <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+        <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
+        <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
+        <Label Content="Return Period" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
+        <TextBox Width="{StaticResource ReturnPeriodLength}"/>
     </StackPanel>
 
 </UserControl>
