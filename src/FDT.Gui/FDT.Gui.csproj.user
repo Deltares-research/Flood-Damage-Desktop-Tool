@@ -21,10 +21,10 @@
     <Page Update="CustomFields\InputFieldFloodMap.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="CustomFields\StyleDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="StyleDictionary.xaml">
+    <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\StyleDictionary.xaml">
