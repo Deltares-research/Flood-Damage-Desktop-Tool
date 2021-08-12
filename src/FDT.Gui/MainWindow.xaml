@@ -39,15 +39,15 @@
                 <Grid Margin="10">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
-                        <ComboBox Width="{StaticResource LabelLength}"/>
+                        <ComboBox 
+                            Width="{StaticResource LabelLength}"
+                            ItemsSource="{Binding AvailableBasins}"
+                            SelectedItem="{Binding SelectedBasin}"/>
                     </StackPanel>
                     <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
                 </Grid>
                 <ScrollViewer Grid.Row="1">
                     <StackPanel Orientation="Vertical" Margin="10">
-                        <!-- Ideally we only want something like this: -->
-                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding EventBasedScenario}"/> -->
-                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding RiskBasedScenario}"/> -->
                         <ItemsControl
                             x:Name="BasinScenarios"
                             ItemsSource="{Binding BasinScenarios}">

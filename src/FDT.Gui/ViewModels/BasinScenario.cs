@@ -9,6 +9,9 @@ namespace FDT.Gui.ViewModels
             Scenarios = new ObservableCollection<IScenario>();
             AddExtraScenario();
         }
+
+        public string ScenarioType { get; set; }
+
         public bool IsEnabled { get; set; }
 
         public ObservableCollection<IScenario> Scenarios { get; }
