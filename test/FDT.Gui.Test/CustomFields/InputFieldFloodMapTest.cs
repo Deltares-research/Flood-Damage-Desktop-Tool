@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
 using FDT.Gui.CustomFields;
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using FDT.Gui.ViewModels;
 using FDT.TestUtils;
 
 namespace FDT.Gui.Test.CustomFields
@@ -28,7 +30,7 @@ namespace FDT.Gui.Test.CustomFields
                 MapPath = riskFloodMapStr,
                 ReturnPeriod = riskReturnPeriod
             };
-            var listMaps = new[] {eventFloodMap, riskFloodMap};
+            var listMaps = new BaseFloodMap[] {eventFloodMap, riskFloodMap};
             inputField.FloodMap = listMaps[0];
             WpfTestHelper testHelper = new WpfTestHelper(inputField, "Switching Scenario Type", () =>
             {

@@ -14,4 +14,8 @@
     <OutputPath>..\..\bin\</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
 </Project>

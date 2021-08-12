@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
+using FDT.Gui.ViewModels;
+using Microsoft.Win32;
 
 namespace FDT.Gui.CustomFields
 {
@@ -13,7 +16,7 @@ namespace FDT.Gui.CustomFields
         /// </summary>
         public static readonly DependencyProperty ParameterProperty =
             DependencyProperty.Register(
-                "FloodMap",
+                "BaseFloodMap",
                 typeof(IFloodMap),
                 typeof(InputFieldFloodMap),
                 new PropertyMetadata(null));
@@ -27,6 +30,20 @@ namespace FDT.Gui.CustomFields
         {
             get => (IFloodMap) GetValue(ParameterProperty);
             set => SetValue(ParameterProperty, value);
+        }
+
+        private void OnOpenFileDialog(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            const string fileExtension = ".tif";
+            // extension = .tif
+            openFileDialog.Filter = $"Flood Map File (*{fileExtension}) | *{fileExtension}";
+            openFileDialog.DefaultExt = fileExtension;
+            bool? showDialog = openFileDialog.ShowDialog();
+            if (showDialog != null && (bool) showDialog)
+            {
+                FloodMap.MapPath = openFileDialog.FileName;
+            }
         }
     }
 }

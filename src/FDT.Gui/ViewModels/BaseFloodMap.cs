@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using FDT.Gui.Annotations;
 
-namespace FDT.Gui
+namespace FDT.Gui.ViewModels
 {
-    public class FloodMap:IFloodMap
+    public abstract class BaseFloodMap:IFloodMap
     {
         private string _mapPath;
 
@@ -18,8 +20,13 @@ namespace FDT.Gui
             } 
         }
 
-        public virtual bool HasReturnPeriod => false;
+        public abstract bool HasReturnPeriod { get; }
+
         public int ReturnPeriod { get; set; }
+
+
+        #region Property Changed
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -27,5 +34,8 @@ namespace FDT.Gui
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
     }
 }
