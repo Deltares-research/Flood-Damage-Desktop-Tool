@@ -31,6 +31,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Content="X" Click="RemoveScenario" 
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Stretch"
                                     Tag="{Binding}"
                                     Visibility="{
                                 Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
