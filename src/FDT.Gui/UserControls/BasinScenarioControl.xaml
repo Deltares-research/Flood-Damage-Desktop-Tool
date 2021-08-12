@@ -4,27 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
-             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="200">
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="200"
+             x:Name="ParentControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/UserControls/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Orientation="Vertical" Margin="10">
-        <CheckBox Content="Risk"/>
-        <ItemsControl
-            x:Name="scenarioList">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <userControls:ScenarioControl/>
-                    <!--
-                        FloodMap="{Binding }"/>
-                    -->
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+    <StackPanel 
+        DataContext="{Binding BasinScenario, ElementName=ParentControl}"
+        Orientation="Vertical" Margin="10">
+        <CheckBox Content="Risk" IsChecked="{Binding IsEnabled}"/>
+        <userControls:ScenarioControl Scenario="{Binding Scenario}"/>
         <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
     </StackPanel>
 </UserControl>

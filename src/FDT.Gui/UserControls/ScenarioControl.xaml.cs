@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using FDT.Gui.ViewModels;
 
 namespace FDT.Gui.UserControls
 {
@@ -20,9 +9,42 @@ namespace FDT.Gui.UserControls
     /// </summary>
     public partial class ScenarioControl : UserControl
     {
+        public static readonly DependencyProperty ParameterProperty =
+            DependencyProperty.Register(
+                "Scenario",
+                typeof(IScenario),
+                typeof(ScenarioControl),
+                new PropertyMetadata(null));
+
         public ScenarioControl()
         {
             InitializeComponent();
+        }
+
+        public IScenario Scenario
+        {
+            get => (IScenario)GetValue(ParameterProperty);
+            set => SetValue(ParameterProperty, value);
+        }
+
+        public bool CanRemoveFloodMapEntries
+        {
+            get { return Scenario.FloodMaps.Count > 1; }
+        }
+
+        private void AddFloodMapToScenario(object sender, RoutedEventArgs e)
+        {
+            Scenario?.AddExtraFloodMap();
+        }
+
+        /// <summary>
+        /// This method is better to have it through the ICommand, but for now it should suffice.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemoveFloodMapEntry(object sender, RoutedEventArgs e)
+        {
+            if (((Button) sender).Tag is IFloodMap floodMapEntry) Scenario.FloodMaps.Remove(floodMapEntry);
         }
     }
 }

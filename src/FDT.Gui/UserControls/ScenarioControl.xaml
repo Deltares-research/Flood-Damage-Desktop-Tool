@@ -4,31 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:customFields="clr-namespace:FDT.Gui.CustomFields"
-             mc:Ignorable="d" >
+             mc:Ignorable="d"
+             x:Name="ParentControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/UserControls/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
+    <StackPanel 
+        DataContext="{Binding Scenario, ElementName=ParentControl}"
+        Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
         <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
             <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
+            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}" Text="{Binding ScenarioName}"/>
         </StackPanel>
         <ItemsControl
-            x:Name="floodMapInputList">
+            x:Name="floodMapInputList"
+            ItemsSource="{Binding FloodMaps}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <customFields:InputFieldFloodMap/>
-                    <!--
-                        FloodMap="{Binding }"/>
-                    -->
+                    <Grid Margin="4,4,4,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="X" Click="RemoveFloodMapEntry" 
+                                Tag="{Binding}"
+                                Visibility="{
+                                Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                Path=CanRemoveFloodMapEntries, Converter={StaticResource BoolToVisibility}}"/>
+                        <customFields:InputFieldFloodMap Grid.Column="1"  FloodMap="{Binding}"/>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <Button Content="Add " Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Margin="{StaticResource TopDownMargin}"
-                Command="{Binding AddInputFieldFloodMap}"/>
+                Click="AddFloodMapToScenario"/>
     </StackPanel>
 </UserControl>

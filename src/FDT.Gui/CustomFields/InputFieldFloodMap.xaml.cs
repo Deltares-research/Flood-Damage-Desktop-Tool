@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using FDT.Gui.ViewModels;
 using Microsoft.Win32;
@@ -16,7 +15,7 @@ namespace FDT.Gui.CustomFields
         /// </summary>
         public static readonly DependencyProperty ParameterProperty =
             DependencyProperty.Register(
-                "BaseFloodMap",
+                "FloodMap",
                 typeof(IFloodMap),
                 typeof(InputFieldFloodMap),
                 new PropertyMetadata(null));

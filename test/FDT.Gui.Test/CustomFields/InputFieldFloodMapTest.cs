@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using FDT.Gui.CustomFields;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using FDT.Gui.ViewModels;
 using FDT.TestUtils;
