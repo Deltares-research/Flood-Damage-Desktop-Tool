@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
+using FDT.Gui.Annotations;
 using FDT.Gui.ViewModels;
 
 namespace FDT.Gui.UserControls
@@ -7,7 +10,7 @@ namespace FDT.Gui.UserControls
     /// <summary>
     /// Interaction logic for ScenarioControl.xaml
     /// </summary>
-    public partial class ScenarioControl : UserControl
+    public partial class ScenarioControl : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ParameterProperty =
             DependencyProperty.Register(
@@ -35,6 +38,7 @@ namespace FDT.Gui.UserControls
         private void AddFloodMapToScenario(object sender, RoutedEventArgs e)
         {
             Scenario?.AddExtraFloodMap();
+            OnPropertyChanged(nameof(CanRemoveFloodMapEntries));
         }
 
         /// <summary>
@@ -45,6 +49,15 @@ namespace FDT.Gui.UserControls
         private void RemoveFloodMapEntry(object sender, RoutedEventArgs e)
         {
             if (((Button) sender).Tag is IFloodMap floodMapEntry) Scenario.FloodMaps.Remove(floodMapEntry);
+            OnPropertyChanged(nameof(CanRemoveFloodMapEntries));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
