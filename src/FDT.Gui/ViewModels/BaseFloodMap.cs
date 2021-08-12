@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
@@ -37,5 +35,14 @@ namespace FDT.Gui.ViewModels
 
         #endregion
 
+    }
+
+    public class FloodMap : BaseFloodMap
+    {
+        public override bool HasReturnPeriod => false;
+    }
+    public class FloodMapWithReturnPeriod : BaseFloodMap
+    {
+        public override bool HasReturnPeriod => true;
     }
 }

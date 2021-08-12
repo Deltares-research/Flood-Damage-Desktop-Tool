@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace FDT.Gui.ViewModels
 {
-    public abstract class Scenario: IScenario
+    public class Scenario<T>: IScenario where T : IFloodMap, new()
     {
-        protected Scenario()
+        public Scenario()
         {
             FloodMaps = new ObservableCollection<IFloodMap>();
             AddExtraFloodMap();
@@ -14,23 +14,9 @@ namespace FDT.Gui.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         public string ScenarioName { get; set; }
         public ObservableCollection<IFloodMap> FloodMaps { get; set; }
-
-        public abstract void AddExtraFloodMap();
-    }
-
-    public class RiskScenario : Scenario
-    {
-        public override void AddExtraFloodMap()
+        public void AddExtraFloodMap()
         {
-            FloodMaps.Add(new FloodMapWithReturnPeriod());
-        }
-    }
-
-    public class EventScenario : Scenario
-    {
-        public override void AddExtraFloodMap()
-        {
-            FloodMaps.Add(new FloodMap());
+            FloodMaps.Add(new T());
         }
     }
 }

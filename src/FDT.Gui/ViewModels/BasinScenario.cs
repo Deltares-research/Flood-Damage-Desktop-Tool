@@ -2,33 +2,19 @@
 
 namespace FDT.Gui.ViewModels
 {
-    public abstract class BasinScenario: IBasinScenario
+    public class BasinScenario<T>: IBasinScenario where T: IFloodMap, new()
     {
-        protected BasinScenario()
+        public BasinScenario()
         {
             Scenarios = new ObservableCollection<IScenario>();
             AddExtraScenario();
         }
-
         public bool IsEnabled { get; set; }
-        public ObservableCollection<IScenario> Scenarios { get; set; }
 
-        public abstract void AddExtraScenario();
-    }
-
-    public class RiskBasinScenario : BasinScenario
-    {
-        public override void AddExtraScenario()
+        public ObservableCollection<IScenario> Scenarios { get; }
+        public void AddExtraScenario()
         {
-            Scenarios.Add(new RiskScenario());
-        }
-    }
-
-    public class EventBasinScenario : BasinScenario
-    {
-        public override void AddExtraScenario()
-        {
-            Scenarios.Add(new EventScenario());
+            Scenarios.Add(new Scenario<T>());
         }
     }
 }

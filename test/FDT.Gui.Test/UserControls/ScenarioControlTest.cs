@@ -52,5 +52,6 @@ namespace FDT.Gui.Test.UserControls
             WpfTestHelper testHelper = new WpfTestHelper(scenarioControl, "Removing Flood map fields", null);
             testHelper.ShowDialog();
         }
+
     }
 }

@@ -6,9 +6,11 @@ namespace FDT.Gui.ViewModels
     {
         public MainWindowViewModel()
         {
-            EventBasedScenario = new EventBasinScenario();
-            RiskBasedScenario = new RiskBasinScenario();
             BasinScenarios = new ObservableCollection<IBasinScenario>();
+
+            EventBasedScenario = new BasinScenario<FloodMap>();
+            RiskBasedScenario = new BasinScenario<FloodMapWithReturnPeriod>();
+            
             BasinScenarios.Add(EventBasedScenario);
             BasinScenarios.Add(RiskBasedScenario);
         }
