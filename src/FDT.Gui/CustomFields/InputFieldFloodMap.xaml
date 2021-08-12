@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="FDT.Gui.CustomFields.InputFieldFloodMap"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             x:Name="ParentControl">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding FloodMap, ElementName=ParentControl}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Content="Flood map"  Margin="{StaticResource RightMargin}"/>
+        <TextBox Grid.Column="1" 
+                 Text="{Binding MapPath}"  Margin="{StaticResource RightMargin}" IsEnabled="False"/>
+        <Button Grid.Column="2" Content="..." Margin="{StaticResource RightMargin}" Click="OnOpenFileDialog"/>
+        <Label Grid.Column="3" Content="Return Period" Width="90" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
+        <TextBox Grid.Column="4" Text="{Binding ReturnPeriod}" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
+    </Grid>
+</UserControl>

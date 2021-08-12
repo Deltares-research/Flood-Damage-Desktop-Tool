@@ -4,21 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:FDT.Gui"
-        xmlns:fields="clr-namespace:FDT.Gui.CustomFields"
+        xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
+        xmlns:viewModels="clr-namespace:FDT.Gui.ViewModels"
         mc:Ignorable="d"
-        Title="Deltares Flood Damage Desktop Tool 2021" MinHeight="600" MinWidth="800">
+        x:Name="ParentControl"
+        Title="Deltares Flood Damage Desktop Tool 2021" MinWidth="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel x:Name="ViewModel"/>
+    </Window.DataContext>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Row="0">
             <StackPanel Orientation="Vertical">
@@ -26,59 +30,35 @@
                 <TextBlock Text="Damage Assessment Tool" TextWrapping="Wrap"/>
             </StackPanel>
         </Viewbox>
-        <StackPanel Grid.Row="1" Margin="10" Orientation="Vertical">
-            <Grid Margin="10">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
-                    <ComboBox Grid.Column="1" Width="{StaticResource LabelLength}"/>
-                </StackPanel>
-                <Button Grid.Column="1" Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
+                        <ComboBox Width="{StaticResource LabelLength}"/>
+                    </StackPanel>
+                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
+                </Grid>
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <!-- Ideally we only want something like this: -->
+                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding EventBasedScenario}"/> -->
+                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding RiskBasedScenario}"/> -->
+                        <ItemsControl
+                            x:Name="BasinScenarios"
+                            ItemsSource="{Binding BasinScenarios}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <userControls:BasinScenarioControl BasinScenario="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
-            <StackPanel Orientation="Vertical" Margin="10">
-                <!-- Event scenario -->
-                <StackPanel Orientation="Vertical" Margin="10">
-                    <CheckBox Content="Event"/>
-                    <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                            <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
-                        </StackPanel>
-                        <Button Content="Add event +" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"  Margin="{StaticResource TopDownMargin}"/>
-                    </StackPanel>
-                    <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
-                </StackPanel>
-                <!-- Risk scenario-->
-                <StackPanel Orientation="Vertical" Margin="10">
-                    <CheckBox Content="Risk"/>
-                    <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                            <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
-                            <Label Content="Return Period" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource ReturnPeriodLength}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-                            <Label Content="Flood map" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}"/>
-                            <Button Content="..." Width="{StaticResource BrowseButtonLength}" Margin="{StaticResource RightMargin}"/>
-                            <Label Content="Return Period" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-                            <TextBox Width="{StaticResource ReturnPeriodLength}"/>
-                        </StackPanel>
-                        <Button Content="Add RP +" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Margin="{StaticResource TopDownMargin}"/>
-                    </StackPanel>
-                    <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
-                </StackPanel>
-            </StackPanel>
-        </StackPanel>
+        
     </Grid>
 </Window>
