@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:FDT.Gui.ViewModels"
         mc:Ignorable="d"
         x:Name="ParentControl"
-        Title="Deltares Flood Damage Desktop Tool 2021" MinHeight="600" MinWidth="800">
+        Title="Deltares Flood Damage Desktop Tool 2021" MinWidth="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Row="0">
             <StackPanel Orientation="Vertical">
@@ -30,29 +30,35 @@
                 <TextBlock Text="Damage Assessment Tool" TextWrapping="Wrap"/>
             </StackPanel>
         </Viewbox>
-        <StackPanel Grid.Row="1" Margin="10" Orientation="Vertical">
-            <Grid Margin="10">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
-                    <ComboBox Width="{StaticResource LabelLength}"/>
-                </StackPanel>
-                <Button Grid.Column="1" Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
+                        <ComboBox Width="{StaticResource LabelLength}"/>
+                    </StackPanel>
+                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
+                </Grid>
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <!-- Ideally we only want something like this: -->
+                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding EventBasedScenario}"/> -->
+                        <!-- <userControls:BasinScenarioControl BasinScenario="{Binding RiskBasedScenario}"/> -->
+                        <ItemsControl
+                            x:Name="BasinScenarios"
+                            ItemsSource="{Binding BasinScenarios}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <userControls:BasinScenarioControl BasinScenario="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
-            <StackPanel Orientation="Vertical" Margin="10">
-                <!-- Ideally we only want something like this: -->
-                <!-- <userControls:BasinScenarioControl BasinScenario="{Binding EventBasedScenario}"/> -->
-                <!-- <userControls:BasinScenarioControl BasinScenario="{Binding RiskBasedScenario}"/> -->
-                <ItemsControl
-                    x:Name="BasinScenarios"
-                    ItemsSource="{Binding BasinScenarios}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <userControls:BasinScenarioControl BasinScenario="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-
-        </StackPanel>
+        
     </Grid>
 </Window>
