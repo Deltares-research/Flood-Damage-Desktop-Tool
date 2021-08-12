@@ -6,5 +6,9 @@
     &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.ScenarioControlTest.TestWhenRemoveFloodMapUpdatesList&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.BasinScenarioControlTest.TestWhenAddFloodMapUpdatesList&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.BasinScenarioControlTest.TestWithRealData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.MainWindowViewModelTest.Test_Constructor&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.BasinScenarioTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.ScenarioTest.Test_Scenario_AddExtraFloodMap_ForFloodMap&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.ScenarioTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

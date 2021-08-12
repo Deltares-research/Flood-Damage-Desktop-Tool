@@ -9,7 +9,7 @@ using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
 {
-    class MainWindowViewModel: INotifyPropertyChanged
+    public class MainWindowViewModel: INotifyPropertyChanged
     {
         private ObservableCollection<string> _availableBasins;
         private string _selectedBasin;
@@ -17,18 +17,8 @@ namespace FDT.Gui.ViewModels
         public MainWindowViewModel()
         {
             BasinScenarios = new ObservableCollection<IBasinScenario>();
-
-            EventBasedScenario = new BasinScenario<FloodMap>()
-            {
-                ScenarioType = "Event"
-            };
-            RiskBasedScenario = new BasinScenario<FloodMapWithReturnPeriod>()
-            {
-                ScenarioType = "Risk"
-            };
-            
-            BasinScenarios.Add(EventBasedScenario);
-            BasinScenarios.Add(RiskBasedScenario);
+            BasinScenarios.Add(new EventBasedScenario());
+            BasinScenarios.Add(new RiskBasedScenario());
 
             LoadBasins = new RelayCommand(OnLoadBasins);
         }
@@ -55,18 +45,14 @@ namespace FDT.Gui.ViewModels
 
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
-        private IBasinScenario EventBasedScenario { get; }
-        private IBasinScenario RiskBasedScenario { get; }
-
         public ICommand LoadBasins { get; }
 
         private void OnLoadBasins(object objectCmd)
         {
-            if (objectCmd is IEnumerable<string> loadedBasins)
-            {
-                AvailableBasins = new ObservableCollection<string>(loadedBasins);
-                SelectedBasin = AvailableBasins.FirstOrDefault();
-            }
+            if (objectCmd is not IEnumerable<string> loadedBasins) return;
+
+            AvailableBasins = new ObservableCollection<string>(loadedBasins);
+            SelectedBasin = AvailableBasins.FirstOrDefault();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

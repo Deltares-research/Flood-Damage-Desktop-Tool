@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
-using Microsoft.Win32;
+
 
 namespace FDT.Gui
 {
@@ -26,17 +26,21 @@ namespace FDT.Gui
         private IEnumerable<string> BrowseExposureDirectory(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new FolderBrowserDialog();
+            openFileDialog.Description = "Could not locate Exposure Directory, please select it.";
 
             DialogResult result = openFileDialog.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.SelectedPath))
             {
-                var directories = Directory.GetDirectories(openFileDialog.SelectedPath);
-                foreach (string directory in directories)
+                var basinNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(openFileDialog.SelectedPath)).ToArray();
+                if (basinNames.Length > 0)
                 {
-                    yield return directory.Remove(0, directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                    return basinNames;
                 }
             }
+            // If the found basin names were not valid or the user did not select anything, just stop.
+            Close();
+            return Enumerable.Empty<string>();
         }
     }
 }
