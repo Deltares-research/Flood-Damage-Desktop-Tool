@@ -5,6 +5,7 @@ namespace FDT.Gui.ViewModels
     public interface IBasinScenario
     {
         bool IsEnabled { get; set; }
-        IScenario Scenario { get; set; }
+        ObservableCollection<IScenario> Scenarios { get; set; }
+        void AddExtraScenario();
     }
 }

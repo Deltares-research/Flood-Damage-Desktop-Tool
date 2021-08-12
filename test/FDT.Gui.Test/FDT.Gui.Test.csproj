@@ -24,8 +24,4 @@
     <ProjectReference Include="..\FDT.TestUtils\FDT.TestUtils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserControls\" />
-  </ItemGroup>
-
 </Project>

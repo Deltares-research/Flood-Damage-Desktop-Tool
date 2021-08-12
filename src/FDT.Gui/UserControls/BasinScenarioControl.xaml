@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
+             xmlns:customFields="clr-namespace:FDT.Gui.CustomFields"
              mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="200"
              x:Name="ParentControl">
     <UserControl.Resources>
@@ -11,13 +12,35 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel 
         DataContext="{Binding BasinScenario, ElementName=ParentControl}"
         Orientation="Vertical" Margin="10">
         <CheckBox Content="Risk" IsChecked="{Binding IsEnabled}"/>
-        <userControls:ScenarioControl Scenario="{Binding Scenario}"/>
-        <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left"/>
+        <StackPanel Visibility="{Binding IsEnabled, Converter={StaticResource BoolToVisibility}}">
+            <ItemsControl
+                x:Name="scenarioList"
+                ItemsSource="{Binding Scenarios}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="4,4,4,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="X" Click="RemoveScenario" 
+                                    Tag="{Binding}"
+                                    Visibility="{
+                                Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                Path=CanRemoveScenarioEntries, Converter={StaticResource BoolToVisibility}}"/>
+                            <userControls:ScenarioControl Grid.Column="1" Scenario="{Binding}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Content="Add Scenario" Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Click="AddNewScenario"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>
