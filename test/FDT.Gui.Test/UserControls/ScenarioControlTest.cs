@@ -12,7 +12,7 @@ namespace FDT.Gui.Test.UserControls
     [TestFixture, Apartment(ApartmentState.STA)]
     public class ScenarioControlTest
     {
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestWhenAddFloodMapUpdatesList()
         {
@@ -31,7 +31,7 @@ namespace FDT.Gui.Test.UserControls
         }
 
         [Test]
-        [STAThread]
+        [STAThread, Explicit]
         public void TestWhenRemoveFloodMapUpdatesList()
         {
             var scenarioControl = new ScenarioControl();

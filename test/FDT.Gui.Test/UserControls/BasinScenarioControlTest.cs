@@ -12,7 +12,7 @@ namespace FDT.Gui.Test.UserControls
     [TestFixture, Apartment(ApartmentState.STA)]
     public class BasinScenarioControlTest
     {
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestWhenAddFloodMapUpdatesList()
         {
@@ -33,7 +33,7 @@ namespace FDT.Gui.Test.UserControls
             testHelper.ShowDialog();
         }
 
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestWithRealData()
         {
