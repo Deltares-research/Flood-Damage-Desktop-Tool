@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -45,6 +46,7 @@ namespace FDT.Gui.ViewModels
 
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
+        public Func<IEnumerable<string>> GetBasinsDirectories { get; set; }
         public ICommand LoadBasins { get; }
 
         private void OnLoadBasins(object objectCmd)

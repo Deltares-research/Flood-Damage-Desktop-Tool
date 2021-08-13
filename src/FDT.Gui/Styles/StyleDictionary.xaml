@@ -6,6 +6,30 @@
     <sys:Double x:Key ="BrowseButtonLength">40</sys:Double>
     <sys:Double x:Key ="ReturnPeriodLength">60</sys:Double>
     <sys:Double x:Key ="AddExtraInputLength">80</sys:Double>
+    
+    <!-- Define the lengths for grids -->
+    <GridLength x:Key="GridLabelLength">100</GridLength>
+    <GridLength x:Key="GridFilePathLength">240</GridLength>
+    <GridLength x:Key="GridBrowseButtonLength">40</GridLength>
+    <GridLength x:Key="GridReturnPeriodLength">60</GridLength>
+    <GridLength x:Key="GridAddExtraInputLength">80</GridLength>
+    
+    <!-- Define Margins -->
     <Thickness x:Key="RightMargin">0,0,10,0</Thickness>
+    <Thickness x:Key="LeftMargin">10,0,0,0</Thickness>
     <Thickness x:Key="TopDownMargin">5,5,0,0</Thickness>
+    <Thickness x:Key="DefaultPadding">5,0,0,0</Thickness>
+    
+    <!-- Defining Styles -->
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="{StaticResource LeftMargin}"/>
+    </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="{StaticResource DefaultPadding}"/>
+        <Setter Property="Margin" Value="{StaticResource LeftMargin}"/>
+    </Style>
 </ResourceDictionary>

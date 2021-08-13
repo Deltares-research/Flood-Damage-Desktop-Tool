@@ -8,8 +8,10 @@
         xmlns:viewModels="clr-namespace:FDT.Gui.ViewModels"
         mc:Ignorable="d"
         x:Name="ParentControl"
-        Title="Deltares Flood Damage Desktop Tool 2021" MinWidth="800"
-        Loaded="ParentControl_Loaded">
+        Title="Deltares Flood Damage Desktop Tool 2021"
+        MinWidth="500" MinHeight="300"
+        Width="750" Height="600"
+        Loaded="ParentControl_Loaded" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

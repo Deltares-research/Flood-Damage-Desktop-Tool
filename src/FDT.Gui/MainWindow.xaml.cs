@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.IO;
-using System.Linq;
 
 
 namespace FDT.Gui
@@ -15,32 +15,58 @@ namespace FDT.Gui
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel.GetBasinsDirectories = GetBasinsDirectories;
         }
 
         private void ParentControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var availableBasins = BrowseExposureDirectory(sender, e).ToArray();
+            IEnumerable<string> availableBasins = ViewModel?.GetBasinsDirectories?.Invoke();
             ViewModel?.LoadBasins?.Execute(availableBasins);
         }
 
-        private IEnumerable<string> BrowseExposureDirectory(object sender, RoutedEventArgs e)
+        private IEnumerable<string> GetBasinsDirectories()
+        {
+            string exposureDirectory = GetExposureDirectory();
+            return GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(exposureDirectory));
+        }
+
+        private string GetExposureDirectory()
+        {
+            // Database >> Exposure
+            // Database >> System >> FDT.exe
+            string exposureDirectory;
+            try
+            {
+                DirectoryInfo directoryInfo = Directory.GetParent(Environment.CurrentDirectory)?.Parent;
+                string databaseDirectory = directoryInfo?.FullName ?? string.Empty;
+                exposureDirectory = Path.Combine(databaseDirectory, "Exposure");
+                if (!Directory.Exists(exposureDirectory))
+                    throw new DirectoryNotFoundException("Default Exposure path not found. Manually entry required.");
+            }
+            catch (Exception)
+            {
+                exposureDirectory = BrowseExposureDirectory();
+            }
+
+            if (string.IsNullOrEmpty(exposureDirectory) || !Directory.Exists(exposureDirectory))
+            {
+                Close();
+            }
+
+            return exposureDirectory;
+        }
+
+        private string BrowseExposureDirectory()
         {
             var openFileDialog = new FolderBrowserDialog();
-            openFileDialog.Description = "Could not locate Exposure Directory, please select it.";
-
             DialogResult result = openFileDialog.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.SelectedPath))
             {
-                var basinNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(openFileDialog.SelectedPath)).ToArray();
-                if (basinNames.Length > 0)
-                {
-                    return basinNames;
-                }
+                return openFileDialog.SelectedPath;
             }
             // If the found basin names were not valid or the user did not select anything, just stop.
-            Close();
-            return Enumerable.Empty<string>();
+            return null;
         }
     }
 }
