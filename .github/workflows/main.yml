@@ -1,0 +1,28 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  build_directory: ./FloodDamageDesktopTool/ 
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.x
+    - name: Restore dependencies
+      run: dotnet restore $env:build_directory --verbosity normal --configfile $env:build_directory/NuGet.config
+    - name: Build
+      run: dotnet build $env:build_directory --no-restore
+    - name: Test
+      run: dotnet test $env:build_directory --no-build --verbosity normal
