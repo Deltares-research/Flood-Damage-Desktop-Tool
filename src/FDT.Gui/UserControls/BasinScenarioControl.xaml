@@ -18,7 +18,7 @@
     <StackPanel 
         DataContext="{Binding BasinScenario, ElementName=ParentControl}"
         Orientation="Vertical" Margin="10">
-        <CheckBox Content="Risk" IsChecked="{Binding IsEnabled}"/>
+        <CheckBox Content="{Binding ScenarioType}" IsChecked="{Binding IsEnabled}"/>
         <StackPanel Visibility="{Binding IsEnabled, Converter={StaticResource BoolToVisibility}}">
             <ItemsControl
                 x:Name="scenarioList"

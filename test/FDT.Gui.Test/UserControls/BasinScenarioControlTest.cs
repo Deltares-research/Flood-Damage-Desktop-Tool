@@ -37,7 +37,7 @@ namespace FDT.Gui.Test.UserControls
         [STAThread]
         public void TestWithRealData()
         {
-            var basin = new BasinScenario<FloodMapWithReturnPeriod>();
+            var basin = new EventBasedScenario();
             var basinScenarioControl = new BasinScenarioControl();
             basinScenarioControl.BasinScenario = basin;
             WpfTestHelper testHelper = new WpfTestHelper(basinScenarioControl, "Adding Scenarios", null);

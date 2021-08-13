@@ -11,21 +11,41 @@
                 <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <Style TargetType="{x:Type Grid}">
+                <Setter Property="Margin" Value="{StaticResource RightMargin}"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid DataContext="{Binding FloodMap, ElementName=ParentControl}">
+    <Grid 
+        DataContext="{Binding FloodMap, ElementName=ParentControl}"
+        Margin="{StaticResource TopDownMargin}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="90"/>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="90"/>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="{StaticResource GridLabelLength}"/>
+            <ColumnDefinition Width="{StaticResource GridFilePathLength}"/>
+            <ColumnDefinition Width="{StaticResource GridBrowseButtonLength}"/>
+            <ColumnDefinition Width="{StaticResource GridLabelLength}"/>
+            <ColumnDefinition Width="{StaticResource GridReturnPeriodLength}"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Content="Flood map"  Margin="{StaticResource RightMargin}"/>
-        <TextBox Grid.Column="1" 
-                 Text="{Binding MapPath}"  Margin="{StaticResource RightMargin}" IsEnabled="False"/>
-        <Button Grid.Column="2" Content="..." Margin="{StaticResource RightMargin}" Click="OnOpenFileDialog"/>
-        <Label Grid.Column="3" Content="Return Period" Width="90" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
-        <TextBox Grid.Column="4" Text="{Binding ReturnPeriod}" Margin="{StaticResource RightMargin}" Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
+        <Label 
+            Grid.Column="0" 
+            Content="Flood map"/>
+        <TextBox 
+            Grid.Column="1" 
+            Text="{Binding MapPath}" 
+            IsEnabled="False"/>
+        <Button 
+            Grid.Column="2"
+            Content="..."
+            Click="OnOpenFileDialog"
+            Margin="{StaticResource LeftMargin}"/>
+        <Label
+            Grid.Column="3"
+            Content="Return Period"
+            Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
+        <TextBox
+            Grid.Column="4"
+            Text="{Binding ReturnPeriod}"
+            TextAlignment="Center"
+            Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
     </Grid>
 </UserControl>
