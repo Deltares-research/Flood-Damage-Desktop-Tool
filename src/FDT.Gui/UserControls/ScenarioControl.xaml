@@ -17,18 +17,31 @@
     <StackPanel 
         DataContext="{Binding Scenario, ElementName=ParentControl}"
         Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
-        <StackPanel Orientation="Horizontal" Margin="{StaticResource TopDownMargin}">
-            <Label Content="Scenario name" Width="{StaticResource LabelLength}" Margin="{StaticResource RightMargin}"/>
-            <TextBox Width="{StaticResource FilePathLength}" Margin="{StaticResource RightMargin}" Text="{Binding ScenarioName}"/>
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource GridRemoveButton}"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" Margin="{StaticResource TopDownMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource GridLabelLength}"/>
+                    <ColumnDefinition Width="{StaticResource GridFilePathLength}"/>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    Content="Scenario name"/>
+                <TextBox Grid.Column="1"
+                         Text="{Binding ScenarioName}"/>
+            </Grid>
+        </Grid>
         <ItemsControl
             x:Name="floodMapInputList"
             ItemsSource="{Binding FloodMaps}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="4,4,4,4">
+                    <Grid >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="{StaticResource GridRemoveButton}" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="X" Click="RemoveFloodMapEntry" 

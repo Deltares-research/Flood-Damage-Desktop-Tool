@@ -16,7 +16,9 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid DataContext="{Binding FloodMap, ElementName=ParentControl}">
+    <Grid 
+        DataContext="{Binding FloodMap, ElementName=ParentControl}"
+        Margin="{StaticResource TopDownMargin}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{StaticResource GridLabelLength}"/>
             <ColumnDefinition Width="{StaticResource GridFilePathLength}"/>
@@ -30,12 +32,12 @@
         <TextBox 
             Grid.Column="1" 
             Text="{Binding MapPath}" 
-            Margin="{StaticResource RightMargin}"
             IsEnabled="False"/>
         <Button 
             Grid.Column="2"
             Content="..."
-            Click="OnOpenFileDialog"/>
+            Click="OnOpenFileDialog"
+            Margin="{StaticResource LeftMargin}"/>
         <Label
             Grid.Column="3"
             Content="Return Period"
