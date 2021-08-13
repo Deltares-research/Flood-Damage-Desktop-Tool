@@ -10,7 +10,7 @@ namespace FDT.Gui.Test.CustomFields
     [TestFixture, Apartment(ApartmentState.STA)]
     class InputFieldFloodMapTest
     {
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestGivenInputFieldReturnPeriodOnlyWithRisk()
         {
@@ -38,7 +38,7 @@ namespace FDT.Gui.Test.CustomFields
             testHelper.ShowDialog();
         }
 
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestGivenInputFieldSetPathUpdatesField()
         {

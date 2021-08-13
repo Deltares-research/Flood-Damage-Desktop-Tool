@@ -9,7 +9,7 @@ namespace FDT.Gui.Test
     [TestFixture, Apartment(ApartmentState.STA)]
     public class MainWindowTest
     {
-        [Test]
+        [Test, Explicit]
         [STAThread]
         public void TestRunMainWindowWithDummyData()
         {
