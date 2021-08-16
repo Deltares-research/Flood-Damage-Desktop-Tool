@@ -3,6 +3,7 @@ using System.IO;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
 using FDT.Backend.OutputLayer;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test
@@ -14,7 +15,7 @@ namespace FDT.Backend.Test
         public void WriteBasinCsvDataTest()
         {
             // Define initial expectations.
-            string csvTestName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".csv";
+            string csvTestName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".xlsx";
             string filePath = Path.Combine(Environment.CurrentDirectory, csvTestName);
             IBasin basinData = new BasinData();
             basinData.NameScenario = ScenarioType.Event;
@@ -49,11 +50,21 @@ namespace FDT.Backend.Test
             };
             
             // Test Action
-            TestDelegate testAction = () => CsvDataWriter.WriteCsvData(filePath, basinData);
+            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(filePath, basinData);
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(File.Exists(filePath));
+            try
+            {
+                // File.Delete(filePath);
+            }
+            catch (Exception e)
+            {
+                
+                throw;
+            }
         }
+
     }
 }
