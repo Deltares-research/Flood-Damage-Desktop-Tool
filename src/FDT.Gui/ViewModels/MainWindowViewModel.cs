@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using FDT.Backend;
+using FDT.Backend.OutputLayer;
 using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
@@ -22,7 +24,11 @@ namespace FDT.Gui.ViewModels
             BasinScenarios.Add(new RiskBasedScenario());
 
             LoadBasins = new RelayCommand(OnLoadBasins);
+            RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
+            BackendPaths = new ApplicationPaths();
         }
+
+        public ApplicationPaths BackendPaths { get; }
 
         public ObservableCollection<string> AvailableBasins
         {
@@ -55,6 +61,27 @@ namespace FDT.Gui.ViewModels
 
             AvailableBasins = new ObservableCollection<string>(loadedBasins);
             SelectedBasin = AvailableBasins.FirstOrDefault();
+        }
+
+        public ICommand RunDamageAssessment { get; }
+        private void OnRunDamageAssessment(object objectCmd)
+        {
+            var floodDamageDomain = new FloodDamageDomain()
+            {
+                BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
+                Paths = BackendPaths
+            };
+
+            // First export to CSV, then execute the python script. 
+            try
+            {
+                IEnumerable<string> generatedFiles = XlsxDataWriter.WriteXlsxData(floodDamageDomain);
+
+            }
+            catch (Exception)
+            {
+                // Empty for now.
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -4,7 +4,7 @@ namespace FDT.Backend.IDataModel
 {
     public interface IScenario
     {
-        string ScenarioName { get; set; }
-        IEnumerable<IFloodMapBase> FloodMaps { get; set; }
+        string ScenarioName { get; }
+        IEnumerable<IFloodMapBase> FloodMaps { get; }
     }
 }

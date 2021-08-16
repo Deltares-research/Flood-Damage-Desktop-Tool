@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ClosedXML.Excel;
 using FDT.Backend.IDataModel;
 
 namespace FDT.Backend.OutputLayer.FileObjectModel

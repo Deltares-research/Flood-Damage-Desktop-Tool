@@ -46,7 +46,7 @@
                             ItemsSource="{Binding AvailableBasins}"
                             SelectedItem="{Binding SelectedBasin}"/>
                     </StackPanel>
-                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right"/>
+                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
                 </Grid>
                 <ScrollViewer Grid.Row="1">
                     <StackPanel Orientation="Vertical" Margin="10">

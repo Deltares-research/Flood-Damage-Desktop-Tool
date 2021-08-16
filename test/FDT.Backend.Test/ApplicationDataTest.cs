@@ -48,15 +48,20 @@ namespace FDT.Backend.Test
                     }
                 }
             };
-            
+
+            var domain = new FloodDamageDomain()
+            {
+                BasinData = basinData,
+            };
+            // Environment.CurrentDirectory;
             // Test Action
             string[] generatedFiles = {};
-            TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(Environment.CurrentDirectory, basinData).ToArray();
+            TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(domain).ToArray();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
-            Assert.That(generatedFiles.All(cf => File.Exists(cf)));
+            Assert.That(generatedFiles.All(File.Exists));
         }
 
     }

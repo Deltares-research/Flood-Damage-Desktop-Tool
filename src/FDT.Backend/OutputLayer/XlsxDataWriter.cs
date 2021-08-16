@@ -11,12 +11,10 @@ namespace FDT.Backend.OutputLayer
 {
     public static class XlsxDataWriter
     {
-        public static IEnumerable<string> WriteXlsxData(string outputDirectory, IBasin basinData)
+        public static IEnumerable<string> WriteXlsxData(FloodDamageDomain domainData)
         {
-            if (string.IsNullOrEmpty(outputDirectory))
-                throw new ArgumentNullException(nameof(outputDirectory));
-            if (basinData == null)
-                throw new ArgumentNullException(nameof(basinData));
+            if (domainData == null)
+                throw new ArgumentNullException(nameof(domainData));
 
             // Get the template.
             DirectoryInfo directoryInfo = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.Parent;
@@ -26,13 +24,13 @@ namespace FDT.Backend.OutputLayer
                 throw new FileNotFoundException(baseTemplate);
             
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            foreach (IScenario scenarioData in basinData.Scenarios)
+            foreach (IScenario scenarioData in domainData.BasinData.Scenarios)
             {
                 string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
-                string filePath = Path.Combine(outputDirectory, $"{scenarioName}_configuration.xlsx");
+                string filePath = Path.Combine(domainData.Paths.ResultsPath, $"{scenarioName}_configuration.xlsx");
                 ITabXlsx[] tabs = {
-                    new SettingsTabXlsx(basinData, scenarioData.ScenarioName),
-                    new HazardTabXlsx(basinData, scenarioData.FloodMaps)
+                    new SettingsTabXlsx(domainData.BasinData, scenarioData.ScenarioName),
+                    new HazardTabXlsx(domainData.BasinData, scenarioData.FloodMaps)
                 };
                 using (var stream = File.Open(baseTemplate, FileMode.Open, FileAccess.Read))
                 using (var workbook = new XLWorkbook(stream))
