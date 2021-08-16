@@ -11,19 +11,22 @@ namespace FDT.Backend.OutputLayer
 {
     public static class XlsxDataWriter
     {
-        public static IEnumerable<string> WriteXlsxData(FloodDamageDomain domainData)
+        public static IList<string> WriteXlsxData(FloodDamageDomain domainData)
         {
             if (domainData == null)
                 throw new ArgumentNullException(nameof(domainData));
 
             // Get the template.
-            DirectoryInfo directoryInfo = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.Parent;
             const string baseConfigurationFileXlsx = "base_configuration_file.xlsx";
-            string baseTemplate = Path.Combine(directoryInfo?.FullName!, baseConfigurationFileXlsx);
+            string baseTemplate = Path.Combine(domainData.Paths.DatabasePath, baseConfigurationFileXlsx);
             if (!File.Exists(baseTemplate))
                 throw new FileNotFoundException(baseTemplate);
-            
+
+            if (!Directory.Exists(domainData.Paths.ResultsPath))
+                Directory.CreateDirectory(domainData.Paths.ResultsPath);
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var generatedfiles = new List<string>();
             foreach (IScenario scenarioData in domainData.BasinData.Scenarios)
             {
                 string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
@@ -42,10 +45,13 @@ namespace FDT.Backend.OutputLayer
                         settingsWorksheet.Columns().AdjustToContents();
                     }
                     workbook.SaveAs(filePath);
-                    yield return filePath;
+                    generatedfiles.Append(filePath);
+                    stream.Flush();
                 }
             }
-            
+
+            return generatedfiles;
+
         }
     }
 }

@@ -12,7 +12,9 @@ namespace FDT.Backend.OutputLayer.FileObjectModel
 
         public HazardTabXlsx(IBasin basin, IEnumerable<IFloodMapBase> floodMaps)
         {
-            RowEntries = floodMaps.Select(fm => new HazardRowEntry(fm, basin.Projection));
+            RowEntries = floodMaps
+                .Where( fm => !string.IsNullOrEmpty(fm.Path))
+                .Select(fm => new HazardRowEntry(fm, basin.Projection));
         }
     }
 }

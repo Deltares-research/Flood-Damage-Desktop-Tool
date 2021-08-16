@@ -48,12 +48,19 @@ namespace FDT.Backend.Test
                     }
                 }
             };
-
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            string testDirectory = Path.Combine(projectDirectory, "TestData", "TestRoot");
+            var applicationPaths = new ApplicationPaths()
+            {
+                RootPath = testDirectory
+            };
             var domain = new FloodDamageDomain()
             {
                 BasinData = basinData,
+                Paths = applicationPaths
             };
-            // Environment.CurrentDirectory;
+            Assert.That(Directory.Exists(applicationPaths.RootPath));
+
             // Test Action
             string[] generatedFiles = {};
             TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(domain).ToArray();
