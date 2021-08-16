@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
 using FDT.Backend.OutputLayer;
@@ -15,8 +17,6 @@ namespace FDT.Backend.Test
         public void WriteBasinCsvDataTest()
         {
             // Define initial expectations.
-            string csvTestName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".xlsx";
-            string filePath = Path.Combine(Environment.CurrentDirectory, csvTestName);
             IBasin basinData = new BasinData();
             basinData.NameScenario = ScenarioType.Event;
             basinData.Scenarios = new[]
@@ -35,12 +35,12 @@ namespace FDT.Backend.Test
                     ScenarioName = "Test Scenario B",
                     FloodMaps = new []
                     {
-                        new FloodMapWithReturnPeriod()
+                        new FloodMapBaseWithReturnPeriod()
                         {
                             Path="dummy//Path//C",
                             ReturnPeriod = 42,
                         },
-                        new FloodMapWithReturnPeriod()
+                        new FloodMapBaseWithReturnPeriod()
                         {
                             Path="dummy//Path//D",
                             ReturnPeriod = 24,
@@ -50,11 +50,13 @@ namespace FDT.Backend.Test
             };
             
             // Test Action
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(filePath, basinData);
+            string[] generatedFiles = new string[]{};
+            TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(Environment.CurrentDirectory, basinData).ToArray();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
-            Assert.That(File.Exists(filePath));
+            Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
+            Assert.That(generatedFiles.All(cf => File.Exists(cf)));
             try
             {
                 // File.Delete(filePath);

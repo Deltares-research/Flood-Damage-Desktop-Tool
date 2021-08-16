@@ -6,6 +6,6 @@ namespace FDT.Backend.DataModel
     public class ScenarioData: IScenario
     {
         public string ScenarioName { get; set; }
-        public IEnumerable<IFloodMap> FloodMaps { get; set; }
+        public IEnumerable<IFloodMapBase> FloodMaps { get; set; }
     }
 }

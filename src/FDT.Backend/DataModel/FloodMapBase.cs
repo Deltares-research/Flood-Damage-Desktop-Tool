@@ -2,12 +2,13 @@
 
 namespace FDT.Backend.DataModel
 {
-    public class FloodMap: IFloodMap
+    public class FloodMap : IFloodMap
     {
         public string Path { get; set; }
+        public string ReturnPeriod => "Event";
     }
 
-    public class FloodMapWithReturnPeriod : IFloodMapWithReturnPeriod
+    public class FloodMapBaseWithReturnPeriod : IFloodMapBaseWithReturnPeriod
     {
         public string Path { get; set; }
         public int ReturnPeriod { get; set; }
