@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using FDT.Backend.IDataModel;
+using FDT.Backend.OutputLayer.FileObjectModel;
 
 namespace FDT.Backend.OutputLayer
 {
@@ -25,27 +26,28 @@ namespace FDT.Backend.OutputLayer
                 throw new FileNotFoundException(baseTemplate);
             
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            foreach (IScenario dataScenario in basinData.Scenarios)
+            foreach (IScenario scenarioData in basinData.Scenarios)
             {
-                string scenarioName = dataScenario.ScenarioName.Replace(" ", "_").ToLowerInvariant();
+                string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
                 string filePath = Path.Combine(outputDirectory, $"{scenarioName}_configuration.xlsx");
+                ITabXlsx[] tabs = {
+                    new SettingsTabXlsx(basinData, scenarioData.ScenarioName),
+                    new HazardTabXlsx(basinData, scenarioData.FloodMaps)
+                };
                 using (var stream = File.Open(baseTemplate, FileMode.Open, FileAccess.Read))
                 using (var workbook = new XLWorkbook(stream))
                 {
-                    SetHazardValues(workbook, dataScenario);
+                    foreach (ITabXlsx tabXlsx in tabs)
+                    {
+                        IXLWorksheet settingsWorksheet = XlsDataWriteHelper.GetWorksheet(workbook, tabXlsx.TabName);
+                        settingsWorksheet.Cell(2, 1).InsertData(tabXlsx.RowEntries.AsEnumerable()).Style.Fill.SetBackgroundColor(XLWorkbook.DefaultStyle.Fill.BackgroundColor);
+                        settingsWorksheet.Columns().AdjustToContents();
+                    }
                     workbook.SaveAs(filePath);
                     yield return filePath;
                 }
             }
             
-        }
-
-        private static void SetHazardValues(IXLWorkbook workBook, IScenario dataScenario)
-        {
-            IXLWorksheet hazardWorksheet;
-            workBook.Worksheets.TryGetWorksheet("Hazard", out hazardWorksheet);
-            hazardWorksheet.Cell(2, 1).InsertData(dataScenario.FloodMaps.AsEnumerable());
-            hazardWorksheet.Columns().AdjustToContents();
         }
     }
 }

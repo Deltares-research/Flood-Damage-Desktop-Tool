@@ -5,7 +5,8 @@ namespace FDT.Backend.DataModel
 {
     public class BasinData: IBasin
     {
-        public ScenarioType NameScenario { get; set; }
+        public string BasinName { get; set; }
+        public string Projection { get; set; }
         public IEnumerable<IScenario> Scenarios { get; set; }
     }
 }
