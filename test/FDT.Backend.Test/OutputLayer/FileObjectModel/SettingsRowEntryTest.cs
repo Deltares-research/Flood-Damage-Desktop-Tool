@@ -36,7 +36,7 @@ namespace FDT.Backend.Test.OutputLayer.FileObjectModel
         [Test]
         public void ConstructorThrowsExceptionWithNullBasin()
         {
-            TestDelegate testAction = () => new SettingsRowEntry(null, Arg.Any<string>());
+            TestDelegate testAction = () => new SettingsRowEntry(null, "dumbValidString");
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("basin"));
         }
 

@@ -22,6 +22,7 @@ namespace FDT.Backend.Test.OutputLayer.FileObjectModel
             const string filePath = "DummyDataPath";
             const int returnObject = 42;
 
+            basin.Projection.Returns("EPSG:42");
             floodMap.Path.Returns(filePath);
             floodMap.GetReturnPeriod().Returns(returnObject);
 
@@ -39,7 +40,7 @@ namespace FDT.Backend.Test.OutputLayer.FileObjectModel
         [Test]
         public void ConstructorGivenNullBasinThrowsException()
         {
-            TestDelegate testAction = () => new HazardTabXlsx(null, Arg.Any<IEnumerable<IFloodMapBase>>());
+            TestDelegate testAction = () => new HazardTabXlsx(null, new List<IFloodMapBase>());
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>().With.Message.Contains("basin"));
         }
 
@@ -58,6 +59,7 @@ namespace FDT.Backend.Test.OutputLayer.FileObjectModel
             var floodMapWithPath = Substitute.For<IFloodMapBase>();
             var floodMapWithoutPath = Substitute.For<IFloodMapBase>();
 
+            basin.Projection.Returns("EPSG:42");
             floodMapWithPath.Path.Returns("DummyPath");
 
             // Define test delegate

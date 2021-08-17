@@ -37,7 +37,7 @@ namespace FDT.Backend.Test.OutputLayer.FileObjectModel
         [Test]
         public void ConstructorThrowsExceptionWithNullFloodMapBase()
         {
-            TestDelegate testAction = () => new HazardRowEntry(null, Arg.Any<string>());
+            TestDelegate testAction = () => new HazardRowEntry(null, "dumbValidString");
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("floodMapBase"));
         }
 
