@@ -1,4 +1,6 @@
-﻿using FDT.Backend.IDataModel;
+﻿using System;
+using FDT.Backend.IDataModel;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.OutputLayer.FileObjectModel
 {
@@ -10,6 +12,11 @@ namespace FDT.Backend.OutputLayer.FileObjectModel
         // public DateTime InundationReference { get; set; }
         public HazardRowEntry(IFloodMapBase floodMapBase, string basinProjection)
         {
+            if (floodMapBase == null)
+                throw new ArgumentNullException(nameof(floodMapBase));
+            if (string.IsNullOrEmpty(basinProjection))
+                throw new ArgumentNullException(nameof(basinProjection));
+
             HazardFile = floodMapBase.Path;
             ReturnPeriod = floodMapBase.GetReturnPeriod();
             CRS = basinProjection;

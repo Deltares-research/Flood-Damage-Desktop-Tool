@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
+using FDT.Backend.IDataModel;
 using Path = System.IO.Path;
 
-namespace FDT.Backend
+namespace FDT.Backend.DataModel
 {
     public class ApplicationPaths: IApplicationPaths
     {

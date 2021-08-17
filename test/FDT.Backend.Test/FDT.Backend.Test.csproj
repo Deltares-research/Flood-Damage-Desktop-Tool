@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="OutputLayer\" />
+    <Folder Include="OutputLayer\FileObjectModel\" />
   </ItemGroup>
 
   <ItemGroup>

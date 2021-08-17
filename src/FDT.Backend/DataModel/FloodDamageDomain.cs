@@ -1,7 +1,6 @@
-﻿using FDT.Backend.DataModel;
-using FDT.Backend.IDataModel;
+﻿using FDT.Backend.IDataModel;
 
-namespace FDT.Backend
+namespace FDT.Backend.DataModel
 {
     public class FloodDamageDomain: IFloodDamageDomain
     {

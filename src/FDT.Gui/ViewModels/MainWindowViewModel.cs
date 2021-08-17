@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FDT.Backend;
+using FDT.Backend.DataModel;
 using FDT.Backend.OutputLayer;
 using FDT.Gui.Annotations;
 

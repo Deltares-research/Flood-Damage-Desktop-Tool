@@ -1,4 +1,6 @@
-﻿using FDT.Backend.IDataModel;
+﻿using System;
+using FDT.Backend.IDataModel;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.OutputLayer.FileObjectModel
 {
@@ -13,7 +15,9 @@ namespace FDT.Backend.OutputLayer.FileObjectModel
 
         public SettingsRowEntry(IBasin basin, string scenarioName)
         {
-            _basin = basin;
+            _basin = basin ?? throw new ArgumentNullException(nameof(basin));
+            if (string.IsNullOrEmpty(scenarioName))
+                throw new ArgumentNullException(nameof(scenarioName));
             ScenarioName = scenarioName;
         }
     }

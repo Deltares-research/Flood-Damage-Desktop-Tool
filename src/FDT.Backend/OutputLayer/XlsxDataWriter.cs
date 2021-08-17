@@ -6,6 +6,7 @@ using System.Text;
 using ClosedXML.Excel;
 using FDT.Backend.IDataModel;
 using FDT.Backend.OutputLayer.FileObjectModel;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.OutputLayer
 {

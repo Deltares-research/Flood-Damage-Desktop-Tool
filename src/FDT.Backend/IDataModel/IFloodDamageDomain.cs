@@ -1,6 +1,4 @@
-﻿using FDT.Backend.IDataModel;
-
-namespace FDT.Backend
+﻿namespace FDT.Backend.IDataModel
 {
     public interface IFloodDamageDomain
     {

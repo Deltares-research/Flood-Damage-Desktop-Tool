@@ -1,4 +1,4 @@
-﻿namespace FDT.Backend.OutputLayer.FileObjectModel
+﻿namespace FDT.Backend.OutputLayer.IFileObjectModel
 {
     public interface IRowEntry
     {

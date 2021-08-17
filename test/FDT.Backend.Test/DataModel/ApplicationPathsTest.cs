@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using FDT.Backend.DataModel;
+using FDT.Backend.IDataModel;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test
+namespace FDT.Backend.Test.DataModel
 {
     public class ApplicationPathsTest
     {

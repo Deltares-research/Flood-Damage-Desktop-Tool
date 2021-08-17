@@ -1,4 +1,4 @@
-﻿namespace FDT.Backend
+﻿namespace FDT.Backend.IDataModel
 {
     public interface IApplicationPaths
     {
