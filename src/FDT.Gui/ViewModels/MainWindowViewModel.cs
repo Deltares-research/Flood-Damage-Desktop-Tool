@@ -67,6 +67,7 @@ namespace FDT.Gui.ViewModels
         public ICommand RunDamageAssessment { get; }
         private void OnRunDamageAssessment(object objectCmd)
         {
+            // This method should throw any generated exception so that it's catched and handled by the caller command.
             var floodDamageDomain = new FloodDamageDomain()
             {
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
@@ -74,15 +75,8 @@ namespace FDT.Gui.ViewModels
             };
 
             // First export to CSV, then execute the python script. 
-            try
-            {
-                IEnumerable<string> generatedFiles = XlsxDataWriter.WriteXlsxData(floodDamageDomain);
+            IEnumerable<string> generatedFiles = XlsxDataWriter.WriteXlsxData(floodDamageDomain);
 
-            }
-            catch (Exception)
-            {
-                // Empty for now.
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
