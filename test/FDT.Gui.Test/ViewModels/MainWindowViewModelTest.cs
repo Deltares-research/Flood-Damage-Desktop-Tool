@@ -17,6 +17,9 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.BasinScenarios.Count, Is.EqualTo(2));
             Assert.That(viewModel.BasinScenarios.Any( bs => bs.GetType() == typeof(EventBasedScenario)));
             Assert.That(viewModel.BasinScenarios.Any(bs => bs.GetType() == typeof(RiskBasedScenario)));
+            Assert.That(viewModel.LoadBasins, Is.Not.Null);
+            Assert.That(viewModel.RunDamageAssessment, Is.Not.Null);
+            Assert.That(viewModel.BackendPaths, Is.Not.Null);
         }
     }
 }

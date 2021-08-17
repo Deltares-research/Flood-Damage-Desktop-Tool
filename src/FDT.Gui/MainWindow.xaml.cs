@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.IO;
+using MessageBox = System.Windows.MessageBox;
 
 
 namespace FDT.Gui
@@ -20,45 +21,37 @@ namespace FDT.Gui
 
         private void ParentControl_Loaded(object sender, RoutedEventArgs e)
         {
-            IEnumerable<string> availableBasins = ViewModel?.GetBasinsDirectories?.Invoke();
-            ViewModel?.LoadBasins?.Execute(availableBasins);
+            try
+            {
+                IEnumerable<string> availableBasins = ViewModel?.GetBasinsDirectories?.Invoke();
+                ViewModel?.LoadBasins?.Execute(availableBasins);
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(
+                    this,
+                    $"It was not possible to find a valid Exposure directory, please check your folder structure.\nDetailed error {exception.Message}",
+                    "Failed to detect directory structure.",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                Close();
+            }
         }
 
         private IEnumerable<string> GetBasinsDirectories()
         {
-            string exposureDirectory = GetExposureDirectory();
-            return GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(exposureDirectory));
-        }
-
-        private string GetExposureDirectory()
-        {
-            // Database >> Exposure
-            // Database >> System >> FDT.exe
-            string exposureDirectory;
-            try
+            if (!Directory.Exists(ViewModel.BackendPaths.ExposurePath))
             {
-                DirectoryInfo directoryInfo = Directory.GetParent(Environment.CurrentDirectory)?.Parent;
-                string databaseDirectory = directoryInfo?.FullName ?? string.Empty;
-                exposureDirectory = Path.Combine(databaseDirectory, "Exposure");
-                if (!Directory.Exists(exposureDirectory))
-                    throw new DirectoryNotFoundException("Default Exposure path not found. Manually entry required.");
+                ViewModel.BackendPaths.UpdateExposurePath(BrowseExposureDirectory());
             }
-            catch (Exception)
-            {
-                exposureDirectory = BrowseExposureDirectory();
-            }
-
-            if (string.IsNullOrEmpty(exposureDirectory) || !Directory.Exists(exposureDirectory))
-            {
-                Close();
-            }
-
-            return exposureDirectory;
+            
+            return GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(ViewModel.BackendPaths.ExposurePath));
         }
 
         private string BrowseExposureDirectory()
         {
             var openFileDialog = new FolderBrowserDialog();
+            openFileDialog.Description = "Select the EXPOSURE directory";
             DialogResult result = openFileDialog.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.SelectedPath))
@@ -67,6 +60,31 @@ namespace FDT.Gui
             }
             // If the found basin names were not valid or the user did not select anything, just stop.
             return null;
+        }
+
+        private void OnRunDamageAssessmentClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.RunDamageAssessment.Execute(sender);
+                MessageBox.Show(
+                    this, 
+                    $"Assessment run correctly, result files stored at {ViewModel.BackendPaths.ResultsPath}", 
+                    "Successful run", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Information);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(
+                    this,
+                    $"Assessment run failed, reason: {exception.Message}.\n Contact support for more details.",
+                    "Failed run",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
+            
         }
     }
 }

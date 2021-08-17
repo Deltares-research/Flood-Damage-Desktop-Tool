@@ -1,15 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9b2447ef_002D5893_002D4f30_002D9df9_002D4ffc0fad0282/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="InputFieldFloodMapTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4e396aa2_002D87cb_002D47b6_002D863a_002Da89ab5668bc4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WriteBasinCsvDataTest #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\repos\Flood-Damage-Desktop-Tool" Presentation="&amp;lt;test&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e6df8658_002D1078_002D4dfc_002Db22c_002D45523c6f8eac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="WriteBasinCsvDataTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.CustomFields.InputFieldFloodMapTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.ScenarioControlTest.TestWhenAddFloodMapUpdatesList&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.ScenarioControlTest.TestWhenRemoveFloodMapUpdatesList&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.BasinScenarioControlTest.TestWhenAddFloodMapUpdatesList&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.UserControls.BasinScenarioControlTest.TestWithRealData&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.MainWindowViewModelTest.Test_Constructor&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.BasinScenarioTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.ScenarioTest.Test_Scenario_AddExtraFloodMap_ForFloodMap&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.ViewModels.ScenarioTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::F88CBF83-FC01-47D0-ACCD-F5D54DBC921E::net5.0-windows7.0::FDT.Gui.Test.MainWindowTest.TestRunMainWindowWithDummyData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::E064357E-CDC1-42E6-A418-5457A3B88349::net5.0::FDT.Backend.Test.Tests.WriteBasinCsvDataTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	</wpf:ResourceDictionary>
