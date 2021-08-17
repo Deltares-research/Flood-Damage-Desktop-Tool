@@ -15,31 +15,25 @@ namespace FDT.Backend.Test.ExeHandler
             // Define test variables.
             DamageAssessmentHandler testHandler = null;
             IFloodDamageDomain dummyDomain = Substitute.For<IFloodDamageDomain>();
-            IExeWrapper dummyWrapper = Substitute.For<IExeWrapper>();
+            dummyDomain.Paths.SystemPath.Returns(Environment.CurrentDirectory);
 
             // Define test action.
-            TestDelegate testAction = () => testHandler = new DamageAssessmentHandler(dummyDomain, dummyWrapper);
+            TestDelegate testAction = () => testHandler = new DamageAssessmentHandler(dummyDomain);
             
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(testHandler, Is.Not.Null);
             Assert.That(testHandler, Is.InstanceOf<IRunnerHandler>());
             Assert.That(testHandler.DataDomain, Is.EqualTo(dummyDomain));
-            Assert.That(testHandler.ExeWrapper, Is.EqualTo(dummyWrapper));
+            Assert.That(testHandler.ExeWrapper, Is.Not.Null);
+            Assert.That(testHandler.ExeWrapper, Is.InstanceOf<IExeWrapper>());
         }
 
         [Test]
         public void ConstructorThrowsExceptionWhenNullFloodDomain()
         {
-            TestDelegate testAction = () => new DamageAssessmentHandler(null, Substitute.For<IExeWrapper>());
+            TestDelegate testAction = () => new DamageAssessmentHandler(null);
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("floodDomain"));
-        }
-
-        [Test]
-        public void ConstructorThrowsExceptionWhenNullExeWrapper()
-        {
-            TestDelegate testAction = () => new DamageAssessmentHandler( Substitute.For<IFloodDamageDomain>(), null);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("exeWrapper"));
         }
     }
 }

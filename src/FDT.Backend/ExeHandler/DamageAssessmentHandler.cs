@@ -11,10 +11,10 @@ namespace FDT.Backend.ExeHandler
         public IFloodDamageDomain DataDomain { get; }
         public IExeWrapper ExeWrapper { get; }
 
-        public DamageAssessmentHandler(IFloodDamageDomain floodDomain, IExeWrapper exeWrapper)
+        public DamageAssessmentHandler(IFloodDamageDomain floodDomain)
         {
             DataDomain = floodDomain ?? throw new ArgumentNullException(nameof(floodDomain));
-            ExeWrapper = exeWrapper ?? throw new ArgumentNullException(nameof(exeWrapper));
+            ExeWrapper = new FiatPythonWrapper(DataDomain.Paths.SystemPath);
         }
 
         public void Run()
@@ -22,10 +22,10 @@ namespace FDT.Backend.ExeHandler
             if (DataDomain == null)
                 throw new ArgumentNullException(nameof(DataDomain));
             IEnumerable<string> damageAssessmentFiles = XlsxDataWriter.WriteXlsxData(DataDomain);
-            IExeWrapper fiatPythonWrapper = new FiatPythonWrapper(DataDomain.Paths.SystemPath);
+            
             foreach (string damageAssessmentFile in damageAssessmentFiles)
             {
-                fiatPythonWrapper.Run(damageAssessmentFile);
+                ExeWrapper.Run(damageAssessmentFile);
             }
         }
     }

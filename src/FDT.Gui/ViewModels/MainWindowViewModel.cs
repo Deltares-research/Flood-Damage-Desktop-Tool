@@ -74,9 +74,7 @@ namespace FDT.Gui.ViewModels
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
                 Paths = BackendPaths
             };
-            var pythonExeWrapper = new FiatPythonWrapper(floodDamageDomain.Paths.SystemPath);
-
-            DamageAssessmentHandler runHandler = new DamageAssessmentHandler(floodDamageDomain, pythonExeWrapper);
+            DamageAssessmentHandler runHandler = new DamageAssessmentHandler(floodDamageDomain);
             runHandler.Run();
         }
 
