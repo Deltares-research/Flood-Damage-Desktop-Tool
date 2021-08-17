@@ -15,7 +15,7 @@ namespace FDT.Backend.Test.OutputLayer
         [Test]
         public void WriteXlsxDataWithWrongArgumentsThrowsException()
         {
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(null);
+            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(null).ToArray();
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>());
         }
 
@@ -24,7 +24,7 @@ namespace FDT.Backend.Test.OutputLayer
         {
             var dummyDomainData = new FloodDamageDomain();
             Assert.That(Directory.Exists(dummyDomainData.Paths.DatabasePath), Is.False);
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData);
+            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData).ToArray();
             Assert.That(testAction, Throws.TypeOf<FileNotFoundException>());
         }
 
@@ -39,7 +39,7 @@ namespace FDT.Backend.Test.OutputLayer
                 Directory.Delete(dummyDomainData.Paths.ResultsPath);
 
             // Define test action.
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData);
+            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData).ToArray();
 
             // Verify final expectations
             Assert.That(testAction, Throws.Nothing);

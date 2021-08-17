@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FDT.Backend;
 using FDT.Backend.DataModel;
+using FDT.Backend.ExeHandler;
 using FDT.Backend.OutputLayer;
 using FDT.Gui.Annotations;
 
@@ -73,10 +74,10 @@ namespace FDT.Gui.ViewModels
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
                 Paths = BackendPaths
             };
+            var pythonExeWrapper = new FiatPythonWrapper(floodDamageDomain.Paths.SystemPath);
 
-            // First export to CSV, then execute the python script. 
-            IEnumerable<string> generatedFiles = XlsxDataWriter.WriteXlsxData(floodDamageDomain);
-
+            DamageAssessmentHandler runHandler = new DamageAssessmentHandler(floodDamageDomain, pythonExeWrapper);
+            runHandler.Run();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
