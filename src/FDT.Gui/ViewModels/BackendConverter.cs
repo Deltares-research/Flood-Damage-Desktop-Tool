@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
+using FDT.Backend.InputOutpulLayer;
 
 namespace FDT.Gui.ViewModels
 {
     public static class BackendConverter
     {
-        public static IBasin ConvertBasin(this IEnumerable<IBasinScenario> basinScenarios, string selectedBasin)
+        public static IBasin ConvertBasin(this IEnumerable<IBasinScenario> basinScenarios, string selectedBasinPath)
         {
-            return new BasinData()
+            if (basinScenarios == null)
+                throw new ArgumentNullException(nameof(basinScenarios));
+
+            return new BasinData
             {
-                Projection = "EPSG:42",
-                BasinName = selectedBasin,
+                Projection = new WkidDataReader().GetWkidCode(selectedBasinPath),
+                BasinName = Path.GetFileName(selectedBasinPath),
                 Scenarios = basinScenarios
                     .Where( bs => bs.IsEnabled )
                     .SelectMany( bs => bs.Scenarios.ConvertScenarios())
@@ -21,6 +27,8 @@ namespace FDT.Gui.ViewModels
 
         public static IEnumerable<Backend.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
         {
+            if (scenarios == null)
+                throw new ArgumentNullException(nameof(scenarios));
             foreach (IScenario scenario in scenarios)
             {
                 yield return new ScenarioData()
@@ -34,6 +42,8 @@ namespace FDT.Gui.ViewModels
         public static IEnumerable<IFloodMapBase> ConvertFloodMaps(
             this IEnumerable<IFloodMap> floodMaps)
         {
+            if (floodMaps == null)
+                throw new ArgumentNullException(nameof(floodMaps));
             foreach (IFloodMap floodMap in floodMaps)
             {
                 if (floodMap.HasReturnPeriod)

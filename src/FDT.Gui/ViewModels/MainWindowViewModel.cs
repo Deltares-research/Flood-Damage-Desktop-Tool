@@ -9,7 +9,6 @@ using System.Windows.Input;
 using FDT.Backend;
 using FDT.Backend.DataModel;
 using FDT.Backend.ExeHandler;
-using FDT.Backend.OutputLayer;
 using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
@@ -48,6 +47,7 @@ namespace FDT.Gui.ViewModels
             set
             {
                 _selectedBasin = value;
+                BackendPaths.UpdateSelectedBasin(_selectedBasin);
                 OnPropertyChanged();
             }
         }
@@ -71,7 +71,7 @@ namespace FDT.Gui.ViewModels
             // This method should throw any generated exception so that it's caught and handled by the caller command.
             var floodDamageDomain = new FloodDamageDomain()
             {
-                BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
+                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
                 Paths = BackendPaths
             };
             DamageAssessmentHandler runHandler = new DamageAssessmentHandler

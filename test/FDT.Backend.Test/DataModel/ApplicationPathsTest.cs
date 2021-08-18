@@ -2,6 +2,7 @@
 using System.IO;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.DataModel
@@ -27,5 +28,13 @@ namespace FDT.Backend.Test.DataModel
             TestDelegate testAction = () => applicationPaths.UpdateExposurePath(exposurePath);
             Assert.That(testAction, Throws.TypeOf(exceptionType));
         }
+
+        [Test]
+        public void UpdateSelectedBasinPathWithoutExposureDirThrowsNothing()
+        {
+            TestDelegate testAction = () => new ApplicationPaths().UpdateSelectedBasin("something");
+            Assert.That(testAction, Throws.Nothing);
+        }
+
     }
 }

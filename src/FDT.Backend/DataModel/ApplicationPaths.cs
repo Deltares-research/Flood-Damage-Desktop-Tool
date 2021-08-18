@@ -7,6 +7,8 @@ namespace FDT.Backend.DataModel
 {
     public class ApplicationPaths: IApplicationPaths
     {
+        private string _selectedBasin;
+
         public ApplicationPaths()
         {
             // This software will be placed under.
@@ -18,9 +20,12 @@ namespace FDT.Backend.DataModel
         }
         public string RootPath { get; set; }
         public string DatabasePath => Path.Combine(RootPath, "database");
-        public string ExposurePath => Path.Combine(DatabasePath, "exposure");
-        public string SystemPath => Path.Combine(RootPath, "system");
-        public string ResultsPath => Path.Combine(RootPath, "results");
+        public string ExposurePath => Path.Combine(DatabasePath, "Exposure");
+
+        public string SelectedBasinPath => Path.Combine(ExposurePath, _selectedBasin);
+
+        public string SystemPath => Path.Combine(RootPath, "System");
+        public string ResultsPath => Path.Combine(RootPath, "Results");
         public void UpdateExposurePath(string exposurePath)
         {
             if (string.IsNullOrEmpty(exposurePath))
@@ -28,6 +33,11 @@ namespace FDT.Backend.DataModel
             if (!Directory.Exists(exposurePath))
                 throw new DirectoryNotFoundException(exposurePath);
             RootPath = Directory.GetParent(exposurePath)?.Parent?.FullName;
+        }
+
+        public void UpdateSelectedBasin(string selectedBasin)
+        {
+            _selectedBasin = selectedBasin;
         }
     }
 }
