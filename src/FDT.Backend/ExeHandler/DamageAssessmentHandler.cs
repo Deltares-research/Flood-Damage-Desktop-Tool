@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FDT.Backend.IDataModel;
 using FDT.Backend.IExeHandler;
 using FDT.Backend.OutputLayer;
@@ -32,10 +33,20 @@ namespace FDT.Backend.ExeHandler
             
             _exeWrapper.ExeDirectory = DataDomain.Paths.SystemPath;
             IEnumerable<IOutputData> outputDataCollection = DataWriter.WriteData(DataDomain);
+            var errorRuns = new List<string>();
             foreach (IOutputData outputData in outputDataCollection)
             {
                 ExeWrapper.Run(outputData);
+                if (!ExeWrapper.ValidateRun(outputData))
+                {
+                    errorRuns.Add($"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}");
+                }
             }
+
+            if (!errorRuns.Any()) return;
+
+            string errorRun = string.Join("\n", errorRuns);
+            throw new Exception(errorRun);
         }
     }
 }

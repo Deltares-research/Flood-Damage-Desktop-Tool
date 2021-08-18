@@ -149,8 +149,11 @@ namespace FDT.Backend.Test.ExeHandler
             // 1. Define test data.
             var pythonWrapper = new FiatPythonWrapper();
             bool isValidRun = false;
-            
+            string movedConfigFilePath = Path.Combine(_basinDir, Path.GetFileName(_copyConfigFile));
+
             // Just copy a file to make the test detect something.
+            if(File.Exists(movedConfigFilePath))
+                File.Delete(movedConfigFilePath);
             File.Copy(_copyConfigFile, Path.Combine(_scenarioDir, "dummy_results.csv"));
             Assert.That(Directory.GetFiles(_scenarioDir), Is.Not.Empty);
 
@@ -161,7 +164,7 @@ namespace FDT.Backend.Test.ExeHandler
             Assert.That(testAction, Throws.Nothing);
             Assert.That(isValidRun, Is.True);
             Assert.That(File.Exists(_copyConfigFile), Is.Not.True);
-            string movedConfigFilePath = Path.Combine(_basinDir, Path.GetFileName(_copyConfigFile));
+            
             Assert.That(File.Exists(movedConfigFilePath));
         }
 
