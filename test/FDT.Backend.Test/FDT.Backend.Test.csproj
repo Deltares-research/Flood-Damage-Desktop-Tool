@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="OutputLayer\FileObjectModel\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="TestData\TestRoot\database\base_configuration_file.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

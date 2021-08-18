@@ -5,7 +5,9 @@ using FDT.Backend.ExeHandler;
 using FDT.Backend.IDataModel;
 using FDT.Backend.IExeHandler;
 using FDT.Backend.OutputLayer;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.ExeHandler
@@ -49,23 +51,31 @@ namespace FDT.Backend.Test.ExeHandler
             {
                 "path\\one", "path\\two", "path\\three"
             };
+            IOutputData[] outputDataCollection = testFilePaths
+                .Select(fp =>
+                {
+                    var outputData = Substitute.For<IOutputData>();
+                    outputData.FilePath.Returns(fp);
+                    return outputData;
+                }).ToArray();
 
             damageAssessmentHandler.ExeWrapper.Returns(exeWrapper);
             damageAssessmentHandler.DataWriter.Returns(dataWriter);
             damageAssessmentHandler.DataDomain.Returns(dataDomain);
             dataWriter
+                .Configure()
                 .WriteData(Arg.Any<IFloodDamageDomain>())
-                .Returns(testFilePaths.AsEnumerable());
+                .Returns(outputDataCollection);
 
             // Define test actions.
             TestDelegate testAction = () => damageAssessmentHandler.Run();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
-            foreach (string testFilePath in testFilePaths)
+            foreach (IOutputData outputData in outputDataCollection)
             {
                 // NSubstitute assert call was received with given argument.
-                exeWrapper.Received().Run(testFilePath);
+                exeWrapper.Received().Run(outputData);
             }
         }
     }

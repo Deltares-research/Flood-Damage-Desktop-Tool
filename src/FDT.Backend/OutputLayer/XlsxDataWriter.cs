@@ -12,7 +12,7 @@ namespace FDT.Backend.OutputLayer
 {
     public class XlsxDataWriter : IWriter
     {
-        public IEnumerable<string> WriteData(IFloodDamageDomain domainData)
+        public IEnumerable<IOutputData> WriteData(IFloodDamageDomain domainData)
         {
             if (domainData == null)
                 throw new ArgumentNullException(nameof(domainData));
@@ -45,7 +45,12 @@ namespace FDT.Backend.OutputLayer
                         settingsWorksheet.Columns().AdjustToContents();
                     }
                     workbook.SaveAs(filePath);
-                    yield return filePath;
+                    yield return new OutputData()
+                    {
+                        FilePath = filePath,
+                        BasinName = domainData.BasinData.BasinName,
+                        ScenarioName = scenarioName
+                    };
                     stream.Flush();
                 }
             }

@@ -5,6 +5,7 @@ using System.Reflection;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
 using FDT.Backend.OutputLayer;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -97,14 +98,14 @@ namespace FDT.Backend.Test.OutputLayer
             Assert.That(Directory.Exists(testDomain.Paths.RootPath));
 
             // Test Action
-            string[] generatedFiles = { };
+            IOutputData[] generatedFiles = null;
             TestDelegate testAction = () => generatedFiles = new XlsxDataWriter().WriteData(testDomain).ToArray();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
             Assert.That(generatedFiles.Length, Is.EqualTo(basinData.Scenarios.Count()));
-            Assert.That(generatedFiles.All(File.Exists));
+            Assert.That(generatedFiles.All( gf => File.Exists(gf.FilePath)));
         }
 
         private IFloodDamageDomain GetDummyDomain()

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using FDT.Backend.IExeHandler;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.ExeHandler
 {
@@ -18,14 +19,18 @@ namespace FDT.Backend.ExeHandler
             ExeDirectory = Directory.GetCurrentDirectory();
         }
 
-        public void Run(string filePath)
+        public void Run(IOutputData outputData)
         {
-            if (string.IsNullOrEmpty(filePath))
-                throw new ArgumentNullException(nameof(filePath));
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException(filePath);
+            if (outputData == null)
+            {
+                throw new ArgumentNullException(nameof(outputData));
+            }
+            if (string.IsNullOrEmpty(outputData.FilePath))
+                throw new ArgumentNullException(nameof(IOutputData.FilePath));
+            if (!File.Exists(outputData.FilePath))
+                throw new FileNotFoundException(outputData.FilePath);
 
-            string arguments = $"--config {filePath}";
+            string arguments = $"--config {outputData.FilePath}";
             // Possibly consider using EnableRaisingEvents and subscribe to Process.Exited.
             Process runProcess = Process.Start(ExeFilePath, arguments);
             runProcess?.WaitForExit();

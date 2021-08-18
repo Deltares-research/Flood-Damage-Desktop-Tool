@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FDT.Backend.IDataModel;
 using FDT.Backend.IExeHandler;
 using FDT.Backend.OutputLayer;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.ExeHandler
 {
@@ -30,11 +31,10 @@ namespace FDT.Backend.ExeHandler
                 throw new ArgumentNullException(nameof(DataDomain));
             
             _exeWrapper.ExeDirectory = DataDomain.Paths.SystemPath;
-            IEnumerable<string> damageAssessmentFiles = DataWriter.WriteData(DataDomain);
-            
-            foreach (string damageAssessmentFile in damageAssessmentFiles)
+            IEnumerable<IOutputData> outputDataCollection = DataWriter.WriteData(DataDomain);
+            foreach (IOutputData outputData in outputDataCollection)
             {
-                ExeWrapper.Run(damageAssessmentFile);
+                ExeWrapper.Run(outputData);
             }
         }
     }

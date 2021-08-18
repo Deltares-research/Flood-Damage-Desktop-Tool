@@ -2,6 +2,8 @@
 using System.IO;
 using FDT.Backend.ExeHandler;
 using FDT.Backend.IExeHandler;
+using FDT.Backend.OutputLayer.IFileObjectModel;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.ExeHandler
@@ -26,19 +28,30 @@ namespace FDT.Backend.Test.ExeHandler
         }
 
         [Test]
+        public void RunThrowsArgumentNullExceptionWhenOutputDataIsNull()
+        {
+            TestDelegate testAction = () => new FiatPythonWrapper().Run(null);
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("outputData"));
+        }
+
+        [Test]
         [TestCase("")]
         [TestCase(null)]
         public void RunThrowsArgumentNullExceptionWhenFilePathNullOrEmpty(string filePath)
         {
-            TestDelegate testAction = () => new FiatPythonWrapper().Run(filePath);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("filePath"));
+            var outputData = Substitute.For<IOutputData>();
+            outputData.FilePath.Returns(filePath);
+            TestDelegate testAction = () => new FiatPythonWrapper().Run(outputData);
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("FilePath"));
         }
 
         [Test]
         public void RunThrowsFileNotFoundExceptionWhenFilePathDoesNotExist()
         {
             const string testFilePath = "Non//Existing//Path";
-            TestDelegate testAction = () => new FiatPythonWrapper().Run(testFilePath);
+            var outputData = Substitute.For<IOutputData>();
+            outputData.FilePath.Returns(testFilePath);
+            TestDelegate testAction = () => new FiatPythonWrapper().Run(outputData);
             Assert.That(testAction, Throws.Exception.TypeOf<FileNotFoundException>());
         }
     }
