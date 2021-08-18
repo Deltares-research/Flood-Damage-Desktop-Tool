@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer;
+using FDT.Backend.InputOutputLayer;
 
 namespace FDT.Gui.ViewModels
 {
@@ -48,7 +48,7 @@ namespace FDT.Gui.ViewModels
             {
                 if (floodMap.HasReturnPeriod)
                 {
-                    yield return new FloodMapBaseWithReturnPeriod()
+                    yield return new Backend.DataModel.FloodMapWithReturnPeriod()
                     {
                         Path = floodMap.MapPath,
                         ReturnPeriod = floodMap.ReturnPeriod

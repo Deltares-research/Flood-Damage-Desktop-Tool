@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer.FileObjectModel;
-using FDT.Backend.InputOutpulLayer.IFileObjectModel;
+using FDT.Backend.InputOutputLayer.FileObjectModel;
+using FDT.Backend.InputOutputLayer.IFileObjectModel;
 
-namespace FDT.Backend.InputOutpulLayer
+namespace FDT.Backend.InputOutputLayer
 {
     public class XlsxDataWriter : IWriter
     {

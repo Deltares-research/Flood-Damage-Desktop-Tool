@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer;
-using FDT.Backend.InputOutpulLayer.IFileObjectModel;
+using FDT.Backend.InputOutputLayer;
+using FDT.Backend.InputOutputLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -79,12 +79,12 @@ namespace FDT.Backend.Test.InputOutputLayer
                         ScenarioName = "Test Scenario B",
                         FloodMaps = new []
                         {
-                            new FloodMapBaseWithReturnPeriod()
+                            new FloodMapWithReturnPeriod()
                             {
                                 Path="dummy//Path//C",
                                 ReturnPeriod = 42,
                             },
-                            new FloodMapBaseWithReturnPeriod()
+                            new FloodMapWithReturnPeriod()
                             {
                                 Path="dummy//Path//D",
                                 ReturnPeriod = 24,

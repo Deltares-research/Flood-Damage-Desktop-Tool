@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer.IFileObjectModel;
+using FDT.Backend.InputOutputLayer.IFileObjectModel;
 
-namespace FDT.Backend.InputOutpulLayer.FileObjectModel
+namespace FDT.Backend.InputOutputLayer.FileObjectModel
 {
     public class HazardTabXlsx : ITabXlsx
     {

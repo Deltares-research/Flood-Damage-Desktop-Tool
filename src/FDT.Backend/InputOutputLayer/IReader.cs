@@ -1,4 +1,4 @@
-﻿namespace FDT.Backend.InputOutpulLayer
+﻿namespace FDT.Backend.InputOutputLayer
 {
     public interface IReader
     {

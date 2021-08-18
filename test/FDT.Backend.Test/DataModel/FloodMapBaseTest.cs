@@ -20,10 +20,10 @@ namespace FDT.Backend.Test.DataModel
         [Test]
         public void FloodMapWithReturnPeriodConstructorTest()
         {
-            var floodMap = new FloodMapBaseWithReturnPeriod();
+            var floodMap = new FloodMapWithReturnPeriod();
             Assert.That(floodMap, Is.Not.Null);
             Assert.That(floodMap, Is.InstanceOf<IFloodMapBase>());
-            Assert.That(floodMap, Is.InstanceOf<IFloodMapBaseWithReturnPeriod>());
+            Assert.That(floodMap, Is.InstanceOf<IFloodMapWithReturnPeriod>());
             Assert.That(floodMap.ReturnPeriod, Is.EqualTo(default(int)));
             Assert.That(floodMap.GetReturnPeriod(), Is.TypeOf<int>());
         }

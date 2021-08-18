@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer.IFileObjectModel;
+using FDT.Backend.InputOutputLayer.IFileObjectModel;
 
-namespace FDT.Backend.InputOutpulLayer
+namespace FDT.Backend.InputOutputLayer
 {
     public interface IWriter
     {

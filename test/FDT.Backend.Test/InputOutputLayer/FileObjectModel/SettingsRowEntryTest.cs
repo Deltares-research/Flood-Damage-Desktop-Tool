@@ -1,7 +1,7 @@
 ﻿using System;
 using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutpulLayer.FileObjectModel;
-using FDT.Backend.InputOutpulLayer.IFileObjectModel;
+using FDT.Backend.InputOutputLayer.FileObjectModel;
+using FDT.Backend.InputOutputLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 

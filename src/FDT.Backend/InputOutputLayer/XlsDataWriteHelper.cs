@@ -1,7 +1,7 @@
 ﻿using System;
 using ClosedXML.Excel;
 
-namespace FDT.Backend.InputOutpulLayer
+namespace FDT.Backend.InputOutputLayer
 {
     public static class XlsDataWriteHelper
     {

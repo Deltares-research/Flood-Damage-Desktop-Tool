@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 
-namespace FDT.Backend.InputOutpulLayer
+namespace FDT.Backend.InputOutputLayer
 {
     public class WkidDataReader: IReader
     {
+        public static readonly string WkidFileName = "WKID.txt";
         public string BasinDir { get; private set; }
-        public string FilePath => Path.Combine(BasinDir, "WKID.txt");
+        public string FilePath => Path.Combine(BasinDir, WkidFileName);
         private string _wkidCode;
         public void ReadInputData()
         {
@@ -22,7 +23,7 @@ namespace FDT.Backend.InputOutpulLayer
         public string GetWkidCode(string basinDir)
         {
             if (string.IsNullOrEmpty(basinDir))
-                throw new ArgumentNullException(basinDir);
+                throw new ArgumentNullException(nameof(basinDir));
             BasinDir = basinDir;
             ReadInputData();
             return _wkidCode;

@@ -1,4 +1,4 @@
-﻿namespace FDT.Backend.InputOutpulLayer.IFileObjectModel
+﻿namespace FDT.Backend.InputOutputLayer.IFileObjectModel
 {
     public interface IOutputData
     {

@@ -13,7 +13,7 @@ namespace FDT.Backend.DataModel
         }
     }
 
-    public class FloodMapBaseWithReturnPeriod : IFloodMapBaseWithReturnPeriod
+    public class FloodMapWithReturnPeriod : IFloodMapWithReturnPeriod
     {
         public string Path { get; set; }
         public int ReturnPeriod { get; set; }

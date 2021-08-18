@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FDT.Backend.InputOutpulLayer.IFileObjectModel
+namespace FDT.Backend.InputOutputLayer.IFileObjectModel
 {
     public interface ITabXlsx
     {
