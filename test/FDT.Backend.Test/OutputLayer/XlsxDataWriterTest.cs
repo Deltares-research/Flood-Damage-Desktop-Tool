@@ -105,7 +105,7 @@ namespace FDT.Backend.Test.OutputLayer
             Assert.That(testAction, Throws.Nothing);
             Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
             Assert.That(generatedFiles.Length, Is.EqualTo(basinData.Scenarios.Count()));
-            Assert.That(generatedFiles.All( gf => File.Exists(gf.FilePath)));
+            Assert.That(generatedFiles.All( gf => File.Exists(gf.ConfigurationFilePath)));
         }
 
         private IFloodDamageDomain GetDummyDomain()
@@ -113,7 +113,7 @@ namespace FDT.Backend.Test.OutputLayer
             var floodDamageDomain = Substitute.For<IFloodDamageDomain>();
             floodDamageDomain.BasinData = Substitute.For<IBasin>();
             floodDamageDomain.Paths = Substitute.For<IApplicationPaths>();
-            string debugDir = AssemblyDirectory;
+            string debugDir = TestHelper.AssemblyDirectory;
             string testDataDir = Path.Combine(debugDir, "TestData");
             string rootDir = Path.Combine(testDataDir, "TestRoot");
             Assert.That(Directory.Exists(rootDir));
@@ -122,20 +122,6 @@ namespace FDT.Backend.Test.OutputLayer
             floodDamageDomain.Paths.ResultsPath.Returns(Path.Combine(rootDir, "results"));
 
             return floodDamageDomain;
-        }
-
-        /// <summary>
-        /// https://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
-        /// </summary>
-        private static string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
         }
     }
 }

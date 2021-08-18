@@ -2,8 +2,9 @@
 {
     public interface IOutputData
     {
-        string FilePath { get; }
+        string ConfigurationFilePath { get; }
         string BasinName { get; }
         string ScenarioName { get; }
+        void ValidateParameters();
     }
 }

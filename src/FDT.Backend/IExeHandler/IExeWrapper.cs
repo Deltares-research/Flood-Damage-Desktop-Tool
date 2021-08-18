@@ -6,5 +6,6 @@ namespace FDT.Backend.IExeHandler
     {
         string ExeFilePath { get; }
         void Run(IOutputData outputData);
+        bool ValidateRun(IOutputData outputData);
     }
 }

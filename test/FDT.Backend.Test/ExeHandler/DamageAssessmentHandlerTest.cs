@@ -55,7 +55,7 @@ namespace FDT.Backend.Test.ExeHandler
                 .Select(fp =>
                 {
                     var outputData = Substitute.For<IOutputData>();
-                    outputData.FilePath.Returns(fp);
+                    outputData.ConfigurationFilePath.Returns(fp);
                     return outputData;
                 }).ToArray();
 

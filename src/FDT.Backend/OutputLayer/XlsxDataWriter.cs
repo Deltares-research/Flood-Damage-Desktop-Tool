@@ -47,7 +47,7 @@ namespace FDT.Backend.OutputLayer
                     workbook.SaveAs(filePath);
                     yield return new OutputData()
                     {
-                        FilePath = filePath,
+                        ConfigurationFilePath = filePath,
                         BasinName = domainData.BasinData.BasinName,
                         ScenarioName = scenarioName
                     };
