@@ -17,7 +17,7 @@ namespace FDT.Gui.ViewModels
 
             return new BasinData
             {
-                Projection = new WkidDataReader().GetWkidCode(selectedBasinPath),
+                Projection = new WkidDataReader{BasinDir = selectedBasinPath}.ReadInputData(),
                 BasinName = Path.GetFileName(selectedBasinPath),
                 Scenarios = basinScenarios
                     .Where( bs => bs.IsEnabled )

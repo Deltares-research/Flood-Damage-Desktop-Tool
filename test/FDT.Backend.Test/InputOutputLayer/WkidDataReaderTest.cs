@@ -18,42 +18,35 @@ namespace FDT.Backend.Test.InputOutputLayer
         }
 
         [Test]
-        public void ReadInputDataThrowsExceptionWhenBasinDirIsNull()
+        [TestCase("")]
+        [TestCase(null)]
+        public void ReadInputDataThrowsExceptionWhenBasinDirIsNullOrEmpty(string basinDirPath)
         {
-            TestDelegate testAction = () => new WkidDataReader().ReadInputData();
+            TestDelegate testAction = () => new WkidDataReader() { BasinDir = basinDirPath }.ReadInputData();
             Assert.That(testAction, Throws.ArgumentNullException.With.Message.Contains(nameof(WkidDataReader.BasinDir)));
         }
 
         [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        public void GetWkidCodeThrowsExceptionWhenBasinDirIsNullOrEmpty(string basinDir)
-        {
-            TestDelegate testAction = () => new WkidDataReader().GetWkidCode(basinDir);
-            Assert.That(testAction, Throws.ArgumentNullException.With.Message.Contains("basinDir"));
-        }
-
-        [Test]
-        public void GetWkidCodeThrowsExceptionWhenFilePathNotFound()
+        public void ReadInputDataThrowsExceptionWhenFilePathNotFound()
         {
             const string basinDirPath = "Not\\A\\Valid\\Path";
-            TestDelegate testAction = () => new WkidDataReader().GetWkidCode(basinDirPath);
+            TestDelegate testAction = () => new WkidDataReader(){BasinDir = basinDirPath}.ReadInputData();
             Assert.That(testAction, Throws.Exception.TypeOf<DirectoryNotFoundException>().With.Message.Contains(basinDirPath));
         }
 
         [Test]
-        public void GetWkidCodeReturnsTxtValueGivenValidBasinDirPath()
+        public void ReadInputDataReturnsTxtValueGivenValidBasinDirPath()
         {
             // 1. Prepare test data.
-            var wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", WkidDataReader.WkidFileName);
+            string wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", WkidDataReader.WkidFileName);
             Assert.That(File.Exists(wkidTestFile));
             string basinDirPath = Path.GetTempPath();
-            var wkidCopyPath = Path.Combine(basinDirPath, WkidDataReader.WkidFileName);
+            string wkidCopyPath = Path.Combine(basinDirPath, Path.GetRandomFileName());
             File.Copy(wkidTestFile, wkidCopyPath);
             string wkidResult = string.Empty;
             
             // 2. Define test action.
-            TestDelegate testAction = () => wkidResult = new WkidDataReader().GetWkidCode(basinDirPath);
+            TestDelegate testAction = () => wkidResult = new WkidDataReader() { BasinDir = basinDirPath }.ReadInputData();
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);

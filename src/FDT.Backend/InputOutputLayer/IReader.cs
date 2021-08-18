@@ -3,6 +3,6 @@
     public interface IReader
     {
         string FilePath { get; }
-        void ReadInputData();
+        string ReadInputData();
     }
 }
