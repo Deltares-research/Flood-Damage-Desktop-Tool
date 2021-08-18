@@ -8,20 +8,29 @@ namespace FDT.Backend.ExeHandler
 {
     public class DamageAssessmentHandler: IRunnerHandler
     {
-        public IFloodDamageDomain DataDomain { get; }
-        public IExeWrapper ExeWrapper { get; }
+        /// <summary>
+        /// Disclaimer, properties made virtual for testing purposes.
+        /// Check GivenMultipleAssessmentFilesDoesMultipleExeRuns
+        /// </summary>
+        private readonly FiatPythonWrapper _exeWrapper;
+        public virtual IFloodDamageDomain DataDomain { get; set; }
+        public virtual IWriter DataWriter { get; }
 
-        public DamageAssessmentHandler(IFloodDamageDomain floodDomain)
+        public virtual IExeWrapper ExeWrapper => _exeWrapper;
+
+        public DamageAssessmentHandler()
         {
-            DataDomain = floodDomain ?? throw new ArgumentNullException(nameof(floodDomain));
-            ExeWrapper = new FiatPythonWrapper(DataDomain.Paths.SystemPath);
+            DataWriter = new XlsxDataWriter();
+            _exeWrapper = new FiatPythonWrapper();
         }
 
         public void Run()
         {
             if (DataDomain == null)
                 throw new ArgumentNullException(nameof(DataDomain));
-            IEnumerable<string> damageAssessmentFiles = XlsxDataWriter.WriteXlsxData(DataDomain);
+            
+            _exeWrapper.ExeDirectory = DataDomain.Paths.SystemPath;
+            IEnumerable<string> damageAssessmentFiles = DataWriter.WriteData(DataDomain);
             
             foreach (string damageAssessmentFile in damageAssessmentFiles)
             {

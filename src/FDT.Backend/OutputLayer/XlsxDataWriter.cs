@@ -10,9 +10,9 @@ using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.OutputLayer
 {
-    public static class XlsxDataWriter
+    public class XlsxDataWriter : IWriter
     {
-        public static IEnumerable<string> WriteXlsxData(IFloodDamageDomain domainData)
+        public IEnumerable<string> WriteData(IFloodDamageDomain domainData)
         {
             if (domainData == null)
                 throw new ArgumentNullException(nameof(domainData));

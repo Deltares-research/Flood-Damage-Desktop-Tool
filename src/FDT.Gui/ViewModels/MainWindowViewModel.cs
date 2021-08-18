@@ -74,7 +74,10 @@ namespace FDT.Gui.ViewModels
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
                 Paths = BackendPaths
             };
-            DamageAssessmentHandler runHandler = new DamageAssessmentHandler(floodDamageDomain);
+            DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+            {
+                DataDomain = floodDamageDomain
+            };
             runHandler.Run();
         }
 

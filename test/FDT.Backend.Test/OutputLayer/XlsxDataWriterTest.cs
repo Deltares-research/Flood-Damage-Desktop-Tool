@@ -13,9 +13,17 @@ namespace FDT.Backend.Test.OutputLayer
     public class XlsxDataWriterTest
     {
         [Test]
+        public void ConstructorTest()
+        {
+            var writer = new XlsxDataWriter();
+            Assert.That(writer, Is.Not.Null);
+            Assert.That(writer, Is.InstanceOf<IWriter>());
+        }
+
+        [Test]
         public void WriteXlsxDataWithWrongArgumentsThrowsException()
         {
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(null).ToArray();
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(null).ToArray();
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>());
         }
 
@@ -24,7 +32,7 @@ namespace FDT.Backend.Test.OutputLayer
         {
             var dummyDomainData = new FloodDamageDomain();
             Assert.That(Directory.Exists(dummyDomainData.Paths.DatabasePath), Is.False);
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData).ToArray();
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
             Assert.That(testAction, Throws.TypeOf<FileNotFoundException>());
         }
 
@@ -39,7 +47,7 @@ namespace FDT.Backend.Test.OutputLayer
                 Directory.Delete(dummyDomainData.Paths.ResultsPath);
 
             // Define test action.
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData).ToArray();
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
 
             // Verify final expectations
             Assert.That(testAction, Throws.Nothing);
@@ -90,7 +98,7 @@ namespace FDT.Backend.Test.OutputLayer
 
             // Test Action
             string[] generatedFiles = { };
-            TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(testDomain).ToArray();
+            TestDelegate testAction = () => generatedFiles = new XlsxDataWriter().WriteData(testDomain).ToArray();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);

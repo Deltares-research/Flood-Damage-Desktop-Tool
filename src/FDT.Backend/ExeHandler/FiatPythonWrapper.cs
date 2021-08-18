@@ -9,17 +9,13 @@ namespace FDT.Backend.ExeHandler
     {
         private readonly string _exeFileName = "fiat_objects.exe";
 
-        public string ExeFilePath { get; }
+        public string ExeDirectory { get; set; }
+        public string ExeFilePath => Path.Combine(ExeDirectory, _exeFileName);
 
-        public FiatPythonWrapper(string exeDirectory)
+        public FiatPythonWrapper()
         {
-            if (string.IsNullOrEmpty(exeDirectory))
-                throw new ArgumentNullException(nameof(exeDirectory));
-            if (!Directory.Exists(exeDirectory))
-                throw new DirectoryNotFoundException(exeDirectory);
-
-
-            ExeFilePath = Path.Combine(exeDirectory, _exeFileName);
+            // By default the exe will be located at the same level as the exe where we are working.
+            ExeDirectory = Directory.GetCurrentDirectory();
         }
 
         public void Run(string filePath)
