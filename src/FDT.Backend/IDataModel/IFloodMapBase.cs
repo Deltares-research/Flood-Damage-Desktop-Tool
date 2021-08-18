@@ -11,7 +11,7 @@
         string ReturnPeriod { get; }
     }
 
-    public interface IFloodMapBaseWithReturnPeriod : IFloodMapBase
+    public interface IFloodMapWithReturnPeriod : IFloodMapBase
     {
         int ReturnPeriod { get; set; }
     }
