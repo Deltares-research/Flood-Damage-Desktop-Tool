@@ -10,9 +10,9 @@ using FDT.Backend.OutputLayer.IFileObjectModel;
 
 namespace FDT.Backend.OutputLayer
 {
-    public static class XlsxDataWriter
+    public class XlsxDataWriter : IWriter
     {
-        public static IList<string> WriteXlsxData(IFloodDamageDomain domainData)
+        public IEnumerable<IOutputData> WriteData(IFloodDamageDomain domainData)
         {
             if (domainData == null)
                 throw new ArgumentNullException(nameof(domainData));
@@ -27,7 +27,6 @@ namespace FDT.Backend.OutputLayer
                 Directory.CreateDirectory(domainData.Paths.ResultsPath);
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            var generatedfiles = new List<string>();
             foreach (IScenario scenarioData in domainData.BasinData.Scenarios)
             {
                 string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
@@ -46,13 +45,15 @@ namespace FDT.Backend.OutputLayer
                         settingsWorksheet.Columns().AdjustToContents();
                     }
                     workbook.SaveAs(filePath);
-                    generatedfiles.Add(filePath);
+                    yield return new OutputData()
+                    {
+                        ConfigurationFilePath = filePath,
+                        BasinName = domainData.BasinData.BasinName,
+                        ScenarioName = scenarioName
+                    };
                     stream.Flush();
                 }
             }
-
-            return generatedfiles;
-
         }
     }
 }

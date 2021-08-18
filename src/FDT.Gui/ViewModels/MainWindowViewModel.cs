@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FDT.Backend;
 using FDT.Backend.DataModel;
+using FDT.Backend.ExeHandler;
 using FDT.Backend.OutputLayer;
 using FDT.Gui.Annotations;
 
@@ -67,16 +68,17 @@ namespace FDT.Gui.ViewModels
         public ICommand RunDamageAssessment { get; }
         private void OnRunDamageAssessment(object objectCmd)
         {
-            // This method should throw any generated exception so that it's catched and handled by the caller command.
+            // This method should throw any generated exception so that it's caught and handled by the caller command.
             var floodDamageDomain = new FloodDamageDomain()
             {
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
                 Paths = BackendPaths
             };
-
-            // First export to CSV, then execute the python script. 
-            IEnumerable<string> generatedFiles = XlsxDataWriter.WriteXlsxData(floodDamageDomain);
-
+            DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+            {
+                DataDomain = floodDamageDomain
+            };
+            runHandler.Run();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

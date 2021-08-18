@@ -20,14 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="OutputLayer\FileObjectModel\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="TestData\TestRoot\database\base_configuration_file.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\TestRoot\database\example_filled_configuration_file.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\TestRoot\results\example_filled_configuration_file.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

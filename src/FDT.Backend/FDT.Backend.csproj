@@ -8,4 +8,8 @@
     <PackageReference Include="ClosedXML" Version="0.95.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IExeHandler\" />
+  </ItemGroup>
+
 </Project>

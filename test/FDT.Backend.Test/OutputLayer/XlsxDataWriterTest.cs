@@ -5,6 +5,7 @@ using System.Reflection;
 using FDT.Backend.DataModel;
 using FDT.Backend.IDataModel;
 using FDT.Backend.OutputLayer;
+using FDT.Backend.OutputLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -13,9 +14,17 @@ namespace FDT.Backend.Test.OutputLayer
     public class XlsxDataWriterTest
     {
         [Test]
+        public void ConstructorTest()
+        {
+            var writer = new XlsxDataWriter();
+            Assert.That(writer, Is.Not.Null);
+            Assert.That(writer, Is.InstanceOf<IWriter>());
+        }
+
+        [Test]
         public void WriteXlsxDataWithWrongArgumentsThrowsException()
         {
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(null);
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(null).ToArray();
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>());
         }
 
@@ -24,7 +33,7 @@ namespace FDT.Backend.Test.OutputLayer
         {
             var dummyDomainData = new FloodDamageDomain();
             Assert.That(Directory.Exists(dummyDomainData.Paths.DatabasePath), Is.False);
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData);
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
             Assert.That(testAction, Throws.TypeOf<FileNotFoundException>());
         }
 
@@ -39,7 +48,7 @@ namespace FDT.Backend.Test.OutputLayer
                 Directory.Delete(dummyDomainData.Paths.ResultsPath);
 
             // Define test action.
-            TestDelegate testAction = () => XlsxDataWriter.WriteXlsxData(dummyDomainData);
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
 
             // Verify final expectations
             Assert.That(testAction, Throws.Nothing);
@@ -89,14 +98,14 @@ namespace FDT.Backend.Test.OutputLayer
             Assert.That(Directory.Exists(testDomain.Paths.RootPath));
 
             // Test Action
-            string[] generatedFiles = { };
-            TestDelegate testAction = () => generatedFiles = XlsxDataWriter.WriteXlsxData(testDomain).ToArray();
+            IOutputData[] generatedFiles = null;
+            TestDelegate testAction = () => generatedFiles = new XlsxDataWriter().WriteData(testDomain).ToArray();
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
             Assert.That(generatedFiles.Length, Is.EqualTo(basinData.Scenarios.Count()));
-            Assert.That(generatedFiles.All(File.Exists));
+            Assert.That(generatedFiles.All( gf => File.Exists(gf.ConfigurationFilePath)));
         }
 
         private IFloodDamageDomain GetDummyDomain()
@@ -104,7 +113,7 @@ namespace FDT.Backend.Test.OutputLayer
             var floodDamageDomain = Substitute.For<IFloodDamageDomain>();
             floodDamageDomain.BasinData = Substitute.For<IBasin>();
             floodDamageDomain.Paths = Substitute.For<IApplicationPaths>();
-            string debugDir = AssemblyDirectory;
+            string debugDir = TestHelper.AssemblyDirectory;
             string testDataDir = Path.Combine(debugDir, "TestData");
             string rootDir = Path.Combine(testDataDir, "TestRoot");
             Assert.That(Directory.Exists(rootDir));
@@ -113,20 +122,6 @@ namespace FDT.Backend.Test.OutputLayer
             floodDamageDomain.Paths.ResultsPath.Returns(Path.Combine(rootDir, "results"));
 
             return floodDamageDomain;
-        }
-
-        /// <summary>
-        /// https://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
-        /// </summary>
-        private static string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
         }
     }
 }

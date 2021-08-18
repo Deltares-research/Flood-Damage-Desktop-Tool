@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using ClosedXML.Excel;
 using FDT.Backend.OutputLayer;
 using NSubstitute;
