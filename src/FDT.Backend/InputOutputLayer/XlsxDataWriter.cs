@@ -33,7 +33,8 @@ namespace FDT.Backend.InputOutputLayer
                 string filePath = Path.Combine(domainData.Paths.ResultsPath, $"{scenarioName}_configuration.xlsx");
                 ITabXlsx[] tabs = {
                     new SettingsTabXlsx(domainData.BasinData, scenarioData.ScenarioName),
-                    new HazardTabXlsx(domainData.BasinData, scenarioData.FloodMaps)
+                    new HazardTabXlsx(domainData.BasinData, scenarioData.FloodMaps),
+                    new ExposureTabXlsx(domainData.BasinData)
                 };
                 using (var stream = File.Open(baseTemplate, FileMode.Open, FileAccess.Read))
                 using (var workbook = new XLWorkbook(stream))
