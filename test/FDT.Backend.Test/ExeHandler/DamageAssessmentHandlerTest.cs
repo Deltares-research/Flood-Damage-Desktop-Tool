@@ -6,7 +6,6 @@ using FDT.Backend.IDataModel;
 using FDT.Backend.IExeHandler;
 using FDT.Backend.OutputLayer;
 using FDT.Backend.OutputLayer.IFileObjectModel;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NSubstitute;
 using NSubstitute.Extensions;
 using NUnit.Framework;

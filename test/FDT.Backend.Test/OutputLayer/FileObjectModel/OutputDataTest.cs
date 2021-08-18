@@ -3,7 +3,6 @@ using System.IO;
 using FDT.Backend.ExeHandler;
 using FDT.Backend.OutputLayer.FileObjectModel;
 using FDT.Backend.OutputLayer.IFileObjectModel;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.OutputLayer.FileObjectModel

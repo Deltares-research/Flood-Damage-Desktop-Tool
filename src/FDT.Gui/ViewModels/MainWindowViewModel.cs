@@ -68,7 +68,7 @@ namespace FDT.Gui.ViewModels
         public ICommand RunDamageAssessment { get; }
         private void OnRunDamageAssessment(object objectCmd)
         {
-            // This method should throw any generated exception so that it's catched and handled by the caller command.
+            // This method should throw any generated exception so that it's caught and handled by the caller command.
             var floodDamageDomain = new FloodDamageDomain()
             {
                 BasinData = BasinScenarios.ConvertBasin(SelectedBasin),
