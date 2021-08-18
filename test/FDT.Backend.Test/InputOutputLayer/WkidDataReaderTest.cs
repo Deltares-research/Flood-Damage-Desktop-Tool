@@ -41,8 +41,10 @@ namespace FDT.Backend.Test.InputOutputLayer
             string wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", WkidDataReader.WkidFileName);
             Assert.That(File.Exists(wkidTestFile));
             string basinDirPath = Path.GetTempPath();
-            string wkidCopyPath = Path.Combine(basinDirPath, Path.GetRandomFileName());
-            File.Copy(wkidTestFile, wkidCopyPath);
+            string wkidCopyPath = Path.Combine(basinDirPath, WkidDataReader.WkidFileName);
+            if(!File.Exists(wkidCopyPath))
+                File.Copy(wkidTestFile, wkidCopyPath);
+            Assert.That(File.Exists(wkidCopyPath));
             string wkidResult = string.Empty;
             
             // 2. Define test action.
