@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FDT.Gui.UserControls.ScenarioControl"
+﻿<UserControl x:Class="FDT.Gui.UserControls.ScenarioEventControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -55,8 +55,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button Content="Add " Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Margin="{StaticResource TopDownMargin}"
-                Visibility="{Binding CanAddExtraFloodMaps, Converter={StaticResource BoolToVisibility}}"
-                Click="AddFloodMapToScenario"/>
     </StackPanel>
 </UserControl>

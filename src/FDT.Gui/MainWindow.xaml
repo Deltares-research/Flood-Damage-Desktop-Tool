@@ -15,6 +15,18 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/StyleDictionary.xaml"/>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="RiskTemplateScenario">
+                        <userControls:BasinRiskScenarioControl BasinScenario="{Binding}"/>
+                    </DataTemplate>
+                    <DataTemplate x:Key="EventTemplateScenario">
+                        <userControls:BasinEventScenarioControl BasinScenario="{Binding}"/>
+                    </DataTemplate>
+                    <userControls:BasinTemplateSelector 
+                        x:Key="BasinTemplateSelector" 
+                        EventTemplate="{StaticResource EventTemplateScenario}"
+                        RiskTemplate="{StaticResource RiskTemplateScenario}"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -51,12 +63,7 @@
                     <StackPanel Orientation="Vertical" Margin="10">
                         <ItemsControl
                             x:Name="BasinScenarios"
-                            ItemsSource="{Binding BasinScenarios}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <userControls:BasinScenarioControl BasinScenario="{Binding}"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
+                            ItemsSource="{Binding BasinScenarios}" ItemTemplateSelector="{StaticResource BasinTemplateSelector}">
                         </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>

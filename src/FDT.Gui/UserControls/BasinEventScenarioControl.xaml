@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FDT.Gui.UserControls.BasinScenarioControl"
+﻿<UserControl x:Class="FDT.Gui.UserControls.BasinEventScenarioControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -37,7 +37,7 @@
                                     Visibility="{
                                 Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
                                 Path=CanRemoveScenarioEntries, Converter={StaticResource BoolToVisibility}}"/>
-                            <userControls:ScenarioControl Grid.Column="1" Scenario="{Binding}"/>
+                            <userControls:ScenarioEventControl Grid.Column="1" Scenario="{Binding}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

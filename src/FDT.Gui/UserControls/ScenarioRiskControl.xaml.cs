@@ -8,18 +8,18 @@ using FDT.Gui.ViewModels;
 namespace FDT.Gui.UserControls
 {
     /// <summary>
-    /// Interaction logic for ScenarioControl.xaml
+    /// Interaction logic for ScenarioRiskControl.xaml
     /// </summary>
-    public partial class ScenarioControl : UserControl, INotifyPropertyChanged
+    public partial class ScenarioRiskControl : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ParameterProperty =
             DependencyProperty.Register(
                 "Scenario",
                 typeof(IScenario),
-                typeof(ScenarioControl),
+                typeof(ScenarioRiskControl),
                 new PropertyMetadata(null));
 
-        public ScenarioControl()
+        public ScenarioRiskControl()
         {
             InitializeComponent();
         }
