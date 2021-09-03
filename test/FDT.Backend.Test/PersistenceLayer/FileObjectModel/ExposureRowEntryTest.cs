@@ -10,13 +10,15 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
         public void ConstructorTest()
         {
             const string selectedBasin = "AnyBasin";
+            const string exposureCsv = "exposure.csv";
 
             var exposureRowEntry = new ExposureRowEntry(selectedBasin);
             Assert.That(exposureRowEntry, Is.Not.Null);
             Assert.That(exposureRowEntry, Is.InstanceOf<IRowEntry>());
             Assert.That(exposureRowEntry.GetOrderedColumns(), Is.EqualTo(new []
             {
-                $"Exposure\\{selectedBasin}\\exposure.csv"
+                exposureCsv,
+                $"Exposure\\{selectedBasin}\\{exposureCsv}"
             }));
         }
 
