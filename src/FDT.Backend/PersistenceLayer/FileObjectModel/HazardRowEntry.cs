@@ -10,7 +10,6 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
         private string HazardFile { get; }
         private object ReturnPeriod { get; }
         private string CRS { get; }
-        // public DateTime InundationReference { get; set; }
         public HazardRowEntry(IFloodMapBase floodMapBase, string basinProjection)
         {
             if (floodMapBase == null)
