@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Gui.UserControls;
-using FDT.Gui.ViewModels;
 using FDT.TestUtils;
 using NSubstitute;
 using NUnit.Framework;
+using IFloodMap = FDT.Gui.ViewModels.IFloodMap;
+using IScenario = FDT.Gui.ViewModels.IScenario;
 
 namespace FDT.Gui.Test.UserControls
 {
@@ -52,6 +54,5 @@ namespace FDT.Gui.Test.UserControls
             WpfTestHelper testHelper = new WpfTestHelper(scenarioControl, "Removing Flood map fields", null);
             testHelper.ShowDialog();
         }
-
     }
 }
