@@ -56,7 +56,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <Button Content="Add " Width="{StaticResource AddExtraInputLength}" HorizontalAlignment="Left" Margin="{StaticResource TopDownMargin}"
-                Visibility="{Binding CanAddExtraFloodMaps, Converter={StaticResource BoolToVisibility}}"
                 Click="AddFloodMapToScenario"/>
     </StackPanel>
 </UserControl>

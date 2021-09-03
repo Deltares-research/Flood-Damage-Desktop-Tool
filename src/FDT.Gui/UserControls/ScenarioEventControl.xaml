@@ -45,11 +45,6 @@
                             <ColumnDefinition Width="{StaticResource GridRemoveButton}" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="X" Click="RemoveFloodMapEntry" 
-                                Tag="{Binding}"
-                                Visibility="{
-                                Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
-                                Path=CanRemoveFloodMapEntries, Converter={StaticResource BoolToVisibility}}"/>
                         <customFields:InputFieldFloodMap Grid.Column="1"  FloodMap="{Binding}"/>
                     </Grid>
                 </DataTemplate>

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FDT.Gui.Test.UserControls
 {
     [TestFixture, Apartment(ApartmentState.STA)]
-    public class BasinScenarioControlTest
+    public class BasinRiskScenarioControlTest
     {
         [Test, Explicit]
         [STAThread]
