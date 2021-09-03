@@ -5,7 +5,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
 {
     public class ExposureRowEntry : IRowEntry
     {
-        public static readonly string ExposureFileName = "exposure.csv";
+        private const string ExposureFileName = "exposure.csv";
         private string _exposureRelativePath;
         public string ExposureRelativePath => _exposureRelativePath;
 

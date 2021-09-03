@@ -5,7 +5,7 @@ namespace FDT.Backend.PersistenceLayer
 {
     public class WkidDataReader: IReader
     {
-        public static readonly string WkidFileName = "WKID.txt";
+        private const string WkidFileName = "WKID.txt";
         public string BasinDir { get; set; }
         public string FilePath => Path.Combine(BasinDir, WkidFileName);
         private string _wkidCode;

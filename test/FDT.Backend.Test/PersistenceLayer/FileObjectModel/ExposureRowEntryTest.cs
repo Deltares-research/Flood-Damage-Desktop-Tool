@@ -10,12 +10,10 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
         public void ConstructorTest()
         {
             const string selectedBasin = "AnyBasin";
-            string expectedExposureRelativePath =  $"Exposure\\{selectedBasin}\\{ExposureRowEntry.ExposureFileName}";
 
             var exposureRowEntry = new ExposureRowEntry(selectedBasin);
             Assert.That(exposureRowEntry, Is.Not.Null);
             Assert.That(exposureRowEntry, Is.InstanceOf<IRowEntry>());
-            Assert.That(exposureRowEntry.ExposureRelativePath, Is.EqualTo(expectedExposureRelativePath));
         }
 
         [Test]

@@ -38,10 +38,11 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void ReadInputDataReturnsTxtValueGivenValidBasinDirPath()
         {
             // 1. Prepare test data.
-            string wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", WkidDataReader.WkidFileName);
+            const string wkidFileName = "WKID.txt";
+            string wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", wkidFileName);
             Assert.That(File.Exists(wkidTestFile));
             string basinDirPath = Path.GetTempPath();
-            string wkidCopyPath = Path.Combine(basinDirPath, WkidDataReader.WkidFileName);
+            string wkidCopyPath = Path.Combine(basinDirPath, wkidFileName);
             if(!File.Exists(wkidCopyPath))
                 File.Copy(wkidTestFile, wkidCopyPath);
             Assert.That(File.Exists(wkidCopyPath));
