@@ -27,10 +27,13 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(testAction, Throws.Nothing);
             Assert.That(rowTest, Is.Not.Null);
             Assert.That(rowTest, Is.InstanceOf<IRowEntry>());
-            Assert.That(rowTest.SiteName, Is.EqualTo(basin.BasinName));
-            Assert.That(rowTest.ScenarioName, Is.EqualTo(scenarioName));
-            Assert.That(rowTest.OutputCrs, Is.EqualTo(basin.Projection));
-            Assert.That(rowTest.VerticalUnit, Is.EqualTo("feet"));
+            Assert.That(rowTest.GetOrderedColumns(), Is.EqualTo(new []
+            {
+                basin.BasinName,
+                scenarioName,
+                basin.Projection,
+                "feet"
+            }));
         }
 
         [Test]

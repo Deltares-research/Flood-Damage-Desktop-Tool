@@ -14,6 +14,10 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             var exposureRowEntry = new ExposureRowEntry(selectedBasin);
             Assert.That(exposureRowEntry, Is.Not.Null);
             Assert.That(exposureRowEntry, Is.InstanceOf<IRowEntry>());
+            Assert.That(exposureRowEntry.GetOrderedColumns(), Is.EqualTo(new []
+            {
+                $"Exposure\\{selectedBasin}\\exposure.csv"
+            }));
         }
 
         [Test]

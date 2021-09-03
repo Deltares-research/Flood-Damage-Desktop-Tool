@@ -29,9 +29,12 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(testAction, Throws.Nothing);
             Assert.That(hazardRowEntry, Is.Not.Null);
             Assert.That(hazardRowEntry, Is.InstanceOf<IRowEntry>());
-            Assert.That(hazardRowEntry.CRS, Is.EqualTo(basinProjection));
-            Assert.That(hazardRowEntry.HazardFile, Is.EqualTo(filePath));
-            Assert.That(hazardRowEntry.ReturnPeriod, Is.EqualTo(returnObject));
+            Assert.That(hazardRowEntry.GetOrderedColumns(), Is.EqualTo(new []
+            {
+                floodMap.Path,
+                floodMap.GetReturnPeriod(),
+                basinProjection,
+            }));
         }
 
         [Test]
