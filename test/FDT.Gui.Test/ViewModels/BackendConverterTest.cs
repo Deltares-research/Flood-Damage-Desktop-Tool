@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FDT.Backend.IDataModel;
+using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Gui.ViewModels;
 using NSubstitute;
 using NUnit.Framework;
+using FloodMap = FDT.Backend.DomainLayer.DataModel.FloodMap;
+using FloodMapWithReturnPeriod = FDT.Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod;
 using IFloodMap = FDT.Gui.ViewModels.IFloodMap;
 
 namespace FDT.Gui.Test.ViewModels
@@ -33,8 +35,8 @@ namespace FDT.Gui.Test.ViewModels
         }
 
         [Test]
-        [TestCase(false, typeof(Backend.DataModel.FloodMap))]
-        [TestCase(true, typeof(Backend.DataModel.FloodMapWithReturnPeriod))]
+        [TestCase(false, typeof(FloodMap))]
+        [TestCase(true, typeof(FloodMapWithReturnPeriod))]
         public void TestConvertFloodMaps(bool hasReturnPeriod, Type expectedType)
         {
             var testFloodMap = Substitute.For<IFloodMap>();

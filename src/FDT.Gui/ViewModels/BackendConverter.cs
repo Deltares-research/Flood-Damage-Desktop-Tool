@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FDT.Backend.DataModel;
-using FDT.Backend.IDataModel;
-using FDT.Backend.InputOutputLayer;
+using FDT.Backend.DomainLayer.DataModel;
+using FDT.Backend.DomainLayer.IDataModel;
+using FDT.Backend.PersistenceLayer;
 
 namespace FDT.Gui.ViewModels
 {
@@ -25,7 +25,7 @@ namespace FDT.Gui.ViewModels
             };
         }
 
-        public static IEnumerable<Backend.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
+        public static IEnumerable<Backend.DomainLayer.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
         {
             if (scenarios == null)
                 throw new ArgumentNullException(nameof(scenarios));
@@ -48,7 +48,7 @@ namespace FDT.Gui.ViewModels
             {
                 if (floodMap.HasReturnPeriod)
                 {
-                    yield return new Backend.DataModel.FloodMapWithReturnPeriod()
+                    yield return new Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod()
                     {
                         Path = floodMap.MapPath,
                         ReturnPeriod = floodMap.ReturnPeriod
@@ -56,7 +56,7 @@ namespace FDT.Gui.ViewModels
                 }
                 else
                 {
-                    yield return new Backend.DataModel.FloodMap()
+                    yield return new Backend.DomainLayer.DataModel.FloodMap()
                     {
                         Path = floodMap.MapPath
                     };
