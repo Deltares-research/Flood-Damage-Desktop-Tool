@@ -45,5 +45,17 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(model.FloodMaps.Count, Is.EqualTo(2));
             Assert.That(model.FloodMaps.All(fm => fm.GetType() == typeof(FloodMapWithReturnPeriod)));
         }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void Test_Scenario_InvalidName_ShowsError(string scenarioName)
+        {
+            // It does not really matter which type of scenario.
+            var model = new Scenario<FloodMap>();
+            TestDelegate testAction = () => model.ScenarioName = scenarioName;
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(model[nameof(model.ScenarioName)], Is.EqualTo("Scenario Name is required"));
+        }
     }
 }

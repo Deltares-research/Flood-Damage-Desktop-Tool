@@ -31,7 +31,8 @@
                     Grid.Column="0"
                     Content="Scenario name"/>
                 <TextBox Grid.Column="1"
-                         Text="{Binding ScenarioName}"/>
+                         Text="{Binding ScenarioName, ValidatesOnDataErrors=True}" >
+                </TextBox>
             </Grid>
         </Grid>
         <ItemsControl
