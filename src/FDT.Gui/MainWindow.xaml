@@ -37,13 +37,19 @@
             </Grid.RowDefinitions>
             <Grid Margin="10">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
+                    <TextBlock 
+                        Text="Select Basin" 
+                        Width="{StaticResource LabelLength}" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
                     <ComboBox 
                         Width="{StaticResource LabelLength}"
                         ItemsSource="{Binding AvailableBasins}"
-                        SelectedItem="{Binding SelectedBasin}"/>
+                        SelectedItem="{Binding SelectedBasin}"
+                        VerticalAlignment="Center"/>
                 </StackPanel>
-                <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
+                <Button Grid.Row="0"
+                        Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick" VerticalAlignment="Stretch"/>
             </Grid>
             <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical" Margin="10">
