@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         x:Name="ParentControl"
         Title="Deltares Flood Damage Desktop Tool 2021"
-        MinWidth="500" MinHeight="300"
+        MinWidth="800" MinHeight="600"
         Width="750" Height="600"
         Loaded="ParentControl_Loaded" >
     <Window.Resources>
@@ -33,9 +33,9 @@
     <Window.DataContext>
         <viewModels:MainWindowViewModel x:Name="ViewModel"/>
     </Window.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="180"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Row="0">

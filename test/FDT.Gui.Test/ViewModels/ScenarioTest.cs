@@ -66,20 +66,5 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(testAction, Throws.Nothing);
             Assert.That(model[nameof(model.ScenarioName)], Is.Null);
         }
-
-
-        [Test]
-        public void TestWhenEventBasedCannotAddExtraFloodMaps()
-        {
-            var scenario = new Scenario<FloodMap>();
-            Assert.That(scenario.CanAddExtraFloodMaps, Is.False);
-        }
-
-        [Test]
-        public void TestWhenNotEventBasedCanAddExtraFloodMaps()
-        {
-            var scenario = new Scenario<FloodMapWithReturnPeriod>();
-            Assert.That(scenario.CanAddExtraFloodMaps, Is.True);
-        }
     }
 }
