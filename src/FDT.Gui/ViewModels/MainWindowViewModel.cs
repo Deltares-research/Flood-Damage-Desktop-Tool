@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,10 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using DocumentFormat.OpenXml.Drawing;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
-using Path = DocumentFormat.OpenXml.Drawing.Path;
 
 namespace FDT.Gui.ViewModels
 {
