@@ -7,8 +7,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FDT.Backend;
-using FDT.Backend.DataModel;
-using FDT.Backend.ExeHandler;
+using FDT.Backend.DomainLayer.DataModel;
+using FDT.Backend.ServiceLayer.ExeHandler;
 using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
