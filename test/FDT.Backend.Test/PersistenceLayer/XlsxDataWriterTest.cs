@@ -44,7 +44,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             string resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
             dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
             if(Directory.Exists(dummyDomainData.Paths.ResultsPath))
-                Directory.Delete(dummyDomainData.Paths.ResultsPath);
+                Directory.Delete(dummyDomainData.Paths.ResultsPath, true);
 
             // Define test action.
             TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
@@ -52,7 +52,8 @@ namespace FDT.Backend.Test.PersistenceLayer
             // Verify final expectations
             Assert.That(testAction, Throws.Nothing);
             Assert.That(Directory.Exists(dummyDomainData.Paths.ResultsPath), Is.True);
-            Directory.Delete(resultsPath);
+            if (Directory.Exists(dummyDomainData.Paths.ResultsPath))
+                Directory.Delete(dummyDomainData.Paths.ResultsPath, true);
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             string resultsPath = Path.Combine(testDomain.Paths.RootPath, "dummyResultsDir");
             testDomain.Paths.ResultsPath.Returns(resultsPath);
             if (Directory.Exists(testDomain.Paths.ResultsPath))
-                Directory.Delete(testDomain.Paths.ResultsPath);
+                Directory.Delete(testDomain.Paths.ResultsPath, true);
 
             // 2. Define test action.
             TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(testCaseBasin);
@@ -73,33 +74,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
             if (Directory.Exists(testDomain.Paths.ResultsPath))
-                Directory.Delete(testDomain.Paths.ResultsPath);
-        }
-
-        [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        public void WriteDataDoesNotThrowWhenScenarioNameIsEmpty(string scenarioName)
-        {
-            // Define test data.
-            IFloodDamageDomain dummyDomainData = GetDummyDomain();
-            var resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
-            dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
-            if (Directory.Exists(dummyDomainData.Paths.ResultsPath))
-                Directory.Delete(dummyDomainData.Paths.ResultsPath);
-            
-            IScenario dummyScenario = Substitute.For<IScenario>();
-            dummyScenario.ScenarioName.Returns(scenarioName);
-
-            dummyDomainData.BasinData.Scenarios.Returns(new [] {dummyScenario});
-
-            // Define test action.
-            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
-
-            // Verify final expectations
-            Assert.That(testAction, Throws.Nothing);
-            Assert.That(Directory.Exists(dummyDomainData.Paths.ResultsPath), Is.True);
-            Directory.Delete(resultsPath);
+                Directory.Delete(testDomain.Paths.ResultsPath, true);
         }
 
         [Test]
@@ -159,13 +134,22 @@ namespace FDT.Backend.Test.PersistenceLayer
             var floodDamageDomain = Substitute.For<IFloodDamageDomain>();
             floodDamageDomain.BasinData = Substitute.For<IBasin>();
             floodDamageDomain.Paths = Substitute.For<IApplicationPaths>();
+            var dummyScenario = Substitute.For<IScenario>();
+            floodDamageDomain.BasinData.Scenarios.Returns(new[] {dummyScenario});
+
             string debugDir = TestHelper.AssemblyDirectory;
             string testDataDir = Path.Combine(debugDir, "TestData");
             string rootDir = Path.Combine(testDataDir, "TestRoot");
             Assert.That(Directory.Exists(rootDir));
+
+            floodDamageDomain.BasinData.BasinName.Returns("ValidBasinName");
+            floodDamageDomain.BasinData.Projection.Returns("ValidProjection");
+
             floodDamageDomain.Paths.RootPath = rootDir;
             floodDamageDomain.Paths.DatabasePath.Returns(Path.Combine(rootDir, "database"));
             floodDamageDomain.Paths.ResultsPath.Returns(Path.Combine(rootDir, "results"));
+
+            dummyScenario.ScenarioName.Returns("A Scenario Name");
 
             return floodDamageDomain;
         }
