@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace FDT.Gui.Commands
 {
+    /// <summary>
+    /// Source: https://stackoverflow.com/questions/28671828/binding-to-display-name-attribute-of-enum-in-xaml
+    /// </summary>
     public static class EnumExtensions
     {
         public static string GetDisplayName(this Enum enu)
@@ -27,7 +30,7 @@ namespace FDT.Gui.Commands
             }
 
             // Get the enum field.
-            var field = type.GetField(value.ToString());
+            var field = type.GetField(value.ToString()!);
             return field == null ? null : field.GetCustomAttribute<DisplayAttribute>();
         }
     }

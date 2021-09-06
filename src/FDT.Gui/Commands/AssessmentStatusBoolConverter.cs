@@ -6,7 +6,7 @@ using FDT.Gui.ViewModels;
 
 namespace FDT.Gui.Commands
 {
-    public class RunStatusEnumConverter: MarkupExtension, IValueConverter
+    public class AssessmentStatusBoolConverter: MarkupExtension, IValueConverter
     {
         private T Convert<T>(object o)
         {
@@ -17,11 +17,13 @@ namespace FDT.Gui.Commands
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            return Convert<RunDamageAssessmentStatusEnum>(value).GetDisplayName();
+
+            return Convert<AssessmentStatus>(value) == AssessmentStatus.Ready;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // 
             throw new NotSupportedException();
         }
 

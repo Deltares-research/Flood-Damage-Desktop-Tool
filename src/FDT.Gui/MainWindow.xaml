@@ -10,8 +10,7 @@
         x:Name="ParentControl"
         Title="Deltares Flood Damage Desktop Tool 2021"
         MinWidth="800" MinHeight="600"
-        Width="750" Height="600"
-        Loaded="ParentControl_Loaded" >
+        Width="750" Height="600">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -51,7 +50,14 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Margin="10">
-                    <StackPanel Orientation="Horizontal">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35*"/>
+                        <ColumnDefinition Width="65*"/>
+                </Grid.ColumnDefinitions>
+                    <StackPanel 
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
                         <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}" VerticalAlignment="Center"/>
                         <ComboBox 
                             VerticalContentAlignment="Center"
@@ -59,11 +65,23 @@
                             ItemsSource="{Binding AvailableBasins}"
                             SelectedItem="{Binding SelectedBasin}"/>
                     </StackPanel>
-                <Button 
-                    Content="{Binding RunStatus, Converter={customCommands:RunStatusEnumConverter}}" 
-                    Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
+                    <Grid
+                        Grid.Column="1">
+                        <Button 
+                            Width="160" 
+                            HorizontalAlignment="Left" Click="OnLoadBasinsActionClick"
+                            Content="Load Basins" 
+                            Visibility="{Binding RunStatus, Converter={customCommands:AssessmentStatusVisibilityConverter}}"/>
+                        <Button 
+                            Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
+                            Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
+                            IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
+
                 </Grid>
-                <ScrollViewer Grid.Row="1">
+                </Grid>
+                <ScrollViewer
+                    Grid.Row="1"
+                    IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
                     <StackPanel Orientation="Vertical" Margin="10">
                         <ItemsControl
                             x:Name="BasinScenarios"

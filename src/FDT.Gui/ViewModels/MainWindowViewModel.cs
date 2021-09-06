@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Input;
+using DocumentFormat.OpenXml.Drawing;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
-using FDT.Gui.Annotations;
+using Path = DocumentFormat.OpenXml.Drawing.Path;
 
 namespace FDT.Gui.ViewModels
 {
@@ -17,7 +18,7 @@ namespace FDT.Gui.ViewModels
     {
         private ObservableCollection<string> _availableBasins;
         private string _selectedBasin;
-        private RunDamageAssessmentStatusEnum _runStatus;
+        private AssessmentStatus _runStatus;
 
         public MainWindowViewModel()
         {
@@ -28,10 +29,10 @@ namespace FDT.Gui.ViewModels
             LoadBasins = new RelayCommand(OnLoadBasins);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
-            RunStatus = RunDamageAssessmentStatusEnum.FailedLoadingBasins;
+            RunStatus = AssessmentStatus.LoadingBasins;
         }
 
-        public RunDamageAssessmentStatusEnum RunStatus
+        public AssessmentStatus RunStatus
         {
             get => _runStatus;
             set
@@ -50,6 +51,7 @@ namespace FDT.Gui.ViewModels
             {
                 _availableBasins = value;
                 OnPropertyChanged();
+                RunStatus = _availableBasins != null && _availableBasins.Any() ? AssessmentStatus.Ready : AssessmentStatus.LoadingBasins;
             } 
         }
 
@@ -66,20 +68,22 @@ namespace FDT.Gui.ViewModels
 
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
-        public Func<IEnumerable<string>> GetBasinsDirectories { get; set; }
         public ICommand LoadBasins { get; }
 
         private void OnLoadBasins(object objectCmd)
         {
-            if (objectCmd is not IEnumerable<string> loadedBasins)
-            {
-                RunStatus = RunDamageAssessmentStatusEnum.FailedLoadingBasins;
-                return;
-            }
+            if (objectCmd is not string exposurePath)
+                throw new ArgumentNullException(nameof(exposurePath));
 
-            AvailableBasins = new ObservableCollection<string>(loadedBasins);
+            BackendPaths.UpdateExposurePath(exposurePath);
+            if (!Directory.Exists(BackendPaths.ExposurePath))
+                throw new DirectoryNotFoundException(exposurePath);
+
+            string[] subDirectoryNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(BackendPaths.ExposurePath)).ToArray();
+            if (!subDirectoryNames.Any())
+                throw new Exception($"No basin subdirectories found at Exposure directory {exposurePath}");
+            AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
             SelectedBasin = AvailableBasins.FirstOrDefault();
-            RunStatus = RunDamageAssessmentStatusEnum.Ready;
         }
 
         public ICommand RunDamageAssessment { get; }
@@ -97,7 +101,7 @@ namespace FDT.Gui.ViewModels
                 {
                     DataDomain = floodDamageDomain
                 };
-                RunStatus = RunDamageAssessmentStatusEnum.Running;
+                RunStatus = AssessmentStatus.Running;
                 runHandler.Run();
             }
             catch
@@ -106,7 +110,7 @@ namespace FDT.Gui.ViewModels
             }
             finally
             {
-                RunStatus = RunDamageAssessmentStatusEnum.Ready;
+                RunStatus = AssessmentStatus.Ready;
             }
         }
 

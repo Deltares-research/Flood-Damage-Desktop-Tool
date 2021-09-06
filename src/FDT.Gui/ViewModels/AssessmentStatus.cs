@@ -2,13 +2,13 @@
 
 namespace FDT.Gui.ViewModels
 {
-    public enum RunDamageAssessmentStatusEnum
+    public enum AssessmentStatus
     {
         [Display(Name = "Run Damage Assessment")]
         Ready,
-        [Display(Name = "Running")]
+        [Display(Name = "Running (wait please)")]
         Running,
-        [Display(Name = "No Basins")]
-        FailedLoadingBasins,
+        [Display(Name = "Cannot run (no basins)")]
+        LoadingBasins,
     }
 }

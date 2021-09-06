@@ -17,14 +17,6 @@ namespace FDT.Gui.Test
             var viewModel = mainWindowControl.DataContext as MainWindowViewModel;
             Assert.That(viewModel, Is.Not.Null);
 
-            viewModel.GetBasinsDirectories = () =>
-            {
-                return new[]
-                {
-                    "C-1", "C-2", "C-3", "C-4", "C-9"
-                };
-            };
-
             // Define some stuff for EVENT based scenario
             EventBasedScenario eventBasinScenario = viewModel.BasinScenarios.OfType<EventBasedScenario>().Single();
             eventBasinScenario.IsEnabled = true;
