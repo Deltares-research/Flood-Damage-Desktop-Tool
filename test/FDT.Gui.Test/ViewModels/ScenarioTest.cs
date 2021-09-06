@@ -57,5 +57,14 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(testAction, Throws.Nothing);
             Assert.That(model[nameof(model.ScenarioName)], Is.EqualTo("Scenario Name is required"));
         }
+
+        [Test]
+        public void Test_Scenario_ValidName_ShowsNoError()
+        {
+            var model = new Scenario<FloodMap>();
+            TestDelegate testAction = () => model.ScenarioName = "A Name";
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(model[nameof(model.ScenarioName)], Is.Null);
+        }
     }
 }
