@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FDT.Backend.DomainLayer.DataModel;
@@ -42,7 +41,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         {
             // Define test data.
             IFloodDamageDomain dummyDomainData = GetDummyDomain();
-            var resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
+            string resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
             dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
             if(Directory.Exists(dummyDomainData.Paths.ResultsPath))
                 Directory.Delete(dummyDomainData.Paths.ResultsPath);
@@ -54,6 +53,27 @@ namespace FDT.Backend.Test.PersistenceLayer
             Assert.That(testAction, Throws.Nothing);
             Assert.That(Directory.Exists(dummyDomainData.Paths.ResultsPath), Is.True);
             Directory.Delete(resultsPath);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIBasin))]
+        public void TestWriteDataThrowsWhenInvalidIBasin(IBasin testCaseBasin, Type exceptionType, string exceptionMessage)
+        {
+            // 1. Prepare test data.
+            IFloodDamageDomain testDomain = GetDummyDomain();
+            testDomain.BasinData.Returns(testCaseBasin);
+            string resultsPath = Path.Combine(testDomain.Paths.RootPath, "dummyResultsDir");
+            testDomain.Paths.ResultsPath.Returns(resultsPath);
+            if (Directory.Exists(testDomain.Paths.ResultsPath))
+                Directory.Delete(testDomain.Paths.ResultsPath);
+
+            // 2. Define test action.
+            TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(testCaseBasin);
+
+            // 3. Verify final expectations.
+            Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
+            if (Directory.Exists(testDomain.Paths.ResultsPath))
+                Directory.Delete(testDomain.Paths.ResultsPath);
         }
 
         [Test]
@@ -149,5 +169,6 @@ namespace FDT.Backend.Test.PersistenceLayer
 
             return floodDamageDomain;
         }
+
     }
 }
