@@ -37,6 +37,7 @@
             Grid.Column="2"
             Content="..."
             Click="OnOpenFileDialog"
+            Style="{StaticResource SmallButtons}"
             Margin="{StaticResource LeftMargin}"/>
         <Label
             Grid.Column="3"
