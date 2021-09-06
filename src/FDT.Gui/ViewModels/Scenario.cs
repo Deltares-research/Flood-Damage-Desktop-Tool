@@ -18,5 +18,16 @@ namespace FDT.Gui.ViewModels
         {
             FloodMaps.Add(new T());
         }
+
+        public string Error { get; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName != nameof(ScenarioName)) return null;
+                return string.IsNullOrEmpty(ScenarioName) ? "Scenario Name is required" : null;
+            }
+        }
     }
 }

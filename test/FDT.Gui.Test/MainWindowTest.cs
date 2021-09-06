@@ -21,7 +21,7 @@ namespace FDT.Gui.Test
             {
                 return new[]
                 {
-                    "C-1", "C-2", "C-3", "C-4"
+                    "C-1", "C-2", "C-3", "C-4", "C-9"
                 };
             };
 

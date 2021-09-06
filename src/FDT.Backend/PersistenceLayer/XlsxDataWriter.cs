@@ -27,7 +27,7 @@ namespace FDT.Backend.PersistenceLayer
                 Directory.CreateDirectory(domainData.Paths.ResultsPath);
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            foreach (IScenario scenarioData in domainData.BasinData.Scenarios)
+            foreach (IScenario scenarioData in domainData.BasinData.Scenarios.Where( s => !string.IsNullOrEmpty(s.ScenarioName)))
             {
                 string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
                 string filePath = Path.Combine(domainData.Paths.ResultsPath, $"{scenarioName}_configuration.xlsx");

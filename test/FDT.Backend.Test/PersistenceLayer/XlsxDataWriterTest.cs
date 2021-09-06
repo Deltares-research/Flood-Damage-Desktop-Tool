@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FDT.Backend.DomainLayer.DataModel;
@@ -45,6 +46,32 @@ namespace FDT.Backend.Test.PersistenceLayer
             dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
             if(Directory.Exists(dummyDomainData.Paths.ResultsPath))
                 Directory.Delete(dummyDomainData.Paths.ResultsPath);
+
+            // Define test action.
+            TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
+
+            // Verify final expectations
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(Directory.Exists(dummyDomainData.Paths.ResultsPath), Is.True);
+            Directory.Delete(resultsPath);
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void WriteDataDoesNotThrowWhenScenarioNameIsEmpty(string scenarioName)
+        {
+            // Define test data.
+            IFloodDamageDomain dummyDomainData = GetDummyDomain();
+            var resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
+            dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
+            if (Directory.Exists(dummyDomainData.Paths.ResultsPath))
+                Directory.Delete(dummyDomainData.Paths.ResultsPath);
+            
+            IScenario dummyScenario = Substitute.For<IScenario>();
+            dummyScenario.ScenarioName.Returns(scenarioName);
+
+            dummyDomainData.BasinData.Scenarios.Returns(new [] {dummyScenario});
 
             // Define test action.
             TestDelegate testAction = () => new XlsxDataWriter().WriteData(dummyDomainData).ToArray();
