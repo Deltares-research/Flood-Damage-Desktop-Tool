@@ -15,6 +15,18 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/StyleDictionary.xaml"/>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="RiskTemplateScenario">
+                        <userControls:BasinRiskScenarioControl BasinScenario="{Binding}"/>
+                    </DataTemplate>
+                    <DataTemplate x:Key="EventTemplateScenario">
+                        <userControls:BasinEventScenarioControl BasinScenario="{Binding}"/>
+                    </DataTemplate>
+                    <userControls:BasinTemplateSelector 
+                        x:Key="BasinTemplateSelector" 
+                        EventTemplate="{StaticResource EventTemplateScenario}"
+                        RiskTemplate="{StaticResource RiskTemplateScenario}"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -26,44 +38,36 @@
             <RowDefinition Height="180"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Image
-            Source="{StaticResource Banner}" 
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch"/>
-        <Grid Grid.Row="1" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid Margin="10">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock 
-                        Text="Select Basin" 
-                        Width="{StaticResource LabelLength}" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"/>
-                    <ComboBox 
-                        Width="{StaticResource LabelLength}"
-                        ItemsSource="{Binding AvailableBasins}"
-                        SelectedItem="{Binding SelectedBasin}"
-                        VerticalAlignment="Center"/>
-                </StackPanel>
-                <Button Grid.Row="0"
-                        Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick" VerticalAlignment="Stretch"/>
+        <Viewbox Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="SFWMD" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Text="Damage Assessment Tool" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Viewbox>
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
+                        <ComboBox 
+                            Width="{StaticResource LabelLength}"
+                            ItemsSource="{Binding AvailableBasins}"
+                            SelectedItem="{Binding SelectedBasin}"/>
+                    </StackPanel>
+                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
+                </Grid>
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <ItemsControl
+                            x:Name="BasinScenarios"
+                            ItemsSource="{Binding BasinScenarios}" ItemTemplateSelector="{StaticResource BasinTemplateSelector}">
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
-            <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Vertical" Margin="10">
-                    <ItemsControl
-                        x:Name="BasinScenarios"
-                        ItemsSource="{Binding BasinScenarios}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <userControls:BasinScenarioControl BasinScenario="{Binding}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
+        
     </Grid>
 </Window>

@@ -8,18 +8,18 @@ using FDT.Gui.ViewModels;
 namespace FDT.Gui.UserControls
 {
     /// <summary>
-    /// Interaction logic for BasinScenarioControl.xaml
+    /// Interaction logic for BasinRiskScenarioControl.xaml
     /// </summary>
-    public partial class BasinScenarioControl : UserControl, INotifyPropertyChanged
+    public partial class BasinRiskScenarioControl : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ParameterProperty =
             DependencyProperty.Register(
                 "BasinScenario",
                 typeof(IBasinScenario),
-                typeof(BasinScenarioControl),
+                typeof(BasinRiskScenarioControl),
                 new PropertyMetadata(null));
 
-        public BasinScenarioControl()
+        public BasinRiskScenarioControl()
         {
             InitializeComponent();
         }

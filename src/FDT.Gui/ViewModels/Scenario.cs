@@ -13,11 +13,14 @@ namespace FDT.Gui.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public string ScenarioName { get; set; }
+        public bool CanAddExtraFloodMaps => typeof(T) == typeof(FloodMapWithReturnPeriod);
         public ObservableCollection<IFloodMap> FloodMaps { get; set; }
         public void AddExtraFloodMap()
         {
             FloodMaps.Add(new T());
         }
+
+        
 
         public string Error { get; }
 
