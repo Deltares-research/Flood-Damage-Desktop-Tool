@@ -39,10 +39,10 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Row="0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="SFWMD" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                <TextBlock Text="Damage Assessment Tool" TextWrapping="Wrap"/>
-            </StackPanel>
+            <Image
+                Source="{StaticResource Banner}" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"/>
         </Viewbox>
             <Grid Grid.Row="1" Margin="10">
                 <Grid.RowDefinitions>
