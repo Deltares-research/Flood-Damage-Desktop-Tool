@@ -83,8 +83,6 @@ namespace FDT.Gui
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
-
-            
         }
     }
 }

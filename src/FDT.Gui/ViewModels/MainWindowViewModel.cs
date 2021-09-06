@@ -5,8 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Input;
-using FDT.Backend;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
 using FDT.Gui.Annotations;
@@ -17,6 +17,7 @@ namespace FDT.Gui.ViewModels
     {
         private ObservableCollection<string> _availableBasins;
         private string _selectedBasin;
+        private RunDamageAssessmentStatusEnum _runStatus;
 
         public MainWindowViewModel()
         {
@@ -27,6 +28,17 @@ namespace FDT.Gui.ViewModels
             LoadBasins = new RelayCommand(OnLoadBasins);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
+            RunStatus = RunDamageAssessmentStatusEnum.FailedLoadingBasins;
+        }
+
+        public RunDamageAssessmentStatusEnum RunStatus
+        {
+            get => _runStatus;
+            set
+            {
+                _runStatus = value;
+                OnPropertyChanged();
+            }
         }
 
         public ApplicationPaths BackendPaths { get; }
@@ -59,26 +71,43 @@ namespace FDT.Gui.ViewModels
 
         private void OnLoadBasins(object objectCmd)
         {
-            if (objectCmd is not IEnumerable<string> loadedBasins) return;
+            if (objectCmd is not IEnumerable<string> loadedBasins)
+            {
+                RunStatus = RunDamageAssessmentStatusEnum.FailedLoadingBasins;
+                return;
+            }
 
             AvailableBasins = new ObservableCollection<string>(loadedBasins);
             SelectedBasin = AvailableBasins.FirstOrDefault();
+            RunStatus = RunDamageAssessmentStatusEnum.Ready;
         }
 
         public ICommand RunDamageAssessment { get; }
         private void OnRunDamageAssessment(object objectCmd)
         {
             // This method should throw any generated exception so that it's caught and handled by the caller command.
-            var floodDamageDomain = new FloodDamageDomain()
+            try
             {
-                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
-                Paths = BackendPaths
-            };
-            DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+                var floodDamageDomain = new FloodDamageDomain()
+                {
+                    BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
+                    Paths = BackendPaths
+                };
+                DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+                {
+                    DataDomain = floodDamageDomain
+                };
+                RunStatus = RunDamageAssessmentStatusEnum.Running;
+                runHandler.Run();
+            }
+            catch
             {
-                DataDomain = floodDamageDomain
-            };
-            runHandler.Run();
+                throw;
+            }
+            finally
+            {
+                RunStatus = RunDamageAssessmentStatusEnum.Ready;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

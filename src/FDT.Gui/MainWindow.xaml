@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
         xmlns:viewModels="clr-namespace:FDT.Gui.ViewModels"
+        xmlns:customCommands="clr-namespace:FDT.Gui.Commands"
         mc:Ignorable="d"
         x:Name="ParentControl"
         Title="Deltares Flood Damage Desktop Tool 2021"
@@ -51,13 +52,16 @@
                 </Grid.RowDefinitions>
                 <Grid Margin="10">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}"/>
+                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}" VerticalAlignment="Center"/>
                         <ComboBox 
+                            VerticalContentAlignment="Center"
                             Width="{StaticResource LabelLength}"
                             ItemsSource="{Binding AvailableBasins}"
                             SelectedItem="{Binding SelectedBasin}"/>
                     </StackPanel>
-                    <Button Content="Run Damage Assessment" Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
+                <Button 
+                    Content="{Binding RunStatus, Converter={customCommands:RunStatusEnumConverter}}" 
+                    Width="160" HorizontalAlignment="Right" Click="OnRunDamageAssessmentClick"/>
                 </Grid>
                 <ScrollViewer Grid.Row="1">
                     <StackPanel Orientation="Vertical" Margin="10">
