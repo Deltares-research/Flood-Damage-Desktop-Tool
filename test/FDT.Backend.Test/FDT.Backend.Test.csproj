@@ -32,6 +32,9 @@
     <None Update="TestData\TestRoot\database\exposure\c-9\WKID.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\TestRoot\database\invalid_exposure\no_directories_should_be_here.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\TestRoot\results\example_filled_configuration_file.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

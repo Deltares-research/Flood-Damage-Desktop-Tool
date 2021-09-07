@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FDT.Backend.DomainLayer.DataModel;
+using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
 
 namespace FDT.Gui.ViewModels
@@ -39,7 +40,7 @@ namespace FDT.Gui.ViewModels
             }
         }
 
-        public ApplicationPaths BackendPaths { get; }
+        public IApplicationPaths BackendPaths { get; set; }
 
         public ObservableCollection<string> AvailableBasins
         {

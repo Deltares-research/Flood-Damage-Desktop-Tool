@@ -39,7 +39,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         {
             // 1. Prepare test data.
             const string wkidFileName = "WKID.txt";
-            string wkidTestFile = Path.Combine(TestHelper.TestRootDirectory,"database", "exposure", "c-9", wkidFileName);
+            string wkidTestFile = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure", "c-9", wkidFileName);
             Assert.That(File.Exists(wkidTestFile));
             string basinDirPath = Path.GetTempPath();
             string wkidCopyPath = Path.Combine(basinDirPath, wkidFileName);
