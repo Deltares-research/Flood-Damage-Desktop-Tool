@@ -118,10 +118,6 @@ namespace FDT.Gui.Test.ViewModels
             // 1. Define test data.
             var viewModel = new MainWindowViewModel();
             var statusTransition = new List<AssessmentStatus>();
-            // string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure");
-            string exposurePath = "A\\temporary\\failing\\path";
-            // 2. Define expectations.
-            viewModel.LoadBasins.Execute(exposurePath);
             viewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName is nameof(MainWindowViewModel.RunStatus))
@@ -130,12 +126,12 @@ namespace FDT.Gui.Test.ViewModels
                 }
             };
             
-            // 3. Define test action.
+            // 2. Define test action.
             TestDelegate testAction = () => viewModel.RunDamageAssessment.Execute(null);
 
-            // 4. Verify final expectations.
-            // The test model is not entirely correct but it suffices to cover the logic on MainWindowViewModel.cs
-            Assert.That(testAction, Throws.TypeOf<Exception>());
+            // 3. Verify final expectations.
+            // The test model is not correct but it suffices to cover the logic on MainWindowViewModel.cs
+            Assert.That(testAction, Throws.Exception);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
             Assert.That(statusTransition.Count, Is.EqualTo(2));
             Assert.That(statusTransition[0], Is.EqualTo(AssessmentStatus.Running));

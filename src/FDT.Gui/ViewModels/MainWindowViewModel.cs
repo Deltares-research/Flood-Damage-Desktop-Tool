@@ -88,6 +88,7 @@ namespace FDT.Gui.ViewModels
         private void OnRunDamageAssessment(object objectCmd)
         {
             // This method should throw any generated exception so that it's caught and handled by the caller command.
+            RunStatus = AssessmentStatus.Running;
             try
             {
                 var floodDamageDomain = new FloodDamageDomain()
@@ -99,7 +100,9 @@ namespace FDT.Gui.ViewModels
                 {
                     DataDomain = floodDamageDomain
                 };
-                RunStatus = AssessmentStatus.Running;
+                // The write stream seems to be causing problems when running
+                // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
+                // IN TEAMCITY.
                 runHandler.Run();
             }
             catch
