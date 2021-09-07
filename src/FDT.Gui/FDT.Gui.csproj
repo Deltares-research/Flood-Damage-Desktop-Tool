@@ -30,6 +30,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Styles\Resources\SFWMD_DesktopTool_header.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FDT.Backend\FDT.Backend.csproj" />
   </ItemGroup>
 
