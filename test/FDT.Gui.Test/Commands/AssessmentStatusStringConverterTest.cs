@@ -13,7 +13,7 @@ namespace FDT.Gui.Test.Commands
             get
             {
                 yield return new TestCaseData(AssessmentStatus.Ready).Returns("Run Damage Assessment");
-                yield return new TestCaseData(AssessmentStatus.Running).Returns("Running (wait please)");
+                yield return new TestCaseData(AssessmentStatus.Running).Returns("Running (please wait)");
                 yield return new TestCaseData(AssessmentStatus.LoadingBasins).Returns("Cannot run (no basins)");
             }
         }

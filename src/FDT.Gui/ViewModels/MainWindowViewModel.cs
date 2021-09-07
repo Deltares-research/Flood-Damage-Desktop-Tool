@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Input;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
@@ -87,34 +88,28 @@ namespace FDT.Gui.ViewModels
         }
 
         public ICommand RunDamageAssessment { get; }
+        
+        /// <summary>
+        /// CS2021: To avoid refreshing issues, the change of state (<see cref="RunStatus"/>) should be done by the
+        /// command caller, instead of here.
+        /// </summary>
+        /// <param name="objectCmd"></param>
         private void OnRunDamageAssessment(object objectCmd)
         {
             // This method should throw any generated exception so that it's caught and handled by the caller command.
-            RunStatus = AssessmentStatus.Running;
-            try
+            var floodDamageDomain = new FloodDamageDomain()
             {
-                var floodDamageDomain = new FloodDamageDomain()
-                {
-                    BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
-                    Paths = BackendPaths
-                };
-                DamageAssessmentHandler runHandler = new DamageAssessmentHandler
-                {
-                    DataDomain = floodDamageDomain
-                };
-                // The write stream seems to be causing problems when running
-                // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
-                // IN TEAMCITY.
-                runHandler.Run();
-            }
-            catch
+                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
+                Paths = BackendPaths
+            };
+            DamageAssessmentHandler runHandler = new DamageAssessmentHandler
             {
-                throw;
-            }
-            finally
-            {
-                RunStatus = AssessmentStatus.Ready;
-            }
+                DataDomain = floodDamageDomain
+            };
+            // The write stream seems to be causing problems when running
+            // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
+            // IN TEAMCITY.
+            runHandler.Run();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
