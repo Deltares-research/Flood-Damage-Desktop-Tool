@@ -27,14 +27,6 @@ namespace FDT.Backend.DomainLayer.DataModel
 
         public string SystemPath => Path.Combine(RootPath, "System");
         public string ResultsPath => Path.Combine(RootPath, "Results");
-        public void UpdateExposurePath(string exposurePath)
-        {
-            if (string.IsNullOrEmpty(exposurePath))
-                throw new ArgumentNullException(nameof(exposurePath));
-            if (!Directory.Exists(exposurePath))
-                throw new DirectoryNotFoundException(exposurePath);
-            RootPath = Directory.GetParent(exposurePath)?.Parent?.FullName;
-        }
 
         public void UpdateSelectedBasin(string selectedBasin)
         {
