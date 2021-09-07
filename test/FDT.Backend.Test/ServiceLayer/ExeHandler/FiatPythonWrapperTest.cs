@@ -65,7 +65,6 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
     }
 
-    [Category("AcceptanceTest")]
     public class FiatPythonWrapperValidateRunAcceptanceTest
     {
         private IOutputData _testOutputData;
@@ -113,6 +112,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
+        [Category("AcceptanceTest")]
         public void ValidateRunFailsWhenBasinDirDoesNotExist()
         {
             // 1. Define test data.
@@ -129,6 +129,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
+        [Category("AcceptanceTest")]
         public void ValidateRunFailsWhenResultsNotGenerated()
         {
             // 1. Define test data.
@@ -144,6 +145,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
+        [Category("AcceptanceTest")]
         public void ValidateRunSucceedsAndMovesConfigurationFileWhenResultsNotGenerated()
         {
             // 1. Define test data.
