@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace FDT.Gui.ViewModels
@@ -8,7 +9,6 @@ namespace FDT.Gui.ViewModels
         public Scenario()
         {
             FloodMaps = new ObservableCollection<IFloodMap>();
-            AddExtraFloodMap();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -17,10 +17,11 @@ namespace FDT.Gui.ViewModels
         public ObservableCollection<IFloodMap> FloodMaps { get; set; }
         public void AddExtraFloodMap()
         {
-            FloodMaps.Add(new T());
+            FloodMaps.Add(new T(){ GetDefaultHazardDirectory = GetDefaultHazardDirectory});
         }
 
-        
+        public Func<string> GetDefaultHazardDirectory { get; set; }
+
 
         public string Error { get; }
 

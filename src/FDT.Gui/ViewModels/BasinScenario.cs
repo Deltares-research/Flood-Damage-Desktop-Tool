@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace FDT.Gui.ViewModels
 {
@@ -7,17 +8,21 @@ namespace FDT.Gui.ViewModels
         public BasinScenario()
         {
             Scenarios = new ObservableCollection<IScenario>();
-            AddExtraScenario();
         }
 
         public virtual string ScenarioType { get; set; }
 
         public bool IsEnabled { get; set; }
-
+        public Func<string> GetDefaultHazardDirectory { get; set; }
         public ObservableCollection<IScenario> Scenarios { get; }
         public void AddExtraScenario()
         {
-            Scenarios.Add(new Scenario<T>());
+            var sc = new Scenario<T>()
+            {
+                GetDefaultHazardDirectory = GetDefaultHazardDirectory
+            };
+            sc.AddExtraFloodMap();
+            Scenarios.Add(sc);
         }
     }
 

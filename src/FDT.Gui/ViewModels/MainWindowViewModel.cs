@@ -21,14 +21,22 @@ namespace FDT.Gui.ViewModels
         public MainWindowViewModel()
         {
             BasinScenarios = new ObservableCollection<IBasinScenario>();
-            BasinScenarios.Add(new EventBasedScenario());
-            BasinScenarios.Add(new RiskBasedScenario());
 
             LoadBasins = new RelayCommand(OnLoadBasins);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
             RunStatus = AssessmentStatus.LoadingBasins;
             AvailableBasins = new ObservableCollection<string>();
+        }
+
+        private void InitializeDefaultBasinScenarios()
+        {
+            BasinScenarios.Add(new EventBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            BasinScenarios.Add(new RiskBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            foreach (var basinScenario in BasinScenarios)
+            {
+                basinScenario.AddExtraScenario();
+            }
         }
 
         public AssessmentStatus RunStatus
@@ -38,6 +46,14 @@ namespace FDT.Gui.ViewModels
             {
                 _runStatus = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private Func<string> GetHazardPath
+        {
+            get
+            {
+                return () => BackendPaths.HazardPath;
             }
         }
 
@@ -84,6 +100,7 @@ namespace FDT.Gui.ViewModels
             if (!subDirectoryNames.Any())
                 throw new Exception($"No basin subdirectories found at Exposure directory {exposurePath}");
             AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
+            InitializeDefaultBasinScenarios();
         }
 
         public ICommand RunDamageAssessment { get; }

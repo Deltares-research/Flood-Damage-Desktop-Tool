@@ -21,10 +21,7 @@ namespace FDT.Gui.Test.ViewModels
         {
             var viewModel = new MainWindowViewModel();
             Assert.That(viewModel, Is.InstanceOf<INotifyPropertyChanged>());
-            Assert.That(viewModel.BasinScenarios, Is.Not.Null.Or.Empty);
-            Assert.That(viewModel.BasinScenarios.Count, Is.EqualTo(2));
-            Assert.That(viewModel.BasinScenarios.Any( bs => bs.GetType() == typeof(EventBasedScenario)));
-            Assert.That(viewModel.BasinScenarios.Any(bs => bs.GetType() == typeof(RiskBasedScenario)));
+            Assert.That(viewModel.BasinScenarios, Is.Empty);
             Assert.That(viewModel.LoadBasins, Is.Not.Null);
             Assert.That(viewModel.RunDamageAssessment, Is.Not.Null);
             Assert.That(viewModel.BackendPaths, Is.Not.Null);

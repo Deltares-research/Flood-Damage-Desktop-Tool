@@ -21,6 +21,7 @@ namespace FDT.Backend.DomainLayer.DataModel
         public string RootPath { get; set; }
         public string DatabasePath => Path.Combine(RootPath, "database");
         public string ExposurePath => Path.Combine(DatabasePath, "Exposure");
+        public string HazardPath => Path.Combine(DatabasePath, "Hazard");
 
         public string SelectedBasinPath => Path.Combine(ExposurePath, _selectedBasin);
 
