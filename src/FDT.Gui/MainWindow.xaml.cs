@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
+using FDT.Gui.ViewModels;
 using MessageBox = System.Windows.MessageBox;
 
 
@@ -44,12 +46,14 @@ namespace FDT.Gui
         {
             try
             {
+                ViewModel.RunStatus = AssessmentStatus.Running;
+                InvalidateVisual();
                 ViewModel.RunDamageAssessment.Execute(sender);
                 MessageBox.Show(
-                    this, 
-                    $"Assessment run correctly, result files stored at {ViewModel.BackendPaths.ResultsPath}", 
-                    "Successful run", 
-                    MessageBoxButton.OK, 
+                    this,
+                    $"Assessment run correctly, result files stored at {ViewModel.BackendPaths.ResultsPath}",
+                    "Successful run",
+                    MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
             catch (Exception exception)
@@ -60,6 +64,10 @@ namespace FDT.Gui
                     "Failed run",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
+            }
+            finally
+            {
+                ViewModel.RunStatus = AssessmentStatus.Ready;
             }
         }
     }
