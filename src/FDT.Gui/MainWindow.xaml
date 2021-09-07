@@ -77,7 +77,7 @@
                             Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
                             IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
 
-                </Grid>
+                    </Grid>
                 </Grid>
                 <ScrollViewer
                     Grid.Row="1"

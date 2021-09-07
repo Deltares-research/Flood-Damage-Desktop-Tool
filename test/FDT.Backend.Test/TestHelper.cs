@@ -13,7 +13,7 @@ namespace FDT.Backend.Test
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().Location;
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
