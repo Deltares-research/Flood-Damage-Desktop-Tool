@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace FDT.Gui.ViewModels
 {
-    public abstract class BaseFloodMap:IFloodMap
+    public abstract class BaseFloodMap: IFloodMap
     {
         private string _mapPath;
 
@@ -20,6 +21,7 @@ namespace FDT.Gui.ViewModels
         public abstract bool HasReturnPeriod { get; }
 
         public int ReturnPeriod { get; set; }
+        public Func<string> GetDefaultHazardDirectory { get; set; }
 
 
         #region Property Changed

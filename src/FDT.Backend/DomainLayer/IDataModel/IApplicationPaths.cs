@@ -5,10 +5,10 @@
         string RootPath { get; set; }
         string DatabasePath { get; }
         string ExposurePath { get; }
+        string HazardPath { get; }
         string SelectedBasinPath { get; }
         string SystemPath { get; }
         string ResultsPath { get; }
-        void UpdateExposurePath(string exposurePath);
         void UpdateSelectedBasin(string selectedBasin);
     }
 }

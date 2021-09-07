@@ -11,9 +11,7 @@ namespace FDT.Gui.Test.ViewModels
         {
             var model = new Scenario<FloodMap>();
             Assert.That(model, Is.InstanceOf<IScenario>());
-            Assert.That(model.FloodMaps, Is.Not.Null.Or.Empty);
-            Assert.That(model.FloodMaps.Count, Is.EqualTo(1));
-            Assert.That(model.FloodMaps.All(fm => fm.GetType() == typeof(FloodMap)));
+            Assert.That(model.FloodMaps, Is.Empty);
         }
 
         [Test]
@@ -22,7 +20,7 @@ namespace FDT.Gui.Test.ViewModels
             var model = new Scenario<FloodMap>();
             TestDelegate testAction = () => model.AddExtraFloodMap();
             Assert.That(testAction, Throws.Nothing);
-            Assert.That(model.FloodMaps.Count, Is.EqualTo(2));
+            Assert.That(model.FloodMaps.Count, Is.EqualTo(1));
             Assert.That(model.FloodMaps.All(fm => fm.GetType() == typeof(FloodMap)));
         }
 
@@ -31,9 +29,7 @@ namespace FDT.Gui.Test.ViewModels
         {
             var model = new Scenario<FloodMapWithReturnPeriod>();
             Assert.That(model, Is.InstanceOf<IScenario>());
-            Assert.That(model.FloodMaps, Is.Not.Null.Or.Empty);
-            Assert.That(model.FloodMaps.Count, Is.EqualTo(1));
-            Assert.That(model.FloodMaps.All(fm => fm.GetType() == typeof(FloodMapWithReturnPeriod)));
+            Assert.That(model.FloodMaps, Is.Empty);
         }
 
         [Test]
@@ -42,7 +38,7 @@ namespace FDT.Gui.Test.ViewModels
             var model = new Scenario<FloodMapWithReturnPeriod>();
             TestDelegate testAction = () => model.AddExtraFloodMap();
             Assert.That(testAction, Throws.Nothing);
-            Assert.That(model.FloodMaps.Count, Is.EqualTo(2));
+            Assert.That(model.FloodMaps.Count, Is.EqualTo(1));
             Assert.That(model.FloodMaps.All(fm => fm.GetType() == typeof(FloodMapWithReturnPeriod)));
         }
 

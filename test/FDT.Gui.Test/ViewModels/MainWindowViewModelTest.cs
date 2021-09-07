@@ -20,11 +20,8 @@ namespace FDT.Gui.Test.ViewModels
         {
             var viewModel = new MainWindowViewModel();
             Assert.That(viewModel, Is.InstanceOf<INotifyPropertyChanged>());
-            Assert.That(viewModel.BasinScenarios, Is.Not.Null.Or.Empty);
-            Assert.That(viewModel.BasinScenarios.Count, Is.EqualTo(2));
-            Assert.That(viewModel.BasinScenarios.Any( bs => bs.GetType() == typeof(EventBasedScenario)));
-            Assert.That(viewModel.BasinScenarios.Any(bs => bs.GetType() == typeof(RiskBasedScenario)));
-            Assert.That(viewModel.LoadBasins, Is.Not.Null);
+            Assert.That(viewModel.BasinScenarios, Is.Empty);
+            Assert.That(viewModel.SelectRootDirectory, Is.Not.Null);
             Assert.That(viewModel.RunDamageAssessment, Is.Not.Null);
             Assert.That(viewModel.BackendPaths, Is.Not.Null);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
@@ -35,8 +32,8 @@ namespace FDT.Gui.Test.ViewModels
         {
             get
             {
-                yield return new TestCaseData(null, typeof(ArgumentNullException), "exposurePath");
-                yield return new TestCaseData(string.Empty, typeof(ArgumentNullException), "exposurePath");
+                yield return new TestCaseData(null, typeof(ArgumentNullException), "rootDirectory");
+                yield return new TestCaseData(string.Empty, typeof(DirectoryNotFoundException), string.Empty);
                 yield return new TestCaseData("InvalidPath", typeof(DirectoryNotFoundException), "InvalidPath");
                 yield return new TestCaseData("In\\valid\\Path", typeof(DirectoryNotFoundException), "In\\valid\\Path");
             }
@@ -44,10 +41,10 @@ namespace FDT.Gui.Test.ViewModels
 
         [Test]
         [TestCaseSource(nameof(InvalidExposurePath))]
-        public void TestOnLoadBasinsThrowsExceptionWhenInvalidArgument(string exposurePath, Type exceptionType, string exceptionMessage)
+        public void TestOnLoadBasinsThrowsExceptionWhenInvalidArgument(string rootDirectoryPath, Type exceptionType, string exceptionMessage)
         {
             var viewModel = new MainWindowViewModel();
-            TestDelegate testAction = () => viewModel.LoadBasins.Execute(exposurePath);
+            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(rootDirectoryPath);
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
         }
 
@@ -62,13 +59,9 @@ namespace FDT.Gui.Test.ViewModels
             var backendPaths = Substitute.For<IApplicationPaths>();
             viewModel.BackendPaths = backendPaths;
             backendPaths.ExposurePath.Returns(exposurePath);
-            backendPaths
-                .When(bp => bp.UpdateExposurePath(exposurePath))
-                .Do(bp => {});
-            
 
             // 2. Define test action.
-            TestDelegate testAction = () => viewModel.LoadBasins.Execute(exposurePath);
+            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(exposurePath);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.TypeOf<Exception>().With.Message.Contains(exceptionMessage));
@@ -91,7 +84,7 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.SelectedBasin, Is.Null);
 
             // 3. Define test action.
-            TestDelegate testAction = () => viewModel.LoadBasins.Execute(exposurePath);
+            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(exposurePath);
 
             // 4. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
