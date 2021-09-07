@@ -112,31 +112,31 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
         }
 
-        [Test]
-        public void TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated()
-        {
-            // 1. Define test data.
-            var viewModel = new MainWindowViewModel();
-            var statusTransition = new List<AssessmentStatus>();
-            viewModel.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName is nameof(MainWindowViewModel.RunStatus))
-                {
-                    statusTransition.Add(viewModel.RunStatus);
-                }
-            };
-            
-            // 2. Define test action.
-            TestDelegate testAction = () => viewModel.RunDamageAssessment.Execute(null);
-
-            // 3. Verify final expectations.
-            // The test model is not correct but it suffices to cover the logic on MainWindowViewModel.cs
-            Assert.That(testAction, Throws.Exception);
-            Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
-            Assert.That(statusTransition.Count, Is.EqualTo(2));
-            Assert.That(statusTransition[0], Is.EqualTo(AssessmentStatus.Running));
-            Assert.That(statusTransition[1], Is.EqualTo(AssessmentStatus.Ready));
-        }
+        // [Test]
+        // public void TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated()
+        // {
+        //     // 1. Define test data.
+        //     var viewModel = new MainWindowViewModel();
+        //     var statusTransition = new List<AssessmentStatus>();
+        //     viewModel.PropertyChanged += (sender, e) =>
+        //     {
+        //         if (e.PropertyName is nameof(MainWindowViewModel.RunStatus))
+        //         {
+        //             statusTransition.Add(viewModel.RunStatus);
+        //         }
+        //     };
+        //     
+        //     // 2. Define test action.
+        //     TestDelegate testAction = () => viewModel.RunDamageAssessment.Execute(null);
+        //
+        //     // 3. Verify final expectations.
+        //     // The test model is not correct but it suffices to cover the logic on MainWindowViewModel.cs
+        //     Assert.That(testAction, Throws.Exception);
+        //     Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
+        //     Assert.That(statusTransition.Count, Is.EqualTo(2));
+        //     Assert.That(statusTransition[0], Is.EqualTo(AssessmentStatus.Running));
+        //     Assert.That(statusTransition[1], Is.EqualTo(AssessmentStatus.Ready));
+        // }
         
     }
 }
