@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using DocumentFormat.OpenXml.Spreadsheet;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.Test;
 using FDT.Gui.ViewModels;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NSubstitute.Extensions;
-using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
-using IScenario = FDT.Gui.ViewModels.IScenario;
+
 
 namespace FDT.Gui.Test.ViewModels
 {
@@ -123,8 +118,8 @@ namespace FDT.Gui.Test.ViewModels
             // 1. Define test data.
             var viewModel = new MainWindowViewModel();
             var statusTransition = new List<AssessmentStatus>();
-            string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure");
-            
+            // string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure");
+            string exposurePath = "A\\temporary\\failing\\path";
             // 2. Define expectations.
             viewModel.LoadBasins.Execute(exposurePath);
             viewModel.PropertyChanged += (sender, e) =>
