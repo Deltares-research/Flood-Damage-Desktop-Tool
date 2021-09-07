@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FDT.Gui\FDT.Gui.csproj" />
-    <ProjectReference Include="..\FDT.Backend.Test\FDT.Backend.Test.csproj" />
     <ProjectReference Include="..\FDT.TestUtils\FDT.TestUtils.csproj" />
   </ItemGroup>
 

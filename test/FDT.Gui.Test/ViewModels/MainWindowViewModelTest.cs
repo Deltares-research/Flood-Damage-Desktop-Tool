@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.Test;
 using FDT.Gui.ViewModels;
 using NSubstitute;
 using NUnit.Framework;
@@ -52,26 +51,36 @@ namespace FDT.Gui.Test.ViewModels
         public void TestOnLoadBasinsThrowsExceptionWhenNoSubDirectoriesFound()
         {
             // 1. Define test data.
-            string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "invalid_exposure");
-            string exceptionMessage = $"No basin subdirectories found at Exposure directory {exposurePath}";
+            string currentDir = Directory.GetCurrentDirectory();
+            string rootDir = Path.Combine(currentDir, "testRootDir");
+            string exceptionMessage = $"No basin subdirectories found at Exposure directory {rootDir}";
+
+            if (Directory.Exists(rootDir))
+                Directory.Delete(rootDir, true);
+            Directory.CreateDirectory(rootDir);
 
             var viewModel =  new MainWindowViewModel();
             var backendPaths = Substitute.For<IApplicationPaths>();
             viewModel.BackendPaths = backendPaths;
-            backendPaths.ExposurePath.Returns(exposurePath);
+            backendPaths.ExposurePath.Returns(rootDir);
 
             // 2. Define test action.
-            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(exposurePath);
+            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(rootDir);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.TypeOf<Exception>().With.Message.Contains(exceptionMessage));
         }
 
         [Test]
-        public void TestGivenValidExposurePathWhenLoadBasinsThenPathsAndBasinsAreUpdated()
+        public void TestGivenValidExposurePathWhenSelectRootDirectoryThenPathsAndBasinsAreUpdated()
         {
             // 1. Define test data.
-            string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure");
+            string rootDir = Path.Combine(Directory.GetCurrentDirectory(), "testRootDir");
+            string exposurePath = Path.Combine(rootDir, "exposure");
+            string basinPath = Path.Combine(exposurePath, "c-9");
+            if(Directory.Exists(rootDir))
+                Directory.Delete(rootDir, true);
+            Directory.CreateDirectory(basinPath);
 
             var viewModel = new MainWindowViewModel();
             var backendPaths = Substitute.For<IApplicationPaths>();
