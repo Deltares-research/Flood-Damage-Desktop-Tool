@@ -18,17 +18,17 @@ namespace FDT.Gui
             InitializeComponent();
         }
 
-        private void OnLoadBasinsActionClick(object sender, RoutedEventArgs e)
+        private void OnSelectRootDirectoryClick(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new FolderBrowserDialog();
-            openFileDialog.Description = "Select the EXPOSURE directory";
+            openFileDialog.Description = "Select the database root directory";
             DialogResult result = openFileDialog.ShowDialog();
 
             if (result != System.Windows.Forms.DialogResult.OK) return;
             
             try
             {
-                ViewModel.LoadBasins.Execute(openFileDialog.SelectedPath);
+                ViewModel.SelectRootDirectory.Execute(openFileDialog.SelectedPath);
             }
             catch (Exception exception)
             {

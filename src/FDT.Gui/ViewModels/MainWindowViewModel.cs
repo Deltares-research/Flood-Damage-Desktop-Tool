@@ -22,14 +22,22 @@ namespace FDT.Gui.ViewModels
         public MainWindowViewModel()
         {
             BasinScenarios = new ObservableCollection<IBasinScenario>();
-            BasinScenarios.Add(new EventBasedScenario());
-            BasinScenarios.Add(new RiskBasedScenario());
 
-            LoadBasins = new RelayCommand(OnLoadBasins);
+            SelectRootDirectory = new RelayCommand(OnSelectRootDirectory);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
             RunStatus = AssessmentStatus.LoadingBasins;
             AvailableBasins = new ObservableCollection<string>();
+        }
+
+        private void InitializeDefaultBasinScenarios()
+        {
+            BasinScenarios.Add(new EventBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            BasinScenarios.Add(new RiskBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            foreach (var basinScenario in BasinScenarios)
+            {
+                basinScenario.AddExtraScenario();
+            }
         }
 
         public AssessmentStatus RunStatus
@@ -39,6 +47,14 @@ namespace FDT.Gui.ViewModels
             {
                 _runStatus = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private Func<string> GetHazardPath
+        {
+            get
+            {
+                return () => BackendPaths.HazardPath;
             }
         }
 
@@ -70,21 +86,22 @@ namespace FDT.Gui.ViewModels
 
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
-        public ICommand LoadBasins { get; }
+        public ICommand SelectRootDirectory { get; }
 
-        private void OnLoadBasins(object objectCmd)
+        private void OnSelectRootDirectory(object objectCmd)
         {
-            if (objectCmd is not string exposurePath)
-                throw new ArgumentNullException(nameof(exposurePath));
+            if (objectCmd is not string rootDirectory)
+                throw new ArgumentNullException(nameof(rootDirectory));
 
-            BackendPaths.UpdateExposurePath(exposurePath);
-            if (!Directory.Exists(BackendPaths.ExposurePath))
-                throw new DirectoryNotFoundException(exposurePath);
+            if (!Directory.Exists(rootDirectory))
+                throw new DirectoryNotFoundException(rootDirectory);
 
+            BackendPaths.RootPath = rootDirectory;
             string[] subDirectoryNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(BackendPaths.ExposurePath)).ToArray();
             if (!subDirectoryNames.Any())
-                throw new Exception($"No basin subdirectories found at Exposure directory {exposurePath}");
+                throw new Exception($"No basin subdirectories found at Exposure directory {BackendPaths.ExposurePath}");
             AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
+            InitializeDefaultBasinScenarios();
         }
 
         public ICommand RunDamageAssessment { get; }

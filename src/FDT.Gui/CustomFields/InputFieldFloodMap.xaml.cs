@@ -36,6 +36,7 @@ namespace FDT.Gui.CustomFields
             var openFileDialog = new OpenFileDialog();
             const string fileExtension = ".tif";
             // extension = .tif
+            openFileDialog.InitialDirectory = FloodMap?.GetDefaultHazardDirectory?.Invoke();
             openFileDialog.Filter = $"Flood Map File (*{fileExtension}) | *{fileExtension}";
             openFileDialog.DefaultExt = fileExtension;
             bool? showDialog = openFileDialog.ShowDialog();

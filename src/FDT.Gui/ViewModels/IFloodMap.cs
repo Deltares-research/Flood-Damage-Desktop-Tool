@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace FDT.Gui.ViewModels
 {
@@ -7,5 +8,6 @@ namespace FDT.Gui.ViewModels
         string MapPath { get; set; }
         bool HasReturnPeriod { get; }
         int ReturnPeriod { get; set; }
+        Func<string> GetDefaultHazardDirectory { get; set; }
     }
 }
