@@ -28,6 +28,7 @@ namespace FDT.Gui.ViewModels
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
             RunStatus = AssessmentStatus.LoadingBasins;
+            AvailableBasins = new ObservableCollection<string>();
         }
 
         public AssessmentStatus RunStatus
@@ -50,6 +51,8 @@ namespace FDT.Gui.ViewModels
                 _availableBasins = value;
                 OnPropertyChanged();
                 RunStatus = _availableBasins != null && _availableBasins.Any() ? AssessmentStatus.Ready : AssessmentStatus.LoadingBasins;
+                if (_availableBasins != null && _availableBasins.Any())
+                    SelectedBasin = AvailableBasins.FirstOrDefault();
             } 
         }
 
@@ -81,7 +84,6 @@ namespace FDT.Gui.ViewModels
             if (!subDirectoryNames.Any())
                 throw new Exception($"No basin subdirectories found at Exposure directory {exposurePath}");
             AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
-            SelectedBasin = AvailableBasins.FirstOrDefault();
         }
 
         public ICommand RunDamageAssessment { get; }

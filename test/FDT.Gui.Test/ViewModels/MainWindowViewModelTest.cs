@@ -29,6 +29,7 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.RunDamageAssessment, Is.Not.Null);
             Assert.That(viewModel.BackendPaths, Is.Not.Null);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
+            Assert.That(viewModel.AvailableBasins, Is.Empty);
         }
 
         public static IEnumerable InvalidExposurePath
@@ -87,7 +88,7 @@ namespace FDT.Gui.Test.ViewModels
 
             // 2. Verify initial expectations.
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
-            Assert.That(viewModel.AvailableBasins, Is.Null);
+            Assert.That(viewModel.AvailableBasins, Is.Empty);
             Assert.That(viewModel.SelectedBasin, Is.Null);
 
             // 3. Define test action.
@@ -96,8 +97,9 @@ namespace FDT.Gui.Test.ViewModels
             // 4. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
-            backendPaths.Received(1).UpdateExposurePath(Arg.Is<string>(x => x != string.Empty));
-            backendPaths.Received(1).UpdateSelectedBasin(Arg.Is<string>( x => x!= string.Empty));
+            Assert.That(viewModel.SelectedBasin, Is.Not.Null);
+            // backendPaths.Received(1).UpdateExposurePath(Arg.Is<string>(x => x != string.Empty));
+            // backendPaths.Received(1).UpdateSelectedBasin(Arg.Is<string>(x => x != string.Empty));
         }
 
         [Test]
@@ -112,31 +114,35 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
         }
 
-        // [Test]
-        // public void TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated()
-        // {
-        //     // 1. Define test data.
-        //     var viewModel = new MainWindowViewModel();
-        //     var statusTransition = new List<AssessmentStatus>();
-        //     viewModel.PropertyChanged += (sender, e) =>
-        //     {
-        //         if (e.PropertyName is nameof(MainWindowViewModel.RunStatus))
-        //         {
-        //             statusTransition.Add(viewModel.RunStatus);
-        //         }
-        //     };
-        //     
-        //     // 2. Define test action.
-        //     TestDelegate testAction = () => viewModel.RunDamageAssessment.Execute(null);
-        //
-        //     // 3. Verify final expectations.
-        //     // The test model is not correct but it suffices to cover the logic on MainWindowViewModel.cs
-        //     Assert.That(testAction, Throws.Exception);
-        //     Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
-        //     Assert.That(statusTransition.Count, Is.EqualTo(2));
-        //     Assert.That(statusTransition[0], Is.EqualTo(AssessmentStatus.Running));
-        //     Assert.That(statusTransition[1], Is.EqualTo(AssessmentStatus.Ready));
-        // }
+        [Test]
+        public void TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated()
+        {
+            // 1. Define test data.
+            var viewModel = new MainWindowViewModel();
+            var statusTransition = new List<AssessmentStatus>();
+            string exposurePath = Path.Combine(TestHelper.TestDatabaseDirectory, "exposure");
+
+            // 2. Define expectations.
+            viewModel.LoadBasins.Execute(exposurePath);
+            viewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName is nameof(MainWindowViewModel.RunStatus))
+                {
+                    statusTransition.Add(viewModel.RunStatus);
+                }
+            };
+            
+            // 3. Define test action.
+            TestDelegate testAction = () => viewModel.RunDamageAssessment.Execute(null);
+
+            // 4. Verify final expectations.
+            // The test model is not entirely correct but it suffices to cover the logic on MainWindowViewModel.cs
+            Assert.That(testAction, Throws.TypeOf<Exception>());
+            Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
+            Assert.That(statusTransition.Count, Is.EqualTo(2));
+            Assert.That(statusTransition[0], Is.EqualTo(AssessmentStatus.Running));
+            Assert.That(statusTransition[1], Is.EqualTo(AssessmentStatus.Ready));
+        }
         
     }
 }
