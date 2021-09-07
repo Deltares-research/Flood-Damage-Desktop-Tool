@@ -65,6 +65,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
     }
 
+    [Category("AcceptanceTest")]
     public class FiatPythonWrapperValidateRunAcceptanceTest
     {
         private IOutputData _testOutputData;
@@ -163,7 +164,6 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             Assert.That(testAction, Throws.Nothing);
             Assert.That(isValidRun, Is.True);
             Assert.That(File.Exists(_copyConfigFile), Is.Not.True);
-            
             Assert.That(File.Exists(movedConfigFilePath));
         }
 
