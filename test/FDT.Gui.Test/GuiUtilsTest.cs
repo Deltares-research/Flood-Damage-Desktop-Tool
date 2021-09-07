@@ -22,7 +22,7 @@ namespace FDT.Gui.Test
             get
             {
                 yield return new TestCaseData(new List<string> {"Path"}).Returns("Path");
-                yield return new TestCaseData(new List<string> {$"Nested\\Path"}).Returns("Path");
+                yield return new TestCaseData(new List<string> {"Nested\\Path"}).Returns("Path");
                 yield return new TestCaseData(new List<string> {$"Another\\Nested\\Path"}).Returns("Path");
                 yield return new TestCaseData(new List<string> {$"Another\\Path\\"}).Returns("Path");
             }
@@ -38,21 +38,21 @@ namespace FDT.Gui.Test
             return result;
         }
 
-        [Test]
-        [TestCaseSource(nameof(ValidSubDirectoryNames))]
-        public string TestGetSubDirectoryNameReturnsOnlyNamesWhenValidDirectoriesGiven(IEnumerable<string> foundDirectories)
-        {
-            // 1. Define test data.
-            string[] result = null;
-
-            // 2. Define test action.
-            TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
-
-            // 3. Verify final expectations.
-            Assert.That(testAction, Throws.Nothing);
-            // Assert.That(result, Is.EqualTo(new List<string>() { "Path" }));
-            Assert.That(result.Count(), Is.EqualTo(1));
-            return result.Single();
-        }
+        // [Test]
+        // [TestCaseSource(nameof(ValidSubDirectoryNames))]
+        // public string TestGetSubDirectoryNameReturnsOnlyNamesWhenValidDirectoriesGiven(IEnumerable<string> foundDirectories)
+        // {
+        //     // 1. Define test data.
+        //     string[] result = null;
+        //
+        //     // 2. Define test action.
+        //     TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
+        //
+        //     // 3. Verify final expectations.
+        //     Assert.That(testAction, Throws.Nothing);
+        //     // Assert.That(result, Is.EqualTo(new List<string>() { "Path" }));
+        //     Assert.That(result.Count(), Is.EqualTo(1));
+        //     return result.Single();
+        // }
     }
 }
