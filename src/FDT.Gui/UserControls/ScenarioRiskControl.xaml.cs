@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using FDT.Gui.Annotations;
 using FDT.Gui.ViewModels;
 
 namespace FDT.Gui.UserControls

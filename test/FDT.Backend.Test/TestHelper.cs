@@ -13,7 +13,7 @@ namespace FDT.Backend.Test
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                string codeBase = Assembly.GetExecutingAssembly().Location;
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
@@ -28,11 +28,19 @@ namespace FDT.Backend.Test
             }
         }
 
+        public static string TestDatabaseDirectory
+        {
+            get
+            {
+                return Path.Combine(TestRootDirectory, "database");
+            }
+        }
+
         internal static string TestConfigurationFile
         {
             get
             {
-                return Path.Combine(TestRootDirectory, "database", "example_filled_configuration_file.xlsx");
+                return Path.Combine(TestDatabaseDirectory, "example_filled_configuration_file.xlsx");
             }
         }
     }

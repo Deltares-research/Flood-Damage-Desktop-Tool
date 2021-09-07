@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using FDT.Backend;
 using FDT.Backend.DomainLayer.DataModel;
+using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
-using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
 {
@@ -17,6 +16,7 @@ namespace FDT.Gui.ViewModels
     {
         private ObservableCollection<string> _availableBasins;
         private string _selectedBasin;
+        private AssessmentStatus _runStatus;
 
         public MainWindowViewModel()
         {
@@ -27,9 +27,21 @@ namespace FDT.Gui.ViewModels
             LoadBasins = new RelayCommand(OnLoadBasins);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
+            RunStatus = AssessmentStatus.LoadingBasins;
+            AvailableBasins = new ObservableCollection<string>();
         }
 
-        public ApplicationPaths BackendPaths { get; }
+        public AssessmentStatus RunStatus
+        {
+            get => _runStatus;
+            set
+            {
+                _runStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IApplicationPaths BackendPaths { get; set; }
 
         public ObservableCollection<string> AvailableBasins
         {
@@ -38,6 +50,9 @@ namespace FDT.Gui.ViewModels
             {
                 _availableBasins = value;
                 OnPropertyChanged();
+                RunStatus = _availableBasins != null && _availableBasins.Any() ? AssessmentStatus.Ready : AssessmentStatus.LoadingBasins;
+                if (_availableBasins != null && _availableBasins.Any())
+                    SelectedBasin = AvailableBasins.FirstOrDefault();
             } 
         }
 
@@ -54,31 +69,52 @@ namespace FDT.Gui.ViewModels
 
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
-        public Func<IEnumerable<string>> GetBasinsDirectories { get; set; }
         public ICommand LoadBasins { get; }
 
         private void OnLoadBasins(object objectCmd)
         {
-            if (objectCmd is not IEnumerable<string> loadedBasins) return;
+            if (objectCmd is not string exposurePath)
+                throw new ArgumentNullException(nameof(exposurePath));
 
-            AvailableBasins = new ObservableCollection<string>(loadedBasins);
-            SelectedBasin = AvailableBasins.FirstOrDefault();
+            BackendPaths.UpdateExposurePath(exposurePath);
+            if (!Directory.Exists(BackendPaths.ExposurePath))
+                throw new DirectoryNotFoundException(exposurePath);
+
+            string[] subDirectoryNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(BackendPaths.ExposurePath)).ToArray();
+            if (!subDirectoryNames.Any())
+                throw new Exception($"No basin subdirectories found at Exposure directory {exposurePath}");
+            AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
         }
 
         public ICommand RunDamageAssessment { get; }
         private void OnRunDamageAssessment(object objectCmd)
         {
             // This method should throw any generated exception so that it's caught and handled by the caller command.
-            var floodDamageDomain = new FloodDamageDomain()
+            RunStatus = AssessmentStatus.Running;
+            try
             {
-                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
-                Paths = BackendPaths
-            };
-            DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+                var floodDamageDomain = new FloodDamageDomain()
+                {
+                    BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
+                    Paths = BackendPaths
+                };
+                DamageAssessmentHandler runHandler = new DamageAssessmentHandler
+                {
+                    DataDomain = floodDamageDomain
+                };
+                // The write stream seems to be causing problems when running
+                // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
+                // IN TEAMCITY.
+                runHandler.Run();
+            }
+            catch
             {
-                DataDomain = floodDamageDomain
-            };
-            runHandler.Run();
+                throw;
+            }
+            finally
+            {
+                RunStatus = AssessmentStatus.Ready;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

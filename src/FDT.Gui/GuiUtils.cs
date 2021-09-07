@@ -12,7 +12,8 @@ namespace FDT.Gui
 
             foreach (string directory in foundSubDirectories)
             {
-                yield return directory.Remove(0, directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                string trimmedDirectory = directory.TrimEnd(Path.DirectorySeparatorChar);
+                yield return trimmedDirectory.Remove(0, trimmedDirectory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
             }
         }
     }

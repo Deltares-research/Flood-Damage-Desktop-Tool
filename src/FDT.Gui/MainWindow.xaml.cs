@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
-using System.IO;
 using MessageBox = System.Windows.MessageBox;
 
 
@@ -16,17 +14,21 @@ namespace FDT.Gui
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel.GetBasinsDirectories = GetBasinsDirectories;
         }
 
-        private void ParentControl_Loaded(object sender, RoutedEventArgs e)
+        private void OnLoadBasinsActionClick(object sender, RoutedEventArgs e)
         {
+            var openFileDialog = new FolderBrowserDialog();
+            openFileDialog.Description = "Select the EXPOSURE directory";
+            DialogResult result = openFileDialog.ShowDialog();
+
+            if (result != System.Windows.Forms.DialogResult.OK) return;
+            
             try
             {
-                IEnumerable<string> availableBasins = ViewModel?.GetBasinsDirectories?.Invoke();
-                ViewModel?.LoadBasins?.Execute(availableBasins);
+                ViewModel.LoadBasins.Execute(openFileDialog.SelectedPath);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show(
                     this,
@@ -34,35 +36,11 @@ namespace FDT.Gui
                     "Failed to detect directory structure.",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
-                Close();
             }
+
         }
 
-        private IEnumerable<string> GetBasinsDirectories()
-        {
-            if (!Directory.Exists(ViewModel.BackendPaths.ExposurePath))
-            {
-                ViewModel.BackendPaths.UpdateExposurePath(BrowseExposureDirectory());
-            }
-            
-            return GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(ViewModel.BackendPaths.ExposurePath));
-        }
-
-        private string BrowseExposureDirectory()
-        {
-            var openFileDialog = new FolderBrowserDialog();
-            openFileDialog.Description = "Select the EXPOSURE directory";
-            DialogResult result = openFileDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.SelectedPath))
-            {
-                return openFileDialog.SelectedPath;
-            }
-            // If the found basin names were not valid or the user did not select anything, just stop.
-            return null;
-        }
-
-        private void OnRunDamageAssessmentClick(object sender, RoutedEventArgs e)
+        private void OnAssessmentActionClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -83,8 +61,6 @@ namespace FDT.Gui
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
-
-            
         }
     }
 }

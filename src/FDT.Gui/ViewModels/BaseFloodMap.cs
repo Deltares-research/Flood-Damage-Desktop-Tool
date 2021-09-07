@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using FDT.Gui.Annotations;
 
 namespace FDT.Gui.ViewModels
 {
