@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using NUnit.Framework;
 
@@ -22,9 +21,9 @@ namespace FDT.Gui.Test
         {
 
             new object[] {new List<string> {"Path"}},
-            new object[] {new List<string> { $"Nested{Path.DirectorySeparatorChar}Path"}},
-            new object[] { new List<string> { $"Another{Path.DirectorySeparatorChar}Nested{Path.DirectorySeparatorChar}Path" }},
-            new object[] { new List<string> { $"Another{Path.DirectorySeparatorChar}Path{Path.DirectorySeparatorChar}"}}
+            new object[] {new List<string> { $"Nested\\Path"}},
+            new object[] { new List<string> { $"Another\\Nested\\Path" }},
+            new object[] { new List<string> { $"Another\\Path\\"}}
         };
 
         [Test]
