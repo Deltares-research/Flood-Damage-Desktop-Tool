@@ -18,7 +18,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
 
         public IEnumerable<object> GetOrderedColumns()
         {
-            return new []{ ExposureFileName, ExposureRelativePath};
+            return new []{ ExposureRelativePath, string.Empty};
         }
     }
 }

@@ -17,8 +17,8 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(exposureRowEntry, Is.InstanceOf<IRowEntry>());
             Assert.That(exposureRowEntry.GetOrderedColumns(), Is.EqualTo(new []
             {
-                exposureCsv,
-                $"Exposure\\{selectedBasin}\\{exposureCsv}"
+                $"Exposure\\{selectedBasin}\\{exposureCsv}",
+                string.Empty,
             }));
         }
 
