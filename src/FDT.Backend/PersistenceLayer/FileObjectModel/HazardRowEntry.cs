@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 
@@ -16,19 +17,23 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
                 throw new ArgumentNullException(nameof(floodMapBase));
             if (string.IsNullOrEmpty(basinProjection))
                 throw new ArgumentNullException(nameof(basinProjection));
-
+            
             HazardFile = floodMapBase.Path;
             ReturnPeriod = floodMapBase.GetReturnPeriod();
             CRS = basinProjection;
         }
 
-        public IEnumerable<object> GetOrderedColumns()
+        public IEnumerable<object> GetOrderedColumns(IXLRow defaultRow)
         {
+            if (defaultRow == null)
+                throw new ArgumentNullException(nameof(defaultRow));
+            string inundationReference = defaultRow.Cell(4).GetValue<string>();
             return new[]
             {
                 HazardFile,
                 ReturnPeriod,
-                CRS
+                CRS,
+                inundationReference
             };
         }
     }

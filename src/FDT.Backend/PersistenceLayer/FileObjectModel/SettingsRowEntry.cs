@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 
@@ -22,7 +23,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
             ScenarioName = scenarioName;
         }
 
-        public IEnumerable<object> GetOrderedColumns()
+        public IEnumerable<object> GetOrderedColumns(IXLRow defaultRow)
         {
             return new[]
             {

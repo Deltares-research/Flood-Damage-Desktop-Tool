@@ -27,7 +27,7 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(testAction, Throws.Nothing);
             Assert.That(rowTest, Is.Not.Null);
             Assert.That(rowTest, Is.InstanceOf<IRowEntry>());
-            Assert.That(rowTest.GetOrderedColumns(), Is.EqualTo(new []
+            Assert.That(rowTest.GetOrderedColumns(null), Is.EqualTo(new []
             {
                 basin.BasinName,
                 scenarioName,

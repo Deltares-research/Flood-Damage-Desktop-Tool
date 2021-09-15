@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClosedXML.Excel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 
 namespace FDT.Backend.PersistenceLayer.FileObjectModel
@@ -16,7 +17,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
             ExposureRelativePath = $"Exposure\\{selectedBasin}\\{ExposureFileName}";
         }
 
-        public IEnumerable<object> GetOrderedColumns()
+        public IEnumerable<object> GetOrderedColumns(IXLRow defaultRow)
         {
             return new []{ ExposureRelativePath, string.Empty};
         }

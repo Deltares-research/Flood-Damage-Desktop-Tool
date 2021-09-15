@@ -43,7 +43,12 @@ namespace FDT.Backend.PersistenceLayer
                     foreach (ITabXlsx tabXlsx in tabs)
                     {
                         IXLWorksheet settingsWorksheet = workbook.GetWorksheet(tabXlsx.TabName);
-                        settingsWorksheet.Cell(2, 1).InsertData(tabXlsx.RowEntries.Select( re => re.GetOrderedColumns())).Style.Fill.SetBackgroundColor(XLWorkbook.DefaultStyle.Fill.BackgroundColor);
+                        // First column contains just the headers, the second one the default values.
+                        IXLRow defaultRow = settingsWorksheet.Row(2);
+                        settingsWorksheet
+                            .Cell(2, 1)
+                            .InsertData(tabXlsx.RowEntries.Select( re => re.GetOrderedColumns(defaultRow)))
+                            .Style.Fill.SetBackgroundColor(XLWorkbook.DefaultStyle.Fill.BackgroundColor);
                         settingsWorksheet.Columns().AdjustToContents();
                     }
                     workbook.SaveAs(filePath);
