@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
@@ -15,12 +17,20 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             // Define test data.
             HazardRowEntry hazardRowEntry = null;
             var floodMap = Substitute.For<IFloodMapBase>();
-            
+            var defaultRow = Substitute.For<IXLRow>();
+            var returnCell = Substitute.For<IXLCell>();
+
             const string basinProjection = "EPSG:42";
             const string filePath = "DummyDataPath";
             const int returnObject = 42;
+            const string inundationReference = "DasRef";
+            
             floodMap.Path.Returns(filePath);
             floodMap.GetReturnPeriod().Returns(returnObject);
+
+            // Substitute expects these calls to be made, otherwise will fail.
+            defaultRow.Cell(4).Returns(returnCell);
+            returnCell.GetValue<string>().Returns(inundationReference);
 
             // Generate object.
             TestDelegate testAction = () => hazardRowEntry = new HazardRowEntry(floodMap, basinProjection);
@@ -29,11 +39,12 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(testAction, Throws.Nothing);
             Assert.That(hazardRowEntry, Is.Not.Null);
             Assert.That(hazardRowEntry, Is.InstanceOf<IRowEntry>());
-            Assert.That(hazardRowEntry.GetOrderedColumns(), Is.EqualTo(new []
+            Assert.That(hazardRowEntry.GetOrderedColumns(defaultRow), Is.EqualTo(new []
             {
                 floodMap.Path,
                 floodMap.GetReturnPeriod(),
                 basinProjection,
+                inundationReference,
             }));
         }
 
@@ -42,6 +53,65 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
         {
             TestDelegate testAction = () => new HazardRowEntry(null, "dumbValidString");
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("floodMapBase"));
+        }
+
+        [Test]
+        public void GetOrderedColumnsThrowsArgumentNullExceptionWithNullRow()
+        {
+            // Define test data.
+            var floodMap = Substitute.For<IFloodMapBase>();
+            const string basinProjection = "EPSG:42";
+            const string filePath = "DummyDataPath";
+            const int returnObject = 42;
+
+            floodMap.Path.Returns(filePath);
+            floodMap.GetReturnPeriod().Returns(returnObject);
+
+            // Verify initial expectations.
+            var hazardRowEntry = new HazardRowEntry(floodMap, basinProjection);
+            Assert.That(hazardRowEntry, Is.Not.Null);
+            Assert.That(hazardRowEntry, Is.InstanceOf<IRowEntry>());
+
+            // Generate object.
+            TestDelegate testAction = () => hazardRowEntry.GetOrderedColumns(null);
+
+            // Verify expectations.
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("defaultRow"));
+        }
+
+        [Test]
+        public void GetOrderedColumnsThrowsExceptionWithInvalidValue()
+        {
+            // Define test data.
+            var floodMap = Substitute.For<IFloodMapBase>();
+            var defaultRow = Substitute.For<IXLRow>();
+
+            const string basinProjection = "EPSG:42";
+            const string filePath = "DummyDataPath";
+            const int returnObject = 42;
+
+            floodMap.Path.Returns(filePath);
+            floodMap.GetReturnPeriod().Returns(returnObject);
+
+            // Verify initial expectations.
+            var hazardRowEntry = new HazardRowEntry(floodMap, basinProjection);
+            Assert.That(hazardRowEntry, Is.Not.Null);
+            Assert.That(hazardRowEntry, Is.InstanceOf<IRowEntry>());
+            object[] expectedReturnValue = new[]
+            {
+                floodMap.Path,
+                floodMap.GetReturnPeriod(),
+                basinProjection,
+                string.Empty,
+            };
+            object[] returnValue = null;
+
+            // Define test action.
+            TestDelegate testAction = () => returnValue = hazardRowEntry.GetOrderedColumns(defaultRow).ToArray();
+
+            // Verify expectations.
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(expectedReturnValue, Is.EqualTo(returnValue));
         }
 
         [Test]
