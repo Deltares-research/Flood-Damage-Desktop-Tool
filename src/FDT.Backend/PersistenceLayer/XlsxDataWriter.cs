@@ -35,7 +35,7 @@ namespace FDT.Backend.PersistenceLayer
                 ITabXlsx[] tabs = {
                     new SettingsTabXlsx(domainData.BasinData, scenarioData.ScenarioName),
                     new HazardTabXlsx(domainData.BasinData, scenarioData.FloodMaps),
-                    new ExposureTabXlsx(domainData.BasinData)
+                    new ExposureTabXlsx(domainData.BasinData, domainData.Paths.ExposurePath)
                 };
                 using (var stream = File.Open(baseTemplate, FileMode.Open, FileAccess.Read))
                 using (var workbook = new XLWorkbook(stream))
