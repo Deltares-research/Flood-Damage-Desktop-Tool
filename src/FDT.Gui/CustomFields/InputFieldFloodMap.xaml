@@ -45,7 +45,7 @@
             Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
         <TextBox
             Grid.Column="4"
-            Text="{Binding ReturnPeriod}"
+            Text="{Binding ReturnPeriod, ValidatesOnDataErrors=True}"
             TextAlignment="Center"
             Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
     </Grid>

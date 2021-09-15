@@ -23,6 +23,19 @@ namespace FDT.Gui.ViewModels
         public int ReturnPeriod { get; set; }
         public Func<string> GetDefaultHazardDirectory { get; set; }
 
+        public string Error { get; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName != nameof(ReturnPeriod)) return null;
+                if (!HasReturnPeriod) return null;
+                return HasValidReturnPeriod() ? null : "Return Period should be greater than 0";
+            }
+        }
+
+        protected abstract bool HasValidReturnPeriod();
 
         #region Property Changed
 
@@ -41,9 +54,17 @@ namespace FDT.Gui.ViewModels
     public class FloodMap : BaseFloodMap
     {
         public override bool HasReturnPeriod => false;
+        protected override bool HasValidReturnPeriod()
+        {
+            throw new NotImplementedException();
+        }
     }
     public class FloodMapWithReturnPeriod : BaseFloodMap
     {
         public override bool HasReturnPeriod => true;
+        protected override bool HasValidReturnPeriod()
+        {
+            return ReturnPeriod > 0;
+        }
     }
 }
