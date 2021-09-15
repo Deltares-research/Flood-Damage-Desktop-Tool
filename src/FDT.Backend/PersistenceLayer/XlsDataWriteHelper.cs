@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
@@ -30,6 +31,15 @@ namespace FDT.Backend.PersistenceLayer
                 throw new Exception("No valid scenarios were provided.");
             if (basinData.Scenarios.Any(s => string.IsNullOrEmpty(s.ScenarioName)))
                 throw new Exception("All selected scenarios should contain a valid name.");
+            basinData.Scenarios.SelectMany( s => s.FloodMaps.OfType<IFloodMapWithReturnPeriod>()).ValidateFloodMapsWithReturnPeriod();
+        }
+
+        public static void ValidateFloodMapsWithReturnPeriod(this IEnumerable<IFloodMapWithReturnPeriod> floodMaps)
+        {
+            if (floodMaps == null)
+                throw new ArgumentNullException(nameof(floodMaps));
+            if (floodMaps.Any(fm => fm.ReturnPeriod <= 0))
+                throw new Exception("All selected Flood Maps with return period should be greater than 0.");
         }
     }
 }

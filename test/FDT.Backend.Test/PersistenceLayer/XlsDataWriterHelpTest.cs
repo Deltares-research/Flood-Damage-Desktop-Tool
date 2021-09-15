@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer;
@@ -49,6 +50,32 @@ namespace FDT.Backend.Test.PersistenceLayer
             TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(basin);
 
             // 3. Validate final expectations.
+            Assert.That(testAction, Throws.Nothing);
+        }
+
+        [Test]
+        public void TestValidateFloodMapsWithReturnPeriodThrowsWhenNullCollectionGiven()
+        {
+            TestDelegate testAction = () =>
+                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(null);
+            Assert.That(testAction, Throws.TypeOf<ArgumentNullException>().With.Message.Contains("floodMaps"));
+        }
+
+        [Test]
+        public void TestValidateFloodMapsWithReturnPeriodThrowsNothingWhenEmptyCollectionGiven()
+        {
+            TestDelegate testAction = () =>
+                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(Enumerable.Empty<IFloodMapWithReturnPeriod>());
+            Assert.That(testAction, Throws.Nothing);
+        }
+
+        [Test]
+        public void TestValidateFloodMapsWithReturnPeriodThrowsNothingWhenValidData()
+        {
+            var testFloodMap = Substitute.For<IFloodMapWithReturnPeriod>();
+            testFloodMap.ReturnPeriod.Returns(42);
+            TestDelegate testAction = () =>
+                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(new []{ testFloodMap });
             Assert.That(testAction, Throws.Nothing);
         }
     }
