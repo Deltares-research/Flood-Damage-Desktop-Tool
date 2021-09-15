@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using ClosedXML.Excel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using Path = System.IO.Path;
 
 namespace FDT.Backend.PersistenceLayer.FileObjectModel
 {
     public class ExposureRowEntry : IRowEntry
     {
         private const string ExposureFileName = "exposure.csv";
-        private string ExposureRelativePath;
+        private readonly string _exposureRelativePath;
 
-        public ExposureRowEntry(string selectedBasin)
+        public ExposureRowEntry(string selectedBasin, string exposurePath)
         {
             if (string.IsNullOrEmpty(selectedBasin))
-                throw new ArgumentNullException(nameof(selectedBasin)); 
-            ExposureRelativePath = $"Exposure\\{selectedBasin}\\{ExposureFileName}";
+                throw new ArgumentNullException(nameof(selectedBasin));
+            if (string.IsNullOrEmpty(exposurePath))
+                throw new ArgumentNullException(nameof(exposurePath));
+            _exposureRelativePath = Path.Combine(exposurePath, selectedBasin, ExposureFileName);
         }
 
         public IEnumerable<object> GetOrderedColumns(IXLRow defaultRow)
         {
-            return new []{ ExposureRelativePath, string.Empty};
+            return new []{ _exposureRelativePath, string.Empty};
         }
     }
 }

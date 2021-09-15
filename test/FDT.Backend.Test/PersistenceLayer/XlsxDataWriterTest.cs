@@ -41,6 +41,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         {
             // Define test data.
             IFloodDamageDomain dummyDomainData = GetDummyDomain();
+            dummyDomainData.Paths.ExposurePath.Returns("Exposure");
             string resultsPath = Path.Combine(dummyDomainData.Paths.RootPath, "dummyResultsDir");
             dummyDomainData.Paths.ResultsPath.Returns(resultsPath);
             if(Directory.Exists(dummyDomainData.Paths.ResultsPath))
@@ -82,6 +83,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         {
             // Define initial expectations.
             var testDomain = GetDummyDomain();
+            testDomain.Paths.ExposurePath.Returns("Exposure");
             IBasin basinData = new BasinData()
             {
                 BasinName = "Test Basin",

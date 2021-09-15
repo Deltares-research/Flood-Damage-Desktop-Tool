@@ -11,12 +11,14 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
         public string TabName => _tabName;
         public IEnumerable<IRowEntry> RowEntries { get; }
         public ExposureRowEntry ExposureRowSingleEntry { get; }
-        public ExposureTabXlsx(IBasin basin)
+        public ExposureTabXlsx(IBasin basin, string exposureDirPath)
         {
             if (basin == null)
                 throw new ArgumentNullException(nameof(basin));
+            if (string.IsNullOrEmpty(exposureDirPath))
+                throw new ArgumentNullException(nameof(exposureDirPath));
 
-            ExposureRowSingleEntry = new ExposureRowEntry(basin.BasinName);
+            ExposureRowSingleEntry = new ExposureRowEntry(basin.BasinName, exposureDirPath);
             RowEntries = new[] { ExposureRowSingleEntry };
         }
     }
