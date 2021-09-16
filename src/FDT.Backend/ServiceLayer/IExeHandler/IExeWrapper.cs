@@ -1,4 +1,5 @@
-﻿using FDT.Backend.PersistenceLayer.IFileObjectModel;
+﻿using FDT.Backend.PersistenceLayer.FileObjectModel;
+using FDT.Backend.PersistenceLayer.IFileObjectModel;
 
 namespace FDT.Backend.ServiceLayer.IExeHandler
 {
@@ -6,6 +7,6 @@ namespace FDT.Backend.ServiceLayer.IExeHandler
     {
         string ExeFilePath { get; }
         void Run(IOutputData outputData);
-        bool ValidateRun(IOutputData outputData);
+        ValidationReport GetValidationReport();
     }
 }

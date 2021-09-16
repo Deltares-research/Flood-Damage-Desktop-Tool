@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
-using FDT.Backend.ServiceLayer.ExeHandler;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
@@ -17,58 +17,48 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             Assert.That(outputDataTest, Is.InstanceOf<IOutputData>());
         }
 
-        [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        public void ValidateParametersThrowsExceptionWhenNullOrEmptyConfigurationFilePath(string filePath)
+        private static IOutputData GetTestOutputData(string configurationFilePath, string basinName, string scenarioName)
         {
-            IOutputData outputData = new OutputData()
+            return new OutputData()
             {
-                ConfigurationFilePath = filePath
-            };
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateRun(outputData);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.ConfigurationFilePath)));
-        }
-
-        [Test]
-        public void ValidateParametersThrowsFileNotFoundExceptionWhenConfigurationFilePathDoesNotExist()
-        {
-            const string filePath = "this\\path\\does\\not\\exist";
-            IOutputData outputData = new OutputData()
-            {
-                ConfigurationFilePath = filePath
-            };
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateRun(outputData);
-            Assert.That(testAction, Throws.Exception.TypeOf<FileNotFoundException>().With.Message.Contains(filePath));
-        }
-
-        [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        public void ValidateParametersThrowsArgumentNullExceptionWhenBasinNameNullOrEmpty(string basinName)
-        {
-            IOutputData outputData = new OutputData()
-            {
-                ConfigurationFilePath = TestHelper.TestConfigurationFile,
-                BasinName = basinName
-            };
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateRun(outputData);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.BasinName)));
-        }
-
-        [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        public void ValidateParametersThrowsArgumentNullExceptionWhenScenarioNameNullOrEmpty(string scenarioName)
-        {
-            IOutputData outputData = new OutputData()
-            {
-                ConfigurationFilePath = TestHelper.TestConfigurationFile,
-                BasinName = "ABasinName",
+                ConfigurationFilePath = configurationFilePath,
+                BasinName = basinName,
                 ScenarioName = scenarioName
             };
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateRun(outputData);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.ScenarioName)));
+        }
+
+        private static IEnumerable OutputDataInvalidParametersCases
+        {
+            get
+            {
+                const string aValidConfigurationFilePath = "AnyPath";
+                const string aValidBasinName = "ABasinName";
+                const string scenarioName = "AValidScenarioName";
+
+                yield return new TestCaseData(GetTestOutputData(null, null, null), typeof(ArgumentNullException),
+                    nameof(IOutputData.ConfigurationFilePath));
+                yield return new TestCaseData(GetTestOutputData(string.Empty, null, null), typeof(ArgumentNullException),
+                    nameof(IOutputData.ConfigurationFilePath));
+                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, null, null), typeof(ArgumentNullException),
+                    nameof(IOutputData.BasinName));
+                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, string.Empty, null), typeof(ArgumentNullException),
+                    nameof(IOutputData.BasinName));
+                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, aValidBasinName, null), typeof(ArgumentNullException),
+                    nameof(IOutputData.ScenarioName));
+                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, aValidBasinName, string.Empty), typeof(ArgumentNullException),
+                    nameof(IOutputData.ScenarioName));
+                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, aValidBasinName, scenarioName), typeof(FileNotFoundException),
+                    aValidConfigurationFilePath);
+
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(OutputDataInvalidParametersCases))]
+        public void ValidateParametersTestThrowsException(IOutputData outputData, Type exceptionType, string message)
+        {
+            TestDelegate testAction = () => outputData.ValidateParameters();
+            Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(message));
         }
     }
 }

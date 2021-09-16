@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer;
+using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 using FDT.Backend.ServiceLayer.IExeHandler;
 
@@ -37,15 +38,18 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
             foreach (IOutputData outputData in outputDataCollection)
             {
                 ExeWrapper.Run(outputData);
-                if (!ExeWrapper.ValidateRun(outputData))
+                ValidationReport exeReport = ExeWrapper.GetValidationReport();
+                if (exeReport.HasErrors())
                 {
-                    errorRuns.Add($"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}");
+                    string errorHeader = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}";
+                    string reportErrors = String.Join("\n", exeReport.IssueList);
+                    errorRuns.Add($"{errorHeader}\n Detailed error: {reportErrors}");
                 }
             }
 
             if (!errorRuns.Any()) return;
 
-            string errorRun = string.Join("\n", errorRuns);
+            string errorRun = string.Join("\n\n", errorRuns);
             throw new Exception(errorRun);
         }
     }

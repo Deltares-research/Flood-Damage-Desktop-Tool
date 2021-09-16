@@ -13,12 +13,13 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
         {
             if (string.IsNullOrEmpty(ConfigurationFilePath))
                 throw new ArgumentNullException(nameof(IOutputData.ConfigurationFilePath));
-            if (!File.Exists(ConfigurationFilePath))
-                throw new FileNotFoundException(ConfigurationFilePath);
             if (string.IsNullOrEmpty(BasinName))
                 throw new ArgumentNullException(nameof(IOutputData.BasinName));
             if (string.IsNullOrEmpty(ScenarioName))
                 throw new ArgumentNullException(nameof(IOutputData.ScenarioName));
+            if (!File.Exists(ConfigurationFilePath))
+                throw new FileNotFoundException(ConfigurationFilePath);
         }
+
     }
 }

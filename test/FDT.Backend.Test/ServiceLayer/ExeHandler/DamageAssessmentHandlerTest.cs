@@ -2,6 +2,7 @@
 using System.Linq;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer;
+using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
 using FDT.Backend.ServiceLayer.IExeHandler;
@@ -39,14 +40,16 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void GivenValidateRunFailsThrowsException()
+        public void GivenExeReportHasErrorsRunThrowsException()
         {
             IOutputData outputData = Substitute.For<IOutputData>();
             outputData.BasinName.Returns("TestBasin");
             outputData.ScenarioName.Returns("Dumb scenario name");
             outputData.ConfigurationFilePath.Returns("\\Not\\A\\Valid\\Path");
-            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}";
+            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}\n Detailed error: ";
+
             var damageAssessmentHandler = Substitute.ForPartsOf<DamageAssessmentHandler>();
+            var exeReport = Substitute.ForPartsOf<ValidationReport>();
             IExeWrapper exeWrapper = Substitute.For<IExeWrapper>();
             IWriter dataWriter = Substitute.For<IWriter>();
             IFloodDamageDomain dataDomain = Substitute.For<IFloodDamageDomain>();
@@ -60,8 +63,12 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
                 .Returns(new []{outputData});
             exeWrapper
                 .Configure()
-                .ValidateRun(Arg.Any<IOutputData>())
-                .Returns(false);
+                .GetValidationReport()
+                .Returns(exeReport);
+            exeReport
+                .Configure()
+                .HasErrors()
+                .Returns(true);
             
             // Define test actions.
             TestDelegate testAction = () => damageAssessmentHandler.Run();
@@ -99,8 +106,8 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
                 .Returns(outputDataCollection);
             exeWrapper
                 .Configure()
-                .ValidateRun(Arg.Any<IOutputData>())
-                .Returns(true);
+                .GetValidationReport()
+                .Returns(new ValidationReport());
 
             // Define test actions.
             TestDelegate testAction = () => damageAssessmentHandler.Run();

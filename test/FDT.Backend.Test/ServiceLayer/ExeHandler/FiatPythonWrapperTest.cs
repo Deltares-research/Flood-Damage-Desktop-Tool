@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
 using FDT.Backend.ServiceLayer.IExeHandler;
@@ -58,14 +59,72 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void ValidateRunThrowsExceptionWithNullOutputData()
+        public void ValidateUsedOutputDataThrowsExceptionWithNullOutputData()
         {
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateRun(null);
+            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(null);
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("outputData"));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void ValidateParametersThrowsExceptionWhenNullOrEmptyConfigurationFilePath(string filePath)
+        {
+            IOutputData outputData = new OutputData()
+            {
+                ConfigurationFilePath = filePath
+            };
+            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(outputData);
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.ConfigurationFilePath)));
+        }
+
+        [Test]
+        public void ValidateParametersThrowsFileNotFoundExceptionWhenConfigurationFilePathDoesNotExist()
+        {
+            const string filePath = "this\\path\\does\\not\\exist";
+            const string scenarioName = "AScenarioName";
+            const string basinName = "ABasinName";
+            IOutputData outputData = new OutputData()
+            {
+                ConfigurationFilePath = filePath,
+                BasinName = basinName,
+                ScenarioName = scenarioName
+            };
+            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(outputData);
+            Assert.That(testAction, Throws.Exception.TypeOf<FileNotFoundException>().With.Message.Contains(filePath));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void ValidateParametersThrowsArgumentNullExceptionWhenBasinNameNullOrEmpty(string basinName)
+        {
+            IOutputData outputData = new OutputData()
+            {
+                ConfigurationFilePath = TestHelper.TestConfigurationFile,
+                BasinName = basinName
+            };
+            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(outputData);
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.BasinName)));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void ValidateParametersThrowsArgumentNullExceptionWhenScenarioNameNullOrEmpty(string scenarioName)
+        {
+            IOutputData outputData = new OutputData()
+            {
+                ConfigurationFilePath = TestHelper.TestConfigurationFile,
+                BasinName = "ABasinName",
+                ScenarioName = scenarioName
+            };
+            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(outputData);
+            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IOutputData.ScenarioName)));
         }
     }
 
-    public class FiatPythonWrapperValidateRunAcceptanceTest
+    public class FiatPythonWrapperValidateUsedOutputDataAcceptanceTest
     {
         private IOutputData _testOutputData;
         private string _basinDir;
@@ -112,7 +171,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void ValidateRunFailsWhenBasinDirDoesNotExist()
+        public void ValidateUsedOutputDataFailsWhenBasinDirDoesNotExist()
         {
             // 1. Define test data.
             var pythonWrapper = new FiatPythonWrapper();
@@ -120,7 +179,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             _testOutputData.BasinName.Returns("ThisDirDoesNotExist");
             
             // 2. Define test delegate.
-            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateRun(_testOutputData);
+            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateUsedOutputData(_testOutputData);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
@@ -128,14 +187,14 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void ValidateRunFailsWhenResultsNotGenerated()
+        public void ValidateUsedOutputDataFailsWhenResultsNotGenerated()
         {
             // 1. Define test data.
             var pythonWrapper = new FiatPythonWrapper();
             bool isValidRun = false;
 
             // 2. Define test delegate.
-            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateRun(_testOutputData);
+            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateUsedOutputData(_testOutputData);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
@@ -143,7 +202,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void ValidateRunSucceedsAndMovesConfigurationFileWhenResultsNotGenerated()
+        public void ValidateUsedOutputDataSucceedsAndMovesConfigurationFileWhenResultsNotGenerated()
         {
             // 1. Define test data.
             var pythonWrapper = new FiatPythonWrapper();
@@ -157,7 +216,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             Assert.That(Directory.GetFiles(_scenarioDir), Is.Not.Empty);
 
             // 2. Define test delegate.
-            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateRun(_testOutputData);
+            TestDelegate testAction = () => isValidRun = pythonWrapper.ValidateUsedOutputData(_testOutputData);
             
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);

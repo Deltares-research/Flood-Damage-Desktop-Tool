@@ -22,7 +22,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         [TestCase(null)]
         public void ReadInputDataThrowsExceptionWhenBasinDirIsNullOrEmpty(string basinDirPath)
         {
-            TestDelegate testAction = () => new WkidDataReader() { BasinDir = basinDirPath }.ReadInputData();
+            TestDelegate testAction = () => new WkidDataReader() { BasinDir = basinDirPath }.GetProjectionValue();
             Assert.That(testAction, Throws.ArgumentNullException.With.Message.Contains(nameof(WkidDataReader.BasinDir)));
         }
 
@@ -30,7 +30,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void ReadInputDataThrowsExceptionWhenFilePathNotFound()
         {
             const string basinDirPath = "Not\\A\\Valid\\Path";
-            TestDelegate testAction = () => new WkidDataReader(){BasinDir = basinDirPath}.ReadInputData();
+            TestDelegate testAction = () => new WkidDataReader(){BasinDir = basinDirPath}.GetProjectionValue();
             Assert.That(testAction, Throws.Exception.TypeOf<DirectoryNotFoundException>().With.Message.Contains(basinDirPath));
         }
 
@@ -49,7 +49,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             string wkidResult = string.Empty;
             
             // 2. Define test action.
-            TestDelegate testAction = () => wkidResult = new WkidDataReader() { BasinDir = basinDirPath }.ReadInputData();
+            TestDelegate testAction = () => wkidResult = new WkidDataReader() { BasinDir = basinDirPath }.GetProjectionValue();
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
