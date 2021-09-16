@@ -9,7 +9,7 @@ namespace FDT.Backend.PersistenceLayer
         public string BasinDir { get; set; }
         public string FilePath => Path.Combine(BasinDir, WkidFileName);
         private string _wkidCode;
-        public string ReadInputData()
+        public string GetProjectionValue()
         {
             if (string.IsNullOrEmpty(BasinDir))
                 throw new ArgumentNullException(nameof(BasinDir));
