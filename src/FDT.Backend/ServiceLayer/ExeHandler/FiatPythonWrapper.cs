@@ -40,7 +40,6 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
             {
                 runProcess.StartInfo.FileName = ExeFilePath;
                 runProcess.StartInfo.Arguments = arguments;
-                runProcess.StartInfo.UseShellExecute = false;
                 runProcess.StartInfo.RedirectStandardError = true;
                 runProcess.Start();
                 runProcess?.WaitForExit();

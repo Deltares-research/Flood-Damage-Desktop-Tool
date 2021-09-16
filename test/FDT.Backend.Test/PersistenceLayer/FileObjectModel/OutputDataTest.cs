@@ -33,7 +33,6 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             {
                 const string aValidConfigurationFilePath = "AnyPath";
                 const string aValidBasinName = "ABasinName";
-                const string scenarioName = "AValidScenarioName";
 
                 yield return new TestCaseData(GetTestOutputData(null, null, null), typeof(ArgumentNullException),
                     nameof(IOutputData.ConfigurationFilePath));
@@ -47,8 +46,6 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
                     nameof(IOutputData.ScenarioName));
                 yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, aValidBasinName, string.Empty), typeof(ArgumentNullException),
                     nameof(IOutputData.ScenarioName));
-                yield return new TestCaseData(GetTestOutputData(aValidConfigurationFilePath, aValidBasinName, scenarioName), typeof(FileNotFoundException),
-                    aValidConfigurationFilePath);
 
             }
         }
