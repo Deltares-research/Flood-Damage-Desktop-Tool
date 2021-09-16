@@ -79,22 +79,6 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
         }
 
         [Test]
-        public void ValidateParametersThrowsFileNotFoundExceptionWhenConfigurationFilePathDoesNotExist()
-        {
-            const string filePath = "this\\path\\does\\not\\exist";
-            const string scenarioName = "AScenarioName";
-            const string basinName = "ABasinName";
-            IOutputData outputData = new OutputData()
-            {
-                ConfigurationFilePath = filePath,
-                BasinName = basinName,
-                ScenarioName = scenarioName
-            };
-            TestDelegate testAction = () => new FiatPythonWrapper().ValidateUsedOutputData(outputData);
-            Assert.That(testAction, Throws.Exception.TypeOf<FileNotFoundException>().With.Message.Contains(filePath));
-        }
-
-        [Test]
         [TestCase("")]
         [TestCase(null)]
         public void ValidateParametersThrowsArgumentNullExceptionWhenBasinNameNullOrEmpty(string basinName)

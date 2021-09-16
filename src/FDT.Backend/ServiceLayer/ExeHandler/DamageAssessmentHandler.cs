@@ -41,7 +41,7 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
                 ValidationReport exeReport = ExeWrapper.GetValidationReport();
                 if (exeReport.HasErrors())
                 {
-                    string errorHeader = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}";
+                    string errorHeader = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}";
                     string reportErrors = String.Join("\n", exeReport.IssueList);
                     errorRuns.Add($"{errorHeader}\n Detailed error: {reportErrors}");
                 }
