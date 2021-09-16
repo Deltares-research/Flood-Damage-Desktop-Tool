@@ -46,7 +46,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             outputData.BasinName.Returns("TestBasin");
             outputData.ScenarioName.Returns("Dumb scenario name");
             outputData.ConfigurationFilePath.Returns("\\Not\\A\\Valid\\Path");
-            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}";
+            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}, config file: {outputData.ConfigurationFilePath}\n Detailed error: ";
 
             var damageAssessmentHandler = Substitute.ForPartsOf<DamageAssessmentHandler>();
             var exeReport = Substitute.ForPartsOf<ValidationReport>();
