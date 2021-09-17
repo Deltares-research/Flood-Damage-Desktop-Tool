@@ -5,7 +5,6 @@ namespace FDT.Backend.ServiceLayer.IExeHandler
 {
     public interface IExeWrapper
     {
-        string ExeFilePath { get; }
         void Run(IOutputData outputData);
         ValidationReport GetValidationReport();
     }

@@ -50,8 +50,8 @@ namespace FDT.Gui
                 ViewModel.RunDamageAssessment.Execute(sender);
                 MessageBox.Show(
                     this,
-                    $"Assessment run correctly, result files stored at {ViewModel.BackendPaths.ResultsPath}",
-                    "Successful run",
+                    $"Assessment run finished.\nFor more details check the results directory at {ViewModel.BackendPaths.ResultsPath}",
+                    "Finished run",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
