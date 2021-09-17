@@ -5,6 +5,5 @@
         string ConfigurationFilePath { get; }
         string BasinName { get; }
         string ScenarioName { get; }
-        void ValidateParameters();
     }
 }
