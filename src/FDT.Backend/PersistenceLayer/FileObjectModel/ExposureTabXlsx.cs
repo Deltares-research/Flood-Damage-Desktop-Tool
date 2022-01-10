@@ -18,7 +18,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
             if (string.IsNullOrEmpty(exposureDirPath))
                 throw new ArgumentNullException(nameof(exposureDirPath));
 
-            ExposureRowSingleEntry = new ExposureRowEntry(basin, exposureDirPath);
+            ExposureRowSingleEntry = new ExposureRowEntry(basin.BasinName, exposureDirPath);
             RowEntries = new[] { ExposureRowSingleEntry };
         }
     }
