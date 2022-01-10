@@ -4,7 +4,6 @@ using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 
 namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
@@ -16,7 +15,8 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
         {
             // Define test data
             IBasin basin = Substitute.For<IBasin>();
-            basin.BasinName.Returns("SelectedBasinname");
+            basin.BasinName.Returns("SelectedBasinName");
+            basin.Projection.Returns("SelectedBasinProjection");
             ExposureTabXlsx exposureTab = null;
             
             // Define test delegate
