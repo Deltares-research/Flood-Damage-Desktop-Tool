@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Input;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
