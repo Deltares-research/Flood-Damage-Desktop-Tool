@@ -58,10 +58,7 @@
                         Grid.Column="0"
                         Orientation="Horizontal"
                         IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
-                        <TextBlock 
-                            Text="Select Area of Interest"
-                            Width="130"
-                            VerticalAlignment="Center"/>
+                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}" VerticalAlignment="Center"/>
                         <ComboBox 
                             VerticalContentAlignment="Center"
                             Width="{StaticResource LabelLength}"
