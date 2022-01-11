@@ -1,4 +1,5 @@
-﻿using FDT.Backend.DomainLayer.DataModel;
+﻿using System.IO;
+using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using NUnit.Framework;
 
@@ -16,11 +17,36 @@ namespace FDT.Backend.Test.DomainLayer.DataModel
         }
 
         [Test]
-        public void UpdateSelectedBasinPathWithoutExposureDirThrowsNothing()
+        public void ChangeRootDirectoryWithoutExposureDirThrowsDirectoryNotFoundException()
         {
-            // TestDelegate testAction = () => new ApplicationPaths().UpdateSelectedBasin("something");
-            // Assert.That(testAction, Throws.Nothing);
-            Assert.Fail("needs rework");
+            var exposurePath = Path.Combine("something", "database", "Exposure");
+            string expectedErrorMssg = $"Exposure directory does not exist at {exposurePath}";
+            TestDelegate testAction = () => new ApplicationPaths().ChangeRootDirectory("something");
+
+            Assert.That(
+                testAction, 
+                Throws.Exception.TypeOf<DirectoryNotFoundException>().With.Message.Contains(expectedErrorMssg));
+        }
+
+        [Test]
+        public void ChangeRootDirectoryWithoutExposureSubdirectoriesThrowsException()
+        {
+            // 1. Define test data.
+            string currentDir = Directory.GetCurrentDirectory();
+            string rootDir = Path.Combine(currentDir, "testRootDir");
+            string databasePath = Path.Combine(rootDir, "database");
+            string exposurePath = Path.Combine(databasePath, "Exposure");
+            string exceptionMessage = $"No basin subdirectories found at Exposure directory {exposurePath}";
+
+            if (Directory.Exists(exposurePath))
+                Directory.Delete(exposurePath, true);
+            Directory.CreateDirectory(exposurePath);
+
+            // 2. Define test action.
+            TestDelegate testAction = () => new ApplicationPaths().ChangeRootDirectory(rootDir);
+
+            // 3. Verify final expectations.
+            Assert.That(testAction, Throws.Exception.With.Message.Contains(exceptionMessage));
         }
 
     }
