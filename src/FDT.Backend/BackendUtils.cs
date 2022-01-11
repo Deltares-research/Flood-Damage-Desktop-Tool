@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace FDT.Gui
+namespace FDT.Backend
 {
-    public static class GuiUtils
+    public static class BackendUtils
     {
         public static IEnumerable<string> GetSubDirectoryNames(string[] foundSubDirectories)
         {

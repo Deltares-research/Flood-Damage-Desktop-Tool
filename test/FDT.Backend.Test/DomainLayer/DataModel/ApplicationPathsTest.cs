@@ -18,8 +18,9 @@ namespace FDT.Backend.Test.DomainLayer.DataModel
         [Test]
         public void UpdateSelectedBasinPathWithoutExposureDirThrowsNothing()
         {
-            TestDelegate testAction = () => new ApplicationPaths().UpdateSelectedBasin("something");
-            Assert.That(testAction, Throws.Nothing);
+            // TestDelegate testAction = () => new ApplicationPaths().UpdateSelectedBasin("something");
+            // Assert.That(testAction, Throws.Nothing);
+            Assert.Fail("needs rework");
         }
 
     }

@@ -63,14 +63,14 @@ namespace FDT.Backend.Test.PersistenceLayer
         {
             // 1. Prepare test data.
             IFloodDamageDomain testDomain = GetDummyDomain();
-            testDomain.BasinData.Returns(testCaseBasin);
+            testDomain.FloodDamageBasinData.Returns(testCaseBasin);
             string resultsPath = Path.Combine(testDomain.Paths.RootPath, "dummyResultsDir");
             testDomain.Paths.ResultsPath.Returns(resultsPath);
             if (Directory.Exists(testDomain.Paths.ResultsPath))
                 Directory.Delete(testDomain.Paths.ResultsPath, true);
 
             // 2. Define test action.
-            TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(testCaseBasin);
+            TestDelegate testAction = () => XlsDataWriteHelper.ValidateFloodDamageBasinData(testCaseBasin);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
@@ -117,7 +117,7 @@ namespace FDT.Backend.Test.PersistenceLayer
                     }
                 }
             };
-            testDomain.BasinData.Returns(basinData);
+            testDomain.FloodDamageBasinData.Returns(basinData);
             Assert.That(Directory.Exists(testDomain.Paths.RootPath));
 
             // Test Action
@@ -134,18 +134,18 @@ namespace FDT.Backend.Test.PersistenceLayer
         private IFloodDamageDomain GetDummyDomain()
         {
             var floodDamageDomain = Substitute.For<IFloodDamageDomain>();
-            floodDamageDomain.BasinData = Substitute.For<IBasin>();
+            floodDamageDomain.FloodDamageBasinData = Substitute.For<IFloodDamageBasin>();
             floodDamageDomain.Paths = Substitute.For<IApplicationPaths>();
             var dummyScenario = Substitute.For<IScenario>();
-            floodDamageDomain.BasinData.Scenarios.Returns(new[] {dummyScenario});
+            floodDamageDomain.FloodDamageBasinData.Scenarios.Returns(new[] {dummyScenario});
 
             string debugDir = TestHelper.AssemblyDirectory;
             string testDataDir = Path.Combine(debugDir, "TestData");
             string rootDir = Path.Combine(testDataDir, "TestRoot");
             Assert.That(Directory.Exists(rootDir));
 
-            floodDamageDomain.BasinData.BasinName.Returns("ValidBasinName");
-            floodDamageDomain.BasinData.Projection.Returns("ValidProjection");
+            floodDamageDomain.FloodDamageBasinData.BasinName.Returns("ValidBasinName");
+            floodDamageDomain.FloodDamageBasinData.Projection.Returns("ValidProjection");
 
             floodDamageDomain.Paths.RootPath = rootDir;
             floodDamageDomain.Paths.DatabasePath.Returns(Path.Combine(rootDir, "database"));

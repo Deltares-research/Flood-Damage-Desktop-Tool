@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer;
 
 namespace FDT.Gui.ViewModels
 {
     public static class BackendConverter
     {
-        public static IBasin ConvertBasin(this IEnumerable<IBasinScenario> basinScenarios, string selectedBasinPath)
+        public static IFloodDamageBasin ConvertBasin(this IBasin basinData, IEnumerable<IBasinScenario> basinScenarios)
         {
             if (basinScenarios == null)
                 throw new ArgumentNullException(nameof(basinScenarios));
 
-            return new BasinData
+            return new FloodDamageBasinData
             {
-                Projection = new WkidDataReader{BasinDir = selectedBasinPath}.GetProjectionValue(),
-                BasinName = Path.GetFileName(selectedBasinPath),
+                Projection = basinData.Projection,
+                BasinName = basinData.BasinName,
                 Scenarios = basinScenarios
                     .Where( bs => bs.IsEnabled )
                     .SelectMany( bs => bs.Scenarios.ConvertScenarios())

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,13 +16,13 @@ namespace FDT.Gui.ViewModels
     public class MainWindowViewModel: INotifyPropertyChanged
     {
         private ObservableCollection<string> _availableBasins;
-        private string _selectedBasin;
+        private Dictionary<string, IBasin> _basinDictionary;
         private AssessmentStatus _runStatus;
 
         public MainWindowViewModel()
         {
             BasinScenarios = new ObservableCollection<IBasinScenario>();
-
+            _basinDictionary = new Dictionary<string, IBasin>();
             SelectRootDirectory = new RelayCommand(OnSelectRootDirectory);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
             BackendPaths = new ApplicationPaths();
@@ -74,11 +75,10 @@ namespace FDT.Gui.ViewModels
 
         public string SelectedBasin
         {
-            get => _selectedBasin;
+            get => BackendPaths?.SelectedBasin?.BasinName ?? string.Empty;
             set
             {
-                _selectedBasin = value;
-                BackendPaths.UpdateSelectedBasin(_selectedBasin);
+                BackendPaths.SelectedBasin = _basinDictionary[value];
                 OnPropertyChanged();
             }
         }
@@ -95,11 +95,9 @@ namespace FDT.Gui.ViewModels
             if (!Directory.Exists(rootDirectory))
                 throw new DirectoryNotFoundException(rootDirectory);
 
-            BackendPaths.RootPath = rootDirectory;
-            string[] subDirectoryNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(BackendPaths.ExposurePath)).ToArray();
-            if (!subDirectoryNames.Any())
-                throw new Exception($"No basin subdirectories found at Exposure directory {BackendPaths.ExposurePath}");
-            AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
+            BackendPaths.ChangeRootDirectory(rootDirectory);
+            _basinDictionary = BackendPaths.AvailableBasins.ToDictionary(ab => ab.BasinName, ab => ab);
+            AvailableBasins = new ObservableCollection<string>(_basinDictionary.Keys);
             InitializeDefaultBasinScenarios();
         }
 
@@ -115,7 +113,7 @@ namespace FDT.Gui.ViewModels
             // This method should throw any generated exception so that it's caught and handled by the caller command.
             var floodDamageDomain = new FloodDamageDomain()
             {
-                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
+                FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios),
                 Paths = BackendPaths
             };
             DamageAssessmentHandler runHandler = new DamageAssessmentHandler

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test
+namespace FDT.Backend.Test
 {
-    public class GuiUtilsTest
+    public class BackendUtilsTest
     {
 
         public static IEnumerable InvalidSubdirectoryNames
@@ -33,7 +33,7 @@ namespace FDT.Gui.Test
         public object TestGetSubDirectoryNamesReturnsNothingWhenNoneGiven(IEnumerable<string> directories)
         {
             IEnumerable<string> result = null;
-            TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(directories?.ToArray()).ToArray();
+            TestDelegate testAction = () => result = BackendUtils.GetSubDirectoryNames(directories?.ToArray()).ToArray();
             Assert.That(testAction, Throws.Nothing);
             return result;
         }
@@ -46,7 +46,7 @@ namespace FDT.Gui.Test
             string[] result = null;
         
             // 2. Define test action.
-            TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
+            TestDelegate testAction = () => result = BackendUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
         
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);

@@ -4,12 +4,12 @@ namespace FDT.Backend.DomainLayer.DataModel
 {
     public class FloodDamageDomain: IFloodDamageDomain
     {
-        public IBasin BasinData { get; set; }
+        public IFloodDamageBasin FloodDamageBasinData { get; set; }
         public IApplicationPaths Paths { get; set; }
 
         public FloodDamageDomain()
         {
-            BasinData = new BasinData();
+            FloodDamageBasinData = new FloodDamageBasinData();
             Paths = new ApplicationPaths();
         }
     }
