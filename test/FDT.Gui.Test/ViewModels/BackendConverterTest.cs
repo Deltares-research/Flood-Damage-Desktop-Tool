@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Gui.ViewModels;
@@ -8,11 +9,38 @@ using NUnit.Framework;
 using FloodMap = FDT.Backend.DomainLayer.DataModel.FloodMap;
 using FloodMapWithReturnPeriod = FDT.Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod;
 using IFloodMap = FDT.Gui.ViewModels.IFloodMap;
+using IScenario = FDT.Gui.ViewModels.IScenario;
 
 namespace FDT.Gui.Test.ViewModels
 {
     public class BackendConverterTest
     {
+        [Test]
+        public void TestConvertBasinScenariosWithValidArguments()
+        {
+            // Define test data.
+            IBasinScenario testBasinScenario = Substitute.For<IBasinScenario>();
+            IBasinScenario testDisabledScenario = Substitute.For<IBasinScenario>();
+            testBasinScenario.IsEnabled.Returns(true);
+            testDisabledScenario.IsEnabled.Returns(false);
+
+            IScenario testScenario = Substitute.For<IScenario>();
+            testScenario.ScenarioName.Returns("aName");
+
+            testBasinScenario.Scenarios.Returns(new ObservableCollection<IScenario>(new List<IScenario> { testScenario }));
+            Backend.DomainLayer.IDataModel.IScenario[] resultScenarios = null;
+            var basinScenarios = new List<IBasinScenario> {testBasinScenario, testDisabledScenario};
+            // Define test action.
+            TestDelegate testAction = () => resultScenarios = BackendConverter.ConvertBasinScenarios(basinScenarios).ToArray();
+            
+            // Verify final expectations.
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(resultScenarios, Is.Not.Empty.Or.Null);
+            Assert.That(resultScenarios.Count(), Is.EqualTo(1));
+            var resultScenario = resultScenarios.Single();
+            Assert.That(resultScenario.ScenarioName, Is.EqualTo(testScenario.ScenarioName));
+        }
+
         [Test]
         public void TestConvertBasinScenariosThrowsExceptionWithNullArguments()
         {
