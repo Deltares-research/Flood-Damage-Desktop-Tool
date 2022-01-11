@@ -9,7 +9,7 @@ namespace FDT.Backend.DomainLayer.DataModel
     {
         public static IBasin GetBasin(string selectedBasinPath)
         {
-            if (selectedBasinPath == null)
+            if (string.IsNullOrEmpty(selectedBasinPath))
                 throw new ArgumentNullException(nameof(selectedBasinPath));
             return new BasinData
             {
@@ -20,7 +20,7 @@ namespace FDT.Backend.DomainLayer.DataModel
 
         public static string GetWkidValue(string selectedBasinPath)
         {
-            if (selectedBasinPath == null)
+            if (string.IsNullOrEmpty(selectedBasinPath))
                 throw new ArgumentNullException(nameof(selectedBasinPath));
             try
             {
