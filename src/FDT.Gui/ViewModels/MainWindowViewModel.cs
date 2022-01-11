@@ -18,7 +18,7 @@ namespace FDT.Gui.ViewModels
     {
         private ObservableCollection<string> _availableBasins;
         private Dictionary<string, IBasin> _basinDictionary;
-        private SelectBasinHelper _selectBasinHelper;
+        private readonly SelectBasinHelper _selectBasinHelper;
         private AssessmentStatus _runStatus;
 
         public MainWindowViewModel()

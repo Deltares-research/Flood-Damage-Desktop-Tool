@@ -2,8 +2,6 @@
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Gui.ViewModels;
 using NSubstitute;
@@ -20,11 +18,11 @@ namespace FDT.Gui.Test.ViewModels
         {
             var viewModel = new MainWindowViewModel();
             Assert.That(viewModel, Is.InstanceOf<INotifyPropertyChanged>());
-            Assert.That(viewModel.BasinScenarios, Is.Empty);
             Assert.That(viewModel.SelectRootDirectory, Is.Not.Null);
             Assert.That(viewModel.RunDamageAssessment, Is.Not.Null);
-            Assert.That(viewModel.BackendPaths, Is.Not.Null);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
+            Assert.That(viewModel.BasinScenarios, Is.Empty);
+            Assert.That(viewModel.BackendPaths, Is.InstanceOf<IApplicationPaths>());
             Assert.That(viewModel.AvailableBasins, Is.Empty);
         }
 
@@ -59,8 +57,8 @@ namespace FDT.Gui.Test.ViewModels
             string exposurePath = Path.Combine(databasePath, "Exposure");
             string exceptionMessage = $"No basin subdirectories found at Exposure directory {rootDir}";
 
-            if (Directory.Exists(exposurePath))
-                Directory.Delete(exposurePath, true);
+            if (Directory.Exists(rootDir))
+                Directory.Delete(rootDir, true);
             Directory.CreateDirectory(exposurePath);
 
             var backendPaths = Substitute.For<IApplicationPaths>();
@@ -84,8 +82,8 @@ namespace FDT.Gui.Test.ViewModels
             string exposurePath = Path.Combine(databasePath, "Exposure");
             const string availableBasin = "c-9";
             string basinPath = Path.Combine(exposurePath, availableBasin);
-            if(Directory.Exists(basinPath))
-                Directory.Delete(basinPath, true);
+            if(Directory.Exists(rootDir))
+                Directory.Delete(rootDir, true);
             Directory.CreateDirectory(basinPath);
 
             // 2. Verify initial expectations.
@@ -100,6 +98,42 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(testAction, Throws.Nothing);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
             Assert.That(viewModel.SelectedBasin, Is.EqualTo(availableBasin));
+        }
+
+        [Test]
+        public void TestGivenValidAvailableBasinsWhenChangeSelectedBasinShowsWarningMessage()
+        {
+            // 1. Define test data.
+            var viewModel = new MainWindowViewModel();
+            string warningMssg = string.Empty;
+            viewModel.ShowWarningMessage = s => warningMssg = s;
+            string rootDir = Path.Combine(Directory.GetCurrentDirectory(), "testRootDir");
+            string databasePath = Path.Combine(rootDir, "database");
+            string exposurePath = Path.Combine(databasePath, "Exposure");
+
+            const string initialBasin = "c-09";
+            const string newBasinSelection = "c-10";
+            string[] availableBasins = {initialBasin, newBasinSelection};
+            if (Directory.Exists(rootDir))
+                Directory.Delete(rootDir, true);
+            foreach (string availableBasin in availableBasins)
+            {
+                Directory.CreateDirectory(Path.Combine(exposurePath, availableBasin));
+            }
+
+            // 2. Verify initial expectations.
+            viewModel.SelectRootDirectory.Execute(rootDir);
+            Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
+            Assert.That(viewModel.AvailableBasins, Is.Not.Empty);
+            Assert.That(viewModel.SelectedBasin, Is.EqualTo(initialBasin));
+
+            // 3. Define test action.
+            TestDelegate testAction = () => viewModel.SelectedBasin = newBasinSelection;
+
+            // 4. Verify final expectations.
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(viewModel.SelectedBasin, Is.EqualTo(newBasinSelection));
+            Assert.That(warningMssg, Is.Not.Null.Or.Empty);
         }
     }
 }
