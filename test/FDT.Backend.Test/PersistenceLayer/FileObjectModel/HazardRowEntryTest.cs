@@ -11,8 +11,15 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
 {
     public class HazardRowEntryTest
     {
+        static object[] GetFloodMapTypeCases =
+        {
+            new object[] { FloodMapType.WaterDepth, "DEM" },
+            new object[] { FloodMapType.WaterLevel, "Datum" },
+        };
+
         [Test]
-        public void ConstructorTest()
+        [TestCaseSource(nameof(GetFloodMapTypeCases))]
+        public void ConstructorTest(FloodMapType mapType, string inundationRef)
         {
             // Define test data.
             HazardRowEntry hazardRowEntry = null;
@@ -26,7 +33,7 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             
             floodMap.Path.Returns(filePath);
             floodMap.GetReturnPeriod().Returns(returnObject);
-            floodMap.MapType.Returns(FloodMapType.WaterDepth);
+            floodMap.MapType.Returns(mapType);
 
             // Substitute expects these calls to be made, otherwise will fail.
             defaultRow.Cell(4).Returns(returnCell);
@@ -43,7 +50,7 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
                 floodMap.Path,
                 floodMap.GetReturnPeriod(),
                 basinProjection,
-                "DEM",
+                inundationRef,
             }));
         }
 
@@ -101,7 +108,7 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
                 floodMap.Path,
                 floodMap.GetReturnPeriod(),
                 basinProjection,
-                string.Empty,
+                "DEM",
             };
             object[] returnValue = null;
 
