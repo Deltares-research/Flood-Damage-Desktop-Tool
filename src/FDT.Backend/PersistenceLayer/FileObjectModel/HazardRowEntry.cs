@@ -11,6 +11,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
         private string HazardFile { get; }
         private object ReturnPeriod { get; }
         private string CRS { get; }
+        private string InundationReference { get; }
         public HazardRowEntry(IFloodMapBase floodMapBase, string basinProjection)
         {
             if (floodMapBase == null)
@@ -21,19 +22,29 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
             HazardFile = floodMapBase.Path;
             ReturnPeriod = floodMapBase.GetReturnPeriod();
             CRS = basinProjection;
+            InundationReference = GetInundationReference(floodMapBase.MapType);
         }
 
         public IEnumerable<object> GetOrderedColumns(IXLRow defaultRow)
         {
             if (defaultRow == null)
                 throw new ArgumentNullException(nameof(defaultRow));
-            string inundationReference = defaultRow.Cell(4).GetValue<string>();
             return new[]
             {
                 HazardFile,
                 ReturnPeriod,
                 CRS,
-                inundationReference
+                InundationReference
+            };
+        }
+
+        private string GetInundationReference(FloodMapType mapType)
+        {
+            return mapType switch
+            {
+                FloodMapType.WaterDepth => "DEM",
+                FloodMapType.WaterLevel => "Datum",
+                _ => throw new ArgumentException($"Unknown Flood Map type {mapType}")
             };
         }
     }

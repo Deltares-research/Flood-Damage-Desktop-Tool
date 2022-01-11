@@ -58,7 +58,7 @@ namespace FDT.Gui.Test.ViewModels
         [Test]
         public void TestConvertFloodMapsThrowsExceptionWithNullArguments()
         {
-            TestDelegate testAction = () => BackendConverter.ConvertFloodMaps(null).ToArray();
+            TestDelegate testAction = () => BackendConverter.ConvertFloodMaps(null, default(FloodMapType)).ToArray();
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("floodMaps"));
         }
 
@@ -71,7 +71,7 @@ namespace FDT.Gui.Test.ViewModels
             testFloodMap.HasReturnPeriod.Returns(hasReturnPeriod);
             IEnumerable<IFloodMapBase> convertedFloodMaps = Enumerable.Empty<IFloodMapBase>();
             TestDelegate testAction = () =>
-                convertedFloodMaps = BackendConverter.ConvertFloodMaps(new[] {testFloodMap});
+                convertedFloodMaps = BackendConverter.ConvertFloodMaps(new[] {testFloodMap}, default(FloodMapType));
             Assert.That(testAction, Throws.Nothing);
             Assert.That(convertedFloodMaps.Single(), Is.InstanceOf<IFloodMapBase>());
             Assert.That(convertedFloodMaps.Single(), Is.InstanceOf(expectedType));

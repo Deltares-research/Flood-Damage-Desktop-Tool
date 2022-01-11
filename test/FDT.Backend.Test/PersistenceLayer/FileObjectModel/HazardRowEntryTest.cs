@@ -23,14 +23,13 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
             const string basinProjection = "EPSG:42";
             const string filePath = "DummyDataPath";
             const int returnObject = 42;
-            const string inundationReference = "DasRef";
             
             floodMap.Path.Returns(filePath);
             floodMap.GetReturnPeriod().Returns(returnObject);
+            floodMap.MapType.Returns(FloodMapType.WaterDepth);
 
             // Substitute expects these calls to be made, otherwise will fail.
             defaultRow.Cell(4).Returns(returnCell);
-            returnCell.GetValue<string>().Returns(inundationReference);
 
             // Generate object.
             TestDelegate testAction = () => hazardRowEntry = new HazardRowEntry(floodMap, basinProjection);
@@ -44,7 +43,7 @@ namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
                 floodMap.Path,
                 floodMap.GetReturnPeriod(),
                 basinProjection,
-                inundationReference,
+                "DEM",
             }));
         }
 

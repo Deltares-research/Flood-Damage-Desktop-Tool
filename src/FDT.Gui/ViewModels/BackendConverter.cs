@@ -27,13 +27,13 @@ namespace FDT.Gui.ViewModels
                 yield return new ScenarioData()
                 {
                     ScenarioName = scenario.ScenarioName,
-                    FloodMaps = scenario.FloodMaps.ConvertFloodMaps()
+                    FloodMaps = scenario.FloodMaps.ConvertFloodMaps(scenario.ScenarioFloodMapType)
                 };
             }
         }
 
         public static IEnumerable<IFloodMapBase> ConvertFloodMaps(
-            this IEnumerable<IFloodMap> floodMaps)
+            this IEnumerable<IFloodMap> floodMaps, FloodMapType mapType)
         {
             if (floodMaps == null)
                 throw new ArgumentNullException(nameof(floodMaps));
@@ -44,14 +44,16 @@ namespace FDT.Gui.ViewModels
                     yield return new Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod()
                     {
                         Path = floodMap.MapPath,
-                        ReturnPeriod = floodMap.ReturnPeriod
+                        ReturnPeriod = floodMap.ReturnPeriod,
+                        MapType = mapType
                     };
                 }
                 else
                 {
                     yield return new Backend.DomainLayer.DataModel.FloodMap()
                     {
-                        Path = floodMap.MapPath
+                        Path = floodMap.MapPath,
+                        MapType = mapType
                     };
                 }
             }
