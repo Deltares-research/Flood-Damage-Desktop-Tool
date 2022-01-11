@@ -2,7 +2,7 @@
 {
     public interface IFloodDamageDomain
     {
-        IBasin BasinData { get; set; }
+        IFloodDamageBasin FloodDamageBasinData { get; set; }
         IApplicationPaths Paths { get; set; }
     }
 }

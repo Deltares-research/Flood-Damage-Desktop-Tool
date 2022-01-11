@@ -19,7 +19,7 @@ namespace FDT.Backend.PersistenceLayer
             return hazardWorksheet;
         }
 
-        public static void ValidateBasinData(this IBasin basinData)
+        public static void ValidateFloodDamageBasinData(this IFloodDamageBasin basinData)
         {
             if (basinData == null)
                 throw new ArgumentNullException(nameof(basinData));

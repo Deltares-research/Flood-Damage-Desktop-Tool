@@ -1,34 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Input;
+using FDT.Backend;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
 
 namespace FDT.Gui.ViewModels
 {
-    public class MainWindowViewModel: INotifyPropertyChanged
+    public sealed class MainWindowViewModel: INotifyPropertyChanged
     {
         private ObservableCollection<string> _availableBasins;
-        private string _selectedBasin;
+        private Dictionary<string, IBasin> _basinDictionary;
+        private readonly SelectBasinHelper _selectBasinHelper;
         private AssessmentStatus _runStatus;
 
         public MainWindowViewModel()
         {
+            _basinDictionary = new Dictionary<string, IBasin>();
+            _selectBasinHelper = new SelectBasinHelper();
             BasinScenarios = new ObservableCollection<IBasinScenario>();
+            AvailableBasins = new ObservableCollection<string>();
+            BackendPaths = new ApplicationPaths();
 
             SelectRootDirectory = new RelayCommand(OnSelectRootDirectory);
             RunDamageAssessment = new RelayCommand(OnRunDamageAssessment);
-            BackendPaths = new ApplicationPaths();
             RunStatus = AssessmentStatus.LoadingBasins;
-            AvailableBasins = new ObservableCollection<string>();
         }
+
+        public Action<string> ShowWarningMessage { private get; set; }
 
         private void InitializeDefaultBasinScenarios()
         {
@@ -58,7 +64,7 @@ namespace FDT.Gui.ViewModels
             }
         }
 
-        public IApplicationPaths BackendPaths { get; set; }
+        public ApplicationPaths BackendPaths { get; set; }
 
         public ObservableCollection<string> AvailableBasins
         {
@@ -75,11 +81,15 @@ namespace FDT.Gui.ViewModels
 
         public string SelectedBasin
         {
-            get => _selectedBasin;
+            get => BackendPaths?.SelectedBasin?.BasinName ?? string.Empty;
             set
             {
-                _selectedBasin = value;
-                BackendPaths.UpdateSelectedBasin(_selectedBasin);
+                if (!_basinDictionary.TryGetValue(value, out var newSelection)) return;
+                BackendPaths.SelectedBasin = newSelection;
+                var warningMessage = _selectBasinHelper.GetSelectedBasinWarning(newSelection);
+                if(!string.IsNullOrEmpty(warningMessage))
+                    ShowWarningMessage?.Invoke(warningMessage);
+
                 OnPropertyChanged();
             }
         }
@@ -96,11 +106,9 @@ namespace FDT.Gui.ViewModels
             if (!Directory.Exists(rootDirectory))
                 throw new DirectoryNotFoundException(rootDirectory);
 
-            BackendPaths.RootPath = rootDirectory;
-            string[] subDirectoryNames = GuiUtils.GetSubDirectoryNames(Directory.GetDirectories(BackendPaths.ExposurePath)).ToArray();
-            if (!subDirectoryNames.Any())
-                throw new Exception($"No basin subdirectories found at Exposure directory {BackendPaths.ExposurePath}");
-            AvailableBasins = new ObservableCollection<string>(subDirectoryNames);
+            BackendPaths.ChangeRootDirectory(rootDirectory);
+            _basinDictionary = BackendPaths.AvailableBasins.ToDictionary(ab => ab.BasinName, ab => ab);
+            AvailableBasins = new ObservableCollection<string>(_basinDictionary.Keys);
             InitializeDefaultBasinScenarios();
         }
 
@@ -114,14 +122,13 @@ namespace FDT.Gui.ViewModels
         private void OnRunDamageAssessment(object objectCmd)
         {
             // This method should throw any generated exception so that it's caught and handled by the caller command.
-            var floodDamageDomain = new FloodDamageDomain()
-            {
-                BasinData = BasinScenarios.ConvertBasin(BackendPaths.SelectedBasinPath),
-                Paths = BackendPaths
-            };
             DamageAssessmentHandler runHandler = new DamageAssessmentHandler
             {
-                DataDomain = floodDamageDomain
+                DataDomain = new FloodDamageDomain
+                {
+                    FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios.ConvertBasinScenarios()),
+                    Paths = BackendPaths
+                }
             };
             // The write stream seems to be causing problems when running
             // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
@@ -132,7 +139,7 @@ namespace FDT.Gui.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

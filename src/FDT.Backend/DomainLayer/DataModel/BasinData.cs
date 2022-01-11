@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FDT.Backend.DomainLayer.IDataModel;
+﻿using FDT.Backend.DomainLayer.IDataModel;
 
 namespace FDT.Backend.DomainLayer.DataModel
 {
@@ -7,6 +6,5 @@ namespace FDT.Backend.DomainLayer.DataModel
     {
         public string BasinName { get; set; }
         public string Projection { get; set; }
-        public IEnumerable<IScenario> Scenarios { get; set; }
     }
 }

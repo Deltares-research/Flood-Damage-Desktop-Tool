@@ -11,25 +11,25 @@ namespace FDT.Backend.Test.PersistenceLayer
 
     public class PersistenceLayerTestData
     {
-        private static IBasin GetTestBasin(string basinName, string projection, IEnumerable<IScenario> scenarios = null)
+        private static IFloodDamageBasin GetTestFloodDamageBasin(string basinName, string projection, IEnumerable<IScenario> scenarios = null)
         {
-            IBasin testBasin = Substitute.For<IBasin>();
+            IFloodDamageBasin testBasin = Substitute.For<IFloodDamageBasin>();
             testBasin.BasinName.Returns(basinName);
             testBasin.Projection.Returns(projection);
             testBasin.Scenarios.Returns(scenarios);
             return testBasin;
         }
 
-        private static IBasin GetTestBasinWithTestScenario(string scenarioName)
+        private static IFloodDamageBasin GetTestFloodDamageBasinWithTestScenario(string scenarioName)
         {
-            IBasin testBasin = GetTestBasin("ValidBasinName", "ValidProjection");
+            IFloodDamageBasin testBasin = GetTestFloodDamageBasin("ValidBasinName", "ValidProjection");
             IScenario testScenario = Substitute.For<IScenario>();
             testScenario.ScenarioName.Returns(scenarioName);
             testBasin.Scenarios.Returns(new[] { testScenario });
             return testBasin;
         }
 
-        public static IEnumerable InvalidIBasin
+        public static IEnumerable InvalidIFloodDamageBasin
         {
             get
             {
@@ -40,21 +40,21 @@ namespace FDT.Backend.Test.PersistenceLayer
                 const string invalidFloodMapReturnPeriod =
                     "All selected Flood Maps with return period should be greater than 0.";
                 yield return new TestCaseData(null, typeof(ArgumentNullException), "basinData");
-                yield return new TestCaseData(GetTestBasin(null, null), typeof(ArgumentNullException), nameof(IBasin.BasinName));
-                yield return new TestCaseData(GetTestBasin(string.Empty, null), typeof(ArgumentNullException), nameof(IBasin.BasinName));
-                yield return new TestCaseData(GetTestBasin(validBasinName, null), typeof(ArgumentNullException), nameof(IBasin.Projection));
-                yield return new TestCaseData(GetTestBasin(validBasinName, string.Empty), typeof(ArgumentNullException), nameof(IBasin.Projection));
-                yield return new TestCaseData(GetTestBasin(validBasinName, validProjection), typeof(Exception), noValidScenariosMssg);
-                yield return new TestCaseData(GetTestBasin(validBasinName, validProjection, Enumerable.Empty<IScenario>()), typeof(Exception), noValidScenariosMssg);
-                yield return new TestCaseData(GetTestBasinWithTestScenario(null), typeof(Exception), invalidScenariosFoundMssg);
-                yield return new TestCaseData(GetTestBasinWithTestScenario(string.Empty), typeof(Exception), invalidScenariosFoundMssg);
-                yield return new TestCaseData(GetTestBasinWithFloodMaps(0), typeof(Exception), invalidFloodMapReturnPeriod);
+                yield return new TestCaseData(GetTestFloodDamageBasin(null, null), typeof(ArgumentNullException), nameof(IBasin.BasinName));
+                yield return new TestCaseData(GetTestFloodDamageBasin(string.Empty, null), typeof(ArgumentNullException), nameof(IBasin.BasinName));
+                yield return new TestCaseData(GetTestFloodDamageBasin(validBasinName, null), typeof(ArgumentNullException), nameof(IBasin.Projection));
+                yield return new TestCaseData(GetTestFloodDamageBasin(validBasinName, string.Empty), typeof(ArgumentNullException), nameof(IBasin.Projection));
+                yield return new TestCaseData(GetTestFloodDamageBasin(validBasinName, validProjection), typeof(Exception), noValidScenariosMssg);
+                yield return new TestCaseData(GetTestFloodDamageBasin(validBasinName, validProjection, Enumerable.Empty<IScenario>()), typeof(Exception), noValidScenariosMssg);
+                yield return new TestCaseData(GetTestFloodDamageBasinWithTestScenario(null), typeof(Exception), invalidScenariosFoundMssg);
+                yield return new TestCaseData(GetTestFloodDamageBasinWithTestScenario(string.Empty), typeof(Exception), invalidScenariosFoundMssg);
+                yield return new TestCaseData(GetTestFloodDamageBasinWithFloodMaps(0), typeof(Exception), invalidFloodMapReturnPeriod);
             }
         }
 
-        private static IBasin GetTestBasinWithFloodMaps(int returnPeriod)
+        private static IFloodDamageBasin GetTestFloodDamageBasinWithFloodMaps(int returnPeriod)
         {
-            IBasin testBasin = GetTestBasinWithTestScenario("DummyScenario");
+            IFloodDamageBasin testBasin = GetTestFloodDamageBasinWithTestScenario("DummyScenario");
             IFloodMapWithReturnPeriod[] floodMaps = null;
             if (returnPeriod >= 0)
             {

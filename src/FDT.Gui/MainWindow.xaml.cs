@@ -15,6 +15,17 @@ namespace FDT.Gui
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel.ShowWarningMessage = OnBasinSelectionChanged;
+        }
+
+        private void OnBasinSelectionChanged(string warningMessage)
+        {
+            MessageBox.Show(
+                this,
+                warningMessage,
+                "Area of interest changed",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
         }
 
         private void OnSelectRootDirectoryClick(object sender, RoutedEventArgs e)
