@@ -66,12 +66,22 @@ namespace FDT.Gui.Test.ViewModels
         [Test]
         [TestCase("")]
         [TestCase(null)]
-        public void ChangeBasinThrowsExceptionWhenBasinHasNoProjection(string projectionName)
+        public void ChangeBasinShowsWarningMessageWhenBasinHasNoProjection(string projectionName)
         {
+            // Define test data
             IBasin testBasin = Substitute.For<IBasin>();
+            const string basinName = "aName";
+            testBasin.BasinName.Returns(basinName);
             testBasin.Projection.Returns(projectionName);
-            TestDelegate testAction = () => new SelectBasinHelper().GetSelectedBasinWarning(testBasin);
-            Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IBasin.Projection)));
+            string warningMessage = string.Empty;
+            string expectedMessage = $"The area of interest {basinName} does not have an associated projection file.";
+
+            // Define test action
+            TestDelegate testAction = () => warningMessage = new SelectBasinHelper().GetSelectedBasinWarning(testBasin);
+            
+            // Verify final expectations.
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(warningMessage, Is.EqualTo(expectedMessage));
         }
 
         [Test]

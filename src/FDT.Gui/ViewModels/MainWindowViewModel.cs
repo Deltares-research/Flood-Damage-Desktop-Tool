@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using FDT.Backend;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
@@ -123,9 +124,9 @@ namespace FDT.Gui.ViewModels
             // This method should throw any generated exception so that it's caught and handled by the caller command.
             DamageAssessmentHandler runHandler = new DamageAssessmentHandler
             {
-                DataDomain = new FloodDamageDomain()
+                DataDomain = new FloodDamageDomain
                 {
-                    FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios),
+                    FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios.ConvertBasinScenarios()),
                     Paths = BackendPaths
                 }
             };

@@ -14,9 +14,9 @@ namespace FDT.Gui.Test.ViewModels
     public class BackendConverterTest
     {
         [Test]
-        public void TestConvertBasinThrowsExceptionWithNullArguments()
+        public void TestConvertBasinScenariosThrowsExceptionWithNullArguments()
         {
-            TestDelegate testAction = () => BackendConverter.ConvertBasin(null, string.Empty);
+            TestDelegate testAction = () => BackendConverter.ConvertBasinScenarios(null);
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("basinScenarios"));
         }
 

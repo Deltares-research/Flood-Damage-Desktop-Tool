@@ -61,7 +61,7 @@ namespace FDT.Gui.Test.ViewModels
 
             var viewModel =  new MainWindowViewModel();
             var backendPaths = Substitute.For<IApplicationPaths>();
-            viewModel.BackendPaths = backendPaths;
+            // viewModel.BackendPaths = backendPaths;
             backendPaths.ExposurePath.Returns(rootDir);
 
             // 2. Define test action.
@@ -84,13 +84,13 @@ namespace FDT.Gui.Test.ViewModels
 
             var viewModel = new MainWindowViewModel();
             var backendPaths = Substitute.For<IApplicationPaths>();
-            viewModel.BackendPaths = backendPaths;
+            // viewModel.BackendPaths = backendPaths;
             backendPaths.ExposurePath.Returns(exposurePath);
 
             // 2. Verify initial expectations.
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
             Assert.That(viewModel.AvailableBasins, Is.Empty);
-            Assert.That(viewModel.SelectedBasin, Is.Null);
+            Assert.That(viewModel.SelectedBasin, Is.Empty);
 
             // 3. Define test action.
             TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(exposurePath);

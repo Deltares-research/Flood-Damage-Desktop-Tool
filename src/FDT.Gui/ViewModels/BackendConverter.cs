@@ -8,19 +8,14 @@ namespace FDT.Gui.ViewModels
 {
     public static class BackendConverter
     {
-        public static IFloodDamageBasin ConvertBasin(this IBasin basinData, IEnumerable<IBasinScenario> basinScenarios)
+        public static IEnumerable<Backend.DomainLayer.IDataModel.IScenario> ConvertBasinScenarios(this IEnumerable<IBasinScenario> basinScenarios)
         {
             if (basinScenarios == null)
                 throw new ArgumentNullException(nameof(basinScenarios));
 
-            return new FloodDamageBasinData
-            {
-                Projection = basinData.Projection,
-                BasinName = basinData.BasinName,
-                Scenarios = basinScenarios
-                    .Where( bs => bs.IsEnabled )
-                    .SelectMany( bs => bs.Scenarios.ConvertScenarios())
-            };
+            return basinScenarios
+                .Where(bs => bs.IsEnabled)
+                .SelectMany(bs => bs.Scenarios.ConvertScenarios());
         }
 
         public static IEnumerable<Backend.DomainLayer.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
