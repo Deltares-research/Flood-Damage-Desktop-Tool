@@ -11,7 +11,7 @@ namespace FDT.Backend.DomainLayer.DataModel
         {
             if (selectedBasinPath == null)
                 throw new ArgumentNullException(nameof(selectedBasinPath));
-            return new FloodDamageBasinData
+            return new BasinData
             {
                 Projection = GetWkidValue(selectedBasinPath),
                 BasinName = Path.GetFileName(selectedBasinPath),

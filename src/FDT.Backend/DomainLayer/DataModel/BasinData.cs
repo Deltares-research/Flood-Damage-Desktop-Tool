@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FDT.Backend.DomainLayer.IDataModel;
+﻿using FDT.Backend.DomainLayer.IDataModel;
 
 namespace FDT.Backend.DomainLayer.DataModel
 {

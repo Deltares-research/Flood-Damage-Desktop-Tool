@@ -16,5 +16,6 @@ namespace FDT.Backend
                 yield return trimmedDirectory.Remove(0, trimmedDirectory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
             }
         }
+
     }
 }

@@ -27,8 +27,8 @@ namespace FDT.Backend.Test.PersistenceLayer
         }
 
         [Test]
-        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIBasin))]
-        public void TestValidateBasinDataThrowsWhenInvalidIBasin(IBasin testCaseBasin, Type exceptionType, string exceptionMessage)
+        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIFloodDamageBasin))]
+        public void TestValidateBasinDataThrowsWhenInvalidIBasin(IFloodDamageBasin testCaseBasin, Type exceptionType, string exceptionMessage)
         {
             TestDelegate testAction = () => XlsDataWriteHelper.ValidateFloodDamageBasinData(testCaseBasin);
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
@@ -38,7 +38,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void TestValidateBasinDataThrowsNothingWhenValidBasinData()
         {
             // 1. Define test case.
-            IBasin basin = Substitute.For<IBasin>();
+            IFloodDamageBasin basin = Substitute.For<IFloodDamageBasin>();
             IScenario scenario = Substitute.For<IScenario>();
             
             basin.BasinName.Returns("ValidBasinName");

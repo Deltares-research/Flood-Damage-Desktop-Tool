@@ -8,27 +8,24 @@ namespace FDT.Gui.ViewModels
     {
         private IList<IBasin> SelectedBasins { get; }
 
-        public Action<string> ShowWarningMessage { private get; set; }
-
         public SelectBasinHelper()
         {
             SelectedBasins = new List<IBasin>();
         }
 
-        public void ChangeBasin(IBasin selectedBasin)
+        public string GetSelectedBasinWarning(IBasin selectedBasin)
         {
             if (selectedBasin is null)
             {
                 throw new ArgumentNullException(nameof(selectedBasin));
             }
             if (SelectedBasins.Contains(selectedBasin))
-                return;
+                return string.Empty;
             SelectedBasins.Add(selectedBasin);
-            string warningMessage =
-                $"Only use flood maps with coordinate system {GetCrsCode(selectedBasin.Projection)} for this area of interest.";
-            ShowWarningMessage?.Invoke(warningMessage);
+            if (string.IsNullOrEmpty(selectedBasin.Projection))
+                return $"The area of interest {selectedBasin.BasinName} does not have an associated projection file.";
+            return $"Only use flood maps with coordinate system {GetCrsCode(selectedBasin.Projection)} for this area of interest.";
         }
-
         private string GetCrsCode(string selectedBasinProjection)
         {
             if (string.IsNullOrEmpty(selectedBasinProjection))
@@ -46,10 +43,9 @@ namespace FDT.Gui.ViewModels
             return selectedBasinProjection;
         }
 
-        private string ExtractProjectionString(string wkidString)
+        private static string ExtractProjectionString(string wkidString)
         {
-            string crsProjection = wkidString.Split("\"")[1];
-            return crsProjection.Replace("_", " ");
+            return wkidString.Split("\"")[1].Replace("_", " ");
         }
     }
 }

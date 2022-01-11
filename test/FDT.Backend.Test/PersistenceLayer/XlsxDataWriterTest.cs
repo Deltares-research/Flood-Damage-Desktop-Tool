@@ -58,8 +58,8 @@ namespace FDT.Backend.Test.PersistenceLayer
         }
 
         [Test]
-        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIBasin))]
-        public void TestWriteDataThrowsWhenInvalidIBasin(IBasin testCaseBasin, Type exceptionType, string exceptionMessage)
+        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIFloodDamageBasin))]
+        public void TestWriteDataThrowsWhenInvalidIBasin(IFloodDamageBasin testCaseBasin, Type exceptionType, string exceptionMessage)
         {
             // 1. Prepare test data.
             IFloodDamageDomain testDomain = GetDummyDomain();
@@ -84,7 +84,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             // Define initial expectations.
             var testDomain = GetDummyDomain();
             testDomain.Paths.ExposurePath.Returns("Exposure");
-            IBasin basinData = new BasinData()
+            IFloodDamageBasin basinData = new FloodDamageBasinData()
             {
                 BasinName = "Test Basin",
                 Projection = "EPSG:42",
@@ -147,7 +147,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             floodDamageDomain.FloodDamageBasinData.BasinName.Returns("ValidBasinName");
             floodDamageDomain.FloodDamageBasinData.Projection.Returns("ValidProjection");
 
-            floodDamageDomain.Paths.RootPath = rootDir;
+            floodDamageDomain.Paths.RootPath.Returns(rootDir);
             floodDamageDomain.Paths.DatabasePath.Returns(Path.Combine(rootDir, "database"));
             floodDamageDomain.Paths.ResultsPath.Returns(Path.Combine(rootDir, "results"));
 

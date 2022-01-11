@@ -37,7 +37,7 @@ namespace FDT.Gui.Test.ViewModels
         [Test]
         public void ChangeBasinThrowsExceptionWhenBasinIsNull()
         {
-            TestDelegate testAction = () => new SelectBasinHelper().ChangeBasin(null);
+            TestDelegate testAction = () => new SelectBasinHelper().GetSelectedBasinWarning(null);
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains("selectedBasin"));
         }
 
@@ -49,18 +49,18 @@ namespace FDT.Gui.Test.ViewModels
             testBasin.Projection.Returns("aProjection");
             int showWarnings = 0;
             var selectBasinHelper = new SelectBasinHelper();
-            selectBasinHelper.ShowWarningMessage = s => showWarnings++;
+            string warningMessage = string.Empty;
             
             // Define test action.
             TestDelegate testAction = () =>
             {
-                selectBasinHelper.ChangeBasin(testBasin);
-                selectBasinHelper.ChangeBasin(testBasin);
+                warningMessage = selectBasinHelper.GetSelectedBasinWarning(testBasin);
+                warningMessage = selectBasinHelper.GetSelectedBasinWarning(testBasin);
             };
 
             // Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
-            Assert.That(showWarnings, Is.EqualTo(1));
+            Assert.That(warningMessage, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace FDT.Gui.Test.ViewModels
         {
             IBasin testBasin = Substitute.For<IBasin>();
             testBasin.Projection.Returns(projectionName);
-            TestDelegate testAction = () => new SelectBasinHelper().ChangeBasin(testBasin);
+            TestDelegate testAction = () => new SelectBasinHelper().GetSelectedBasinWarning(testBasin);
             Assert.That(testAction, Throws.Exception.TypeOf<ArgumentNullException>().With.Message.Contains(nameof(IBasin.Projection)));
         }
 
@@ -85,10 +85,9 @@ namespace FDT.Gui.Test.ViewModels
             string resultWarningMessage = string.Empty;
             string expectedWarningMessage =
                 $"Only use flood maps with coordinate system {expectedCrsCode} for this area of interest.";
-            basinHelper.ShowWarningMessage = s => resultWarningMessage = s;
 
             // Define test delegate
-            TestDelegate testAction = () => basinHelper.ChangeBasin(testBasin);
+            TestDelegate testAction = () => resultWarningMessage = basinHelper.GetSelectedBasinWarning(testBasin);
             
             // Verify final expectations
             Assert.That(testAction, Throws.Nothing);

@@ -46,6 +46,5 @@ namespace FDT.Backend.DomainLayer.DataModel
                 throw new Exception($"No basin subdirectories found at Exposure directory {ExposurePath}");
             return directories;
         }
-
     }
 }

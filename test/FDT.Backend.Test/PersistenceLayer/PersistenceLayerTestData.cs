@@ -29,7 +29,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             return testBasin;
         }
 
-        public static IEnumerable InvalidIBasin
+        public static IEnumerable InvalidIFloodDamageBasin
         {
             get
             {
