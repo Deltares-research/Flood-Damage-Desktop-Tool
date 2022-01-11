@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Gui.ViewModels;
 using NSubstitute;
@@ -51,15 +52,17 @@ namespace FDT.Gui.Test.ViewModels
         public void TestOnLoadBasinsThrowsExceptionWhenNoSubDirectoriesFound()
         {
             // 1. Define test data.
+            var viewModel = new MainWindowViewModel();
             string currentDir = Directory.GetCurrentDirectory();
             string rootDir = Path.Combine(currentDir, "testRootDir");
+            string databasePath = Path.Combine(rootDir, "database");
+            string exposurePath = Path.Combine(databasePath, "Exposure");
             string exceptionMessage = $"No basin subdirectories found at Exposure directory {rootDir}";
 
-            if (Directory.Exists(rootDir))
-                Directory.Delete(rootDir, true);
-            Directory.CreateDirectory(rootDir);
+            if (Directory.Exists(exposurePath))
+                Directory.Delete(exposurePath, true);
+            Directory.CreateDirectory(exposurePath);
 
-            var viewModel =  new MainWindowViewModel();
             var backendPaths = Substitute.For<IApplicationPaths>();
             // viewModel.BackendPaths = backendPaths;
             backendPaths.ExposurePath.Returns(rootDir);
@@ -72,20 +75,18 @@ namespace FDT.Gui.Test.ViewModels
         }
 
         [Test]
-        public void TestGivenValidExposurePathWhenSelectRootDirectoryThenPathsAndBasinsAreUpdated()
+        public void TestGivenValidRootPathWhenSelectRootDirectoryThenPathsAndBasinsAreUpdated()
         {
             // 1. Define test data.
-            string rootDir = Path.Combine(Directory.GetCurrentDirectory(), "testRootDir");
-            string exposurePath = Path.Combine(rootDir, "exposure");
-            string basinPath = Path.Combine(exposurePath, "c-9");
-            if(Directory.Exists(rootDir))
-                Directory.Delete(rootDir, true);
-            Directory.CreateDirectory(basinPath);
-
             var viewModel = new MainWindowViewModel();
-            var backendPaths = Substitute.For<IApplicationPaths>();
-            // viewModel.BackendPaths = backendPaths;
-            backendPaths.ExposurePath.Returns(exposurePath);
+            string rootDir = Path.Combine(Directory.GetCurrentDirectory(), "testRootDir");
+            string databasePath = Path.Combine(rootDir, "database");
+            string exposurePath = Path.Combine(databasePath, "Exposure");
+            const string availableBasin = "c-9";
+            string basinPath = Path.Combine(exposurePath, availableBasin);
+            if(Directory.Exists(basinPath))
+                Directory.Delete(basinPath, true);
+            Directory.CreateDirectory(basinPath);
 
             // 2. Verify initial expectations.
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.LoadingBasins));
@@ -93,12 +94,12 @@ namespace FDT.Gui.Test.ViewModels
             Assert.That(viewModel.SelectedBasin, Is.Empty);
 
             // 3. Define test action.
-            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(exposurePath);
+            TestDelegate testAction = () => viewModel.SelectRootDirectory.Execute(rootDir);
 
             // 4. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);
             Assert.That(viewModel.RunStatus, Is.EqualTo(AssessmentStatus.Ready));
-            Assert.That(viewModel.SelectedBasin, Is.Not.Null);
+            Assert.That(viewModel.SelectedBasin, Is.EqualTo(availableBasin));
         }
     }
 }
