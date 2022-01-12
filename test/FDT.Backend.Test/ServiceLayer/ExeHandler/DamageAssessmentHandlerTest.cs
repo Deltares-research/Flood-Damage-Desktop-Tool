@@ -36,7 +36,6 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             Assert.That(testHandler.DataWriter, Is.Not.Null);
             Assert.That(testHandler.DataWriter, Is.InstanceOf<XlsxDataWriter>());
             Assert.That(testHandler.DataWriter, Is.InstanceOf<IWriter>());
-
         }
 
         [Test]

@@ -131,6 +131,59 @@ namespace FDT.Backend.Test.PersistenceLayer
             Assert.That(generatedFiles.All( gf => File.Exists(gf.ConfigurationFilePath)));
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void WriteDataGivenSaveOutputSetsValueForEachOutputData(bool saveOutput)
+        {
+            // Define initial expectations.
+            var testDomain = GetDummyDomain();
+            testDomain.Paths.ExposurePath.Returns("Exposure");
+            IFloodDamageBasin basinData = new FloodDamageBasinData()
+            {
+                BasinName = "Test Basin",
+                Projection = "EPSG:42",
+                Scenarios = new[]{
+                    new ScenarioData()
+                    {
+                        ScenarioName = "Test Scenario A",
+                        FloodMaps = new[]
+                        {
+                            new FloodMap() { Path = "dummy//Path//A"}
+                        }
+                    },
+                    new ScenarioData()
+                    {
+                        ScenarioName = "Test Scenario B",
+                        FloodMaps = new []
+                        {
+                            new FloodMapWithReturnPeriod()
+                            {
+                                Path="dummy//Path//C",
+                                ReturnPeriod = 42,
+                            }
+                        }
+                    }
+                }
+            };
+            testDomain.FloodDamageBasinData.Returns(basinData);
+            Assert.That(Directory.Exists(testDomain.Paths.RootPath));
+
+            // Test Action
+            IOutputData[] generatedFiles = null;
+            TestDelegate testAction = () => generatedFiles = new XlsxDataWriter()
+            {
+                SaveOutput = saveOutput
+            }.WriteData(testDomain).ToArray();
+
+            // Verify final expectations.
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(generatedFiles, Is.Not.Null.Or.Empty);
+            Assert.That(generatedFiles.Length, Is.EqualTo(basinData.Scenarios.Count()));
+            Assert.That(generatedFiles.All(gf => File.Exists(gf.ConfigurationFilePath)));
+            Assert.That(generatedFiles.All(gf => gf.SaveOutput == saveOutput));
+        }
+
         private IFloodDamageDomain GetDummyDomain()
         {
             var floodDamageDomain = Substitute.For<IFloodDamageDomain>();
