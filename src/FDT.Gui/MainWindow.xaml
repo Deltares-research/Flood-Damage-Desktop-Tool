@@ -75,10 +75,17 @@
                             HorizontalAlignment="Left" Click="OnSelectRootDirectoryClick"
                             Content="Select Root Directory" 
                             Visibility="{Binding RunStatus, Converter={customCommands:AssessmentStatusVisibilityConverter}}"/>
-                        <Button 
-                            Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
-                            Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
+                        <CheckBox 
+                            Width="160" HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="20,0,0,0"
+                            Content="Save Shapefile"
+                            IsChecked="{Binding SaveShapefile}"
                             IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
+                        <Button 
+                                Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
+                                Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
+                                IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
 
                     </Grid>
                 </Grid>
