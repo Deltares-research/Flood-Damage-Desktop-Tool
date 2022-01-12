@@ -3,6 +3,7 @@
     public interface IFloodMapBase
     {
         string Path { get; set; }
+        FloodMapType MapType { get; set; }
         object GetReturnPeriod();
     }
 
