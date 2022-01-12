@@ -62,6 +62,11 @@
                           SelectedItem="{Binding ScenarioFloodMapType}"
                           HorizontalContentAlignment="Center"
                           VerticalContentAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={commands:FloodMapTypeStringConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </Grid>
         </Grid>
