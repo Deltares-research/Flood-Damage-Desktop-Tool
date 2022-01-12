@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FDT.Gui.CustomFields"
              xmlns:backend="clr-namespace:FDT.Backend.DomainLayer.IDataModel;assembly=FDT.Backend"
              xmlns:System="clr-namespace:System;assembly=System.Runtime"
+             xmlns:commands="clr-namespace:FDT.Gui.Commands"
              mc:Ignorable="d"
              x:Name="ParentControl">
     <UserControl.Resources>
@@ -57,7 +58,10 @@
                     Content="Flood Map Type"/>
                 <ComboBox Grid.Column="1"
                           Width="140"
-                          ItemsSource="{Binding Source={StaticResource enumValues}}">
+                          ItemsSource="{Binding Source={StaticResource enumValues}}"
+                          SelectedItem="{Binding ScenarioFloodMapType}"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center">
                 </ComboBox>
             </Grid>
         </Grid>
