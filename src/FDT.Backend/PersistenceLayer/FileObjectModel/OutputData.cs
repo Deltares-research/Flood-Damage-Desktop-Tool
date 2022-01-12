@@ -9,6 +9,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
         public string ConfigurationFilePath { get; set; }
         public string BasinName { get; set; }
         public string ScenarioName { get; set; }
+        public bool SaveOutput { get; set; }
     }
 
     public static class IOutputDataExtension

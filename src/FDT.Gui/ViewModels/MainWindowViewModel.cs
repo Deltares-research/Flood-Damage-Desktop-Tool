@@ -34,17 +34,9 @@ namespace FDT.Gui.ViewModels
             RunStatus = AssessmentStatus.LoadingBasins;
         }
 
-        public Action<string> ShowWarningMessage { private get; set; }
+        public bool SaveShapefile { get; set; }
 
-        private void InitializeDefaultBasinScenarios()
-        {
-            BasinScenarios.Add(new EventBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
-            BasinScenarios.Add(new RiskBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
-            foreach (var basinScenario in BasinScenarios)
-            {
-                basinScenario.AddExtraScenario();
-            }
-        }
+        public Action<string> ShowWarningMessage { private get; set; }
 
         public AssessmentStatus RunStatus
         {
@@ -53,14 +45,6 @@ namespace FDT.Gui.ViewModels
             {
                 _runStatus = value;
                 OnPropertyChanged();
-            }
-        }
-
-        private Func<string> GetHazardPath
-        {
-            get
-            {
-                return () => BackendPaths.HazardPath;
             }
         }
 
@@ -94,9 +78,28 @@ namespace FDT.Gui.ViewModels
             }
         }
 
+        private Func<string> GetHazardPath
+        {
+            get
+            {
+                return () => BackendPaths.HazardPath;
+            }
+        }
+
         public ObservableCollection<IBasinScenario> BasinScenarios { get; }
 
         public ICommand SelectRootDirectory { get; }
+        public ICommand RunDamageAssessment { get; }
+
+        private void InitializeDefaultBasinScenarios()
+        {
+            BasinScenarios.Add(new EventBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            BasinScenarios.Add(new RiskBasedScenario() { GetDefaultHazardDirectory = GetHazardPath });
+            foreach (var basinScenario in BasinScenarios)
+            {
+                basinScenario.AddExtraScenario();
+            }
+        }
 
         private void OnSelectRootDirectory(object objectCmd)
         {
@@ -112,8 +115,6 @@ namespace FDT.Gui.ViewModels
             InitializeDefaultBasinScenarios();
         }
 
-        public ICommand RunDamageAssessment { get; }
-        
         /// <summary>
         /// CS2021: To avoid refreshing issues, the change of state (<see cref="RunStatus"/>) should be done by the
         /// command caller, instead of here.
@@ -128,7 +129,8 @@ namespace FDT.Gui.ViewModels
                 {
                     FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios.ConvertBasinScenarios()),
                     Paths = BackendPaths
-                }
+                },
+                WriteShpOutput = SaveShapefile
             };
             // The write stream seems to be causing problems when running
             // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
