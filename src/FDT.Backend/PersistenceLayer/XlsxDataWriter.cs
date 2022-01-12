@@ -12,6 +12,7 @@ namespace FDT.Backend.PersistenceLayer
 {
     public class XlsxDataWriter : IWriter
     {
+        public bool SaveOutput { get; set; }
         public IEnumerable<IOutputData> WriteData(IFloodDamageDomain domainData)
         {
             if (domainData == null)
@@ -56,7 +57,8 @@ namespace FDT.Backend.PersistenceLayer
                     {
                         ConfigurationFilePath = filePath,
                         BasinName = domainData.FloodDamageBasinData.BasinName,
-                        ScenarioName = scenarioName
+                        ScenarioName = scenarioName,
+                        SaveOutput = SaveOutput
                     };
                     stream.Flush();
                 }

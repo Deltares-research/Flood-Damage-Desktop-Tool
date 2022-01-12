@@ -24,7 +24,8 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
         public void Run(IOutputData outputData)
         {
             outputData.CheckValidParameters();
-            string arguments = $"--config {outputData.ConfigurationFilePath}";
+            string saveShp = outputData.SaveOutput ? "True" : "False";
+            string arguments = $"--config {outputData.ConfigurationFilePath} --save_shp {saveShp}";
             // Possibly consider using EnableRaisingEvents and subscribe to Process.Exited.
             // Process runProcess = Process.Start(ExeFilePath, arguments);
             using (Process runProcess = new Process())

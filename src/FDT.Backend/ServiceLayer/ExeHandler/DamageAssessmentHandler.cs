@@ -16,15 +16,21 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
         /// Check GivenMultipleAssessmentFilesDoesMultipleExeRuns
         /// </summary>
         private readonly FiatPythonWrapper _exeWrapper;
+        private readonly XlsxDataWriter _dataWriter;
         public virtual IFloodDamageDomain DataDomain { get; set; }
-        public virtual IWriter DataWriter { get; }
-
+        public virtual IWriter DataWriter => _dataWriter;
         public virtual IExeWrapper ExeWrapper => _exeWrapper;
+
+        public bool WriteShpOutput
+        {
+            set => _dataWriter.SaveOutput = value;
+        }
 
         public DamageAssessmentHandler()
         {
-            DataWriter = new XlsxDataWriter();
+            _dataWriter = new XlsxDataWriter();
             _exeWrapper = new FiatPythonWrapper();
+            WriteShpOutput = false;
         }
 
         public void Run()

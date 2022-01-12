@@ -128,7 +128,8 @@ namespace FDT.Gui.ViewModels
                 {
                     FloodDamageBasinData = BackendPaths.SelectedBasin.ConvertBasin(BasinScenarios.ConvertBasinScenarios()),
                     Paths = BackendPaths
-                }
+                },
+                WriteShpOutput = false
             };
             // The write stream seems to be causing problems when running
             // tests (check TestGivenValidRunPropertiesWhenRunDamageAssessmentThenRunStatusIsUpdated)
