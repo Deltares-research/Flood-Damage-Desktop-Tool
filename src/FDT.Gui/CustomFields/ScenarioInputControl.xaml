@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FDT.Gui.CustomFields"
+             xmlns:backend="clr-namespace:FDT.Backend.DomainLayer.IDataModel;assembly=FDT.Backend"
+             xmlns:System="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
              x:Name="ParentControl">
     <UserControl.Resources>
@@ -12,6 +14,13 @@
                 <ResourceDictionary Source="../Styles/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <ObjectDataProvider x:Key="enumValues"
+                                MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="backend:FloodMapType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel DataContext="{Binding Scenario, ElementName=ParentControl}">
@@ -47,7 +56,8 @@
                     Grid.Column="0"
                     Content="Flood Map Type"/>
                 <ComboBox Grid.Column="1"
-                          Width="140">
+                          Width="140"
+                          ItemsSource="{Binding Source={StaticResource enumValues}}">
                 </ComboBox>
             </Grid>
         </Grid>
