@@ -59,8 +59,8 @@
                         Grid.Column="0"
                         Orientation="Horizontal"
                         IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
-                        <TextBlock 
-                            Text="Select Area of Interest"
+                        <Label 
+                            Content="Select Area of Interest"
                             Width="130"
                             VerticalAlignment="Center"/>
                         <ComboBox 
@@ -83,13 +83,14 @@
                         <!--     Content="Save Shapefile" -->
                         <!--     IsChecked="{Binding SaveShapefile}" -->
                         <!--     IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/> -->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel
+                            Orientation="Horizontal" HorizontalAlignment="Center"
+                            IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
                             <Label Content="Save Shapefile"/>
                             <customFields:ToggleCheckbox
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Toggled="{Binding SaveShapefile, NotifyOnTargetUpdated=True, Mode=OneWayToSource}"
-                                IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
+                                Toggled="{Binding SaveShapefile, NotifyOnTargetUpdated=True, Mode=OneWayToSource}"/>
                         </StackPanel>
                         <Button 
                                 Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
