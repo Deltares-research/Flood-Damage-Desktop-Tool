@@ -7,7 +7,7 @@ using FDT.Backend.Properties;
 
 namespace FDT.Backend.PersistenceLayer
 {
-    public static class XlsDataWriteHelper
+    public static class XlsxDataWriteHelper
     {
         public static IXLWorksheet GetWorksheet(this IXLWorkbook workBook, string tabName)
         {

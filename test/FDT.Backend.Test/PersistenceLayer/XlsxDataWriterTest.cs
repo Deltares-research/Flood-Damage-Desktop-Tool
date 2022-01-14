@@ -70,7 +70,7 @@ namespace FDT.Backend.Test.PersistenceLayer
                 Directory.Delete(testDomain.Paths.ResultsPath, true);
 
             // 2. Define test action.
-            TestDelegate testAction = () => XlsDataWriteHelper.ValidateFloodDamageBasinData(testCaseBasin);
+            TestDelegate testAction = () => XlsxDataWriteHelper.ValidateFloodDamageBasinData(testCaseBasin);
 
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
