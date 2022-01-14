@@ -9,7 +9,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>CopyUsed</TrimMode>
     <Configurations>Debug;Release;Deliverable</Configurations>
-    <ApplicationIcon />
+    <ApplicationIcon>deltares.ico</ApplicationIcon>
     <Win32Resource />
   </PropertyGroup>
 
@@ -29,7 +29,8 @@
 
   <ItemGroup>
     <None Remove="Styles\Resources\DamageDesktopTool_header.png" />
-    <None Remove="Styles\Resources\icon.png" />
+    <None Remove="Styles\Resources\deltares.ico" />
+    <None Remove="Styles\Resources\deltares.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,7 +47,13 @@
     <Content Include="Styles\Resources\DamageDesktopTool_header.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Resources\icon.png">
+    <Content Include="Styles\Resources\deltares.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Styles\Resources\deltares.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
