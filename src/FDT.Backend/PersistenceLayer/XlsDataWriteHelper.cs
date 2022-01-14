@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
+using FDT.Backend.Properties;
 
 namespace FDT.Backend.PersistenceLayer
 {
@@ -28,9 +29,9 @@ namespace FDT.Backend.PersistenceLayer
             if (string.IsNullOrEmpty(basinData.Projection))
                 throw new ArgumentNullException(nameof(basinData.Projection));
             if (basinData.Scenarios == null || !basinData.Scenarios.Any())
-                throw new Exception("No valid scenarios were provided.");
+                throw new Exception(Resources.XlsDataWriteHelper_ValidateFloodDamageBasinData_No_valid_scenarios_were_provided_);
             if (basinData.Scenarios.Any(s => string.IsNullOrEmpty(s.ScenarioName)))
-                throw new Exception("All selected scenarios should contain a valid name.");
+                throw new Exception(Resources.XlsDataWriteHelper_ValidateFloodDamageBasinData_All_selected_scenarios_should_contain_a_valid_name_);
             basinData.Scenarios.SelectMany( s => s.FloodMaps.OfType<IFloodMapWithReturnPeriod>()).ValidateFloodMapsWithReturnPeriod();
         }
 
@@ -39,7 +40,7 @@ namespace FDT.Backend.PersistenceLayer
             if (floodMaps == null)
                 throw new ArgumentNullException(nameof(floodMaps));
             if (floodMaps.Any(fm => fm.ReturnPeriod <= 0))
-                throw new Exception("All selected Flood Maps with return period should be greater than 0.");
+                throw new Exception(Resources.XlsDataWriteHelper_ValidateFloodMapsWithReturnPeriod_All_selected_Flood_Maps_with_return_period_should_be_greater_than_0_);
         }
     }
 }

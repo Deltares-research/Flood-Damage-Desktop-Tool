@@ -12,8 +12,8 @@ namespace FDT.Gui.Test.Commands
         {
             get
             {
-                yield return new TestCaseData(FloodMapType.WaterDepth).Returns("Water Depth");
-                yield return new TestCaseData(FloodMapType.WaterLevel).Returns("Water Level");;
+                yield return new TestCaseData(FloodMapType.WaterDepth).Returns("Water depth");
+                yield return new TestCaseData(FloodMapType.WaterLevel).Returns("Water level");;
             }
         }
 
