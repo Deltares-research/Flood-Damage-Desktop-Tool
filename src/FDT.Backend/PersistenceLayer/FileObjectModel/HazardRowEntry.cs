@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ClosedXML.Excel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FDT.Backend.Properties;
 
 namespace FDT.Backend.PersistenceLayer.FileObjectModel
 {
@@ -44,7 +45,7 @@ namespace FDT.Backend.PersistenceLayer.FileObjectModel
             {
                 FloodMapType.WaterDepth => "DEM",
                 FloodMapType.WaterLevel => "Datum",
-                _ => throw new ArgumentException($"Unknown Flood Map type {mapType}")
+                _ => throw new ArgumentException(string.Format(Resources.HazardRowEntry_GetInundationReference_Unknown_Flood_map_type__0_, mapType))
             };
         }
     }

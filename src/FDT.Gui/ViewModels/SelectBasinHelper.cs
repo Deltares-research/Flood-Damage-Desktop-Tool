@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FDT.Backend.DomainLayer.IDataModel;
+using FDT.Gui.Properties;
 
 namespace FDT.Gui.ViewModels
 {
@@ -23,8 +24,8 @@ namespace FDT.Gui.ViewModels
                 return string.Empty;
             SelectedBasins.Add(selectedBasin);
             if (string.IsNullOrEmpty(selectedBasin.Projection))
-                return $"The area of interest {selectedBasin.BasinName} does not have an associated projection file.";
-            return $"Only use flood maps with coordinate system {GetCrsCode(selectedBasin.Projection)} for this area of interest.";
+                return string.Format(Resources.SelectBasinHelper_GetSelectedBasinWarning_The_area_of_interest__0__does_not_have_an_associated_projection_file_, selectedBasin.BasinName);
+            return string.Format(Resources.SelectBasinHelper_GetSelectedBasinWarning_Only_use_flood_maps_with_coordinate_system__0__for_this_area_of_interest_, GetCrsCode(selectedBasin.Projection));
         }
         private string GetCrsCode(string selectedBasinProjection)
         {

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using FDT.Backend.DomainLayer.IDataModel;
+using FDT.Gui.Properties;
 
 namespace FDT.Gui.ViewModels
 {
@@ -32,7 +33,7 @@ namespace FDT.Gui.ViewModels
             get
             {
                 if (columnName != nameof(ScenarioName)) return null;
-                return string.IsNullOrEmpty(ScenarioName) ? "Scenario Name is required" : null;
+                return string.IsNullOrEmpty(ScenarioName) ? Resources.Scenario_this_Scenario_name_is_required : null;
             }
         }
     }

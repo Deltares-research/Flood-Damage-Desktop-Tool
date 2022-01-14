@@ -11,6 +11,7 @@ using FDT.Backend;
 using FDT.Backend.DomainLayer.DataModel;
 using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.ServiceLayer.ExeHandler;
+using FDT.Gui.Properties;
 
 namespace FDT.Gui.ViewModels
 {
@@ -20,7 +21,19 @@ namespace FDT.Gui.ViewModels
         private Dictionary<string, IBasin> _basinDictionary;
         private readonly SelectBasinHelper _selectBasinHelper;
         private AssessmentStatus _runStatus;
-
+        public string SelectAreaOfInterestLabel
+        {
+            get => Resources.MainWindow_SelectAreaOfInterest_Label;
+        }
+        public string SelectRootDirectoryButtonText
+        {
+            get => Resources.MainWindow_SelectRootDirectory_Button;
+        }
+        public string SaveShapefileLabel
+        {
+            get => Resources.MainWindowViewModel_SaveShapefileLabel;
+        }
+        
         public MainWindowViewModel()
         {
             _basinDictionary = new Dictionary<string, IBasin>();

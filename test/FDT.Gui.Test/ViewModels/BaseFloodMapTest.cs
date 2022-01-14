@@ -16,7 +16,7 @@ namespace FDT.Gui.Test.ViewModels
         }
 
         [Test]
-        [TestCase(0, "Return Period should be greater than 0")]
+        [TestCase(0, "Return period should be greater than 0")]
         [TestCase(42, null)]
         public void TestFloodMapWithReturnPeriodValidationWorks(int returnPeriod, string error)
         {
