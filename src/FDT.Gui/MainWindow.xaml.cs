@@ -18,6 +18,8 @@ namespace FDT.Gui
             ViewModel.ShowWarningMessage = OnBasinSelectionChanged;
         }
 
+        public string LabelTest => Properties.Resources.MainWindow_SelectAreaOfInterest_Label;
+
         private void OnBasinSelectionChanged(string warningMessage)
         {
             MessageBox.Show(

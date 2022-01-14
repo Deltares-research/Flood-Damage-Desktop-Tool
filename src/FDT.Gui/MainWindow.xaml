@@ -60,7 +60,7 @@
                         Orientation="Horizontal"
                         IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
                         <Label 
-                            Content="Select area of interest"
+                            Content="{Binding SelectAreaOfInterestLabel}"
                             Width="130"
                             VerticalAlignment="Center"/>
                         <ComboBox 
@@ -74,7 +74,7 @@
                         <Button 
                             Width="160" 
                             HorizontalAlignment="Left" Click="OnSelectRootDirectoryClick"
-                            Content="Select root directory" 
+                            Content="{Binding SelectRootDirectoryButtonText}" 
                             Visibility="{Binding RunStatus, Converter={customCommands:AssessmentStatusVisibilityConverter}}"/>
                         <!-- <CheckBox  -->
                         <!--     Width="160" HorizontalAlignment="Center" -->
@@ -86,7 +86,7 @@
                         <StackPanel
                             Orientation="Horizontal" HorizontalAlignment="Center"
                             IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
-                            <Label Content="Save shapefile"/>
+                        <Label Content="{Binding SaveShapefileLabel}"/>
                             <customFields:ToggleCheckbox
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"

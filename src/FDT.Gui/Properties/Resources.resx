@@ -140,4 +140,28 @@ For more details check the results directory at {0}</value>
   <data name="InputFieldFloodMap_OnOpenFileDialog_Flood_map_file____0_______1_" xml:space="preserve">
     <value>Flood map file (*{0}) | *{1}</value>
   </data>
+  <data name="MainWindow_SelectAreaOfInterest_Label" xml:space="preserve">
+    <value>Select area of interest</value>
+  </data>
+  <data name="MainWindow_SelectRootDirectory_Button" xml:space="preserve">
+    <value>Select root directory</value>
+  </data>
+  <data name="MainWindowViewModel_SaveShapefileLabel" xml:space="preserve">
+    <value>Save shapefile</value>
+  </data>
+  <data name="AssessmentStatus_Ready_Run_damage_assessment" xml:space="preserve">
+    <value>Run damage assessment</value>
+  </data>
+  <data name="AssessmentStatus_Running_Running__please_wait_" xml:space="preserve">
+    <value>Running (please wait)</value>
+  </data>
+  <data name="AssessmentStatus_LoadingBasins_Cannot_run__no_basins_" xml:space="preserve">
+    <value>Cannot run (no basins)</value>
+  </data>
+  <data name="FloodMapTypeStringConverter_Convert_Water_level" xml:space="preserve">
+    <value>Water level</value>
+  </data>
+  <data name="FloodMapTypeStringConverter_Convert_Water_depth" xml:space="preserve">
+    <value>Water depth</value>
+  </data>
 </root>

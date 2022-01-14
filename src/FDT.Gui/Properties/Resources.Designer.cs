@@ -61,11 +61,56 @@ namespace FDT.Gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot run (no basins).
+        /// </summary>
+        internal static string AssessmentStatus_LoadingBasins_Cannot_run__no_basins_ {
+            get {
+                return ResourceManager.GetString("AssessmentStatus_LoadingBasins_Cannot_run__no_basins_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run damage assessment.
+        /// </summary>
+        internal static string AssessmentStatus_Ready_Run_damage_assessment {
+            get {
+                return ResourceManager.GetString("AssessmentStatus_Ready_Run_damage_assessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running (please wait).
+        /// </summary>
+        internal static string AssessmentStatus_Running_Running__please_wait_ {
+            get {
+                return ResourceManager.GetString("AssessmentStatus_Running_Running__please_wait_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return period should be greater than 0.
         /// </summary>
         internal static string BaseFloodMap_this_Return_period_should_be_greater_than_0 {
             get {
                 return ResourceManager.GetString("BaseFloodMap_this_Return_period_should_be_greater_than_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Water depth.
+        /// </summary>
+        internal static string FloodMapTypeStringConverter_Convert_Water_depth {
+            get {
+                return ResourceManager.GetString("FloodMapTypeStringConverter_Convert_Water_depth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Water level.
+        /// </summary>
+        internal static string FloodMapTypeStringConverter_Convert_Water_level {
+            get {
+                return ResourceManager.GetString("FloodMapTypeStringConverter_Convert_Water_level", resourceCulture);
             }
         }
         
@@ -150,6 +195,33 @@ namespace FDT.Gui.Properties {
         internal static string MainWindow_OnSelectRootDirectoryClick_Select_the_database_root_directory {
             get {
                 return ResourceManager.GetString("MainWindow_OnSelectRootDirectoryClick_Select_the_database_root_directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select area of interest.
+        /// </summary>
+        internal static string MainWindow_SelectAreaOfInterest_Label {
+            get {
+                return ResourceManager.GetString("MainWindow_SelectAreaOfInterest_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select root directory.
+        /// </summary>
+        internal static string MainWindow_SelectRootDirectory_Button {
+            get {
+                return ResourceManager.GetString("MainWindow_SelectRootDirectory_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save shapefile.
+        /// </summary>
+        internal static string MainWindowViewModel_SaveShapefileLabel {
+            get {
+                return ResourceManager.GetString("MainWindowViewModel_SaveShapefileLabel", resourceCulture);
             }
         }
         
