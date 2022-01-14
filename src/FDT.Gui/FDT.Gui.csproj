@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <None Remove="Styles\Resources\DamageDesktopTool_header.png" />
-    <None Remove="Styles\Resources\icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,9 +43,6 @@
 
   <ItemGroup>
     <Content Include="Styles\Resources\DamageDesktopTool_header.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Styles\Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
