@@ -50,7 +50,7 @@ namespace FDT.Backend.PersistenceLayer
                             .Cell(2, 1)
                             .InsertData(tabXlsx.RowEntries.Select( re => re.GetOrderedColumns(defaultRow)))
                             .Style.Fill.SetBackgroundColor(XLWorkbook.DefaultStyle.Fill.BackgroundColor);
-                        settingsWorksheet.Columns().AdjustToContents();
+                        settingsWorksheet.Columns().AdjustToContents(minWidth:10, maxWidth:100);
                     }
                     workbook.SaveAs(filePath);
                     yield return new OutputData()
