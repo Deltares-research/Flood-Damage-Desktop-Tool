@@ -36,7 +36,6 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             Assert.That(testHandler.DataWriter, Is.Not.Null);
             Assert.That(testHandler.DataWriter, Is.InstanceOf<XlsxDataWriter>());
             Assert.That(testHandler.DataWriter, Is.InstanceOf<IWriter>());
-
         }
 
         [Test]
@@ -46,7 +45,7 @@ namespace FDT.Backend.Test.ServiceLayer.ExeHandler
             outputData.BasinName.Returns("TestBasin");
             outputData.ScenarioName.Returns("Dumb scenario name");
             outputData.ConfigurationFilePath.Returns("\\Not\\A\\Valid\\Path");
-            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}\n Detailed error: ";
+            string expectedErrorMessage = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}\r\n Detailed error: ";
 
             var damageAssessmentHandler = Substitute.ForPartsOf<DamageAssessmentHandler>();
             var exeReport = Substitute.ForPartsOf<ValidationReport>();

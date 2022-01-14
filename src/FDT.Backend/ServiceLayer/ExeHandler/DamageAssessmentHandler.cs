@@ -5,6 +5,7 @@ using FDT.Backend.DomainLayer.IDataModel;
 using FDT.Backend.PersistenceLayer;
 using FDT.Backend.PersistenceLayer.FileObjectModel;
 using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FDT.Backend.Properties;
 using FDT.Backend.ServiceLayer.IExeHandler;
 
 namespace FDT.Backend.ServiceLayer.ExeHandler
@@ -16,15 +17,21 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
         /// Check GivenMultipleAssessmentFilesDoesMultipleExeRuns
         /// </summary>
         private readonly FiatPythonWrapper _exeWrapper;
+        private readonly XlsxDataWriter _dataWriter;
         public virtual IFloodDamageDomain DataDomain { get; set; }
-        public virtual IWriter DataWriter { get; }
-
+        public virtual IWriter DataWriter => _dataWriter;
         public virtual IExeWrapper ExeWrapper => _exeWrapper;
+
+        public bool WriteShpOutput
+        {
+            set => _dataWriter.SaveOutput = value;
+        }
 
         public DamageAssessmentHandler()
         {
-            DataWriter = new XlsxDataWriter();
+            _dataWriter = new XlsxDataWriter();
             _exeWrapper = new FiatPythonWrapper();
+            WriteShpOutput = false;
         }
 
         public void Run()
@@ -41,9 +48,9 @@ namespace FDT.Backend.ServiceLayer.ExeHandler
                 ValidationReport exeReport = ExeWrapper.GetValidationReport();
                 if (exeReport.HasErrors())
                 {
-                    string errorHeader = $"Error while running basin: {outputData.BasinName}, scenario: {outputData.ScenarioName}";
+                    string errorHeader = string.Format(Resources.DamageAssessmentHandler_Run_Error_while_running_basin___0___scenario___1_, outputData.BasinName, outputData.ScenarioName);
                     string reportErrors = String.Join("\n", exeReport.IssueList);
-                    errorRuns.Add($"{errorHeader}\n Detailed error: {reportErrors}");
+                    errorRuns.Add(string.Format(Resources.DamageAssessmentHandler_Run_ErrorLine, errorHeader, reportErrors));
                 }
             }
 

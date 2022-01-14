@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using FDT.Gui.Properties;
 
 namespace FDT.Gui.ViewModels
 {
@@ -31,7 +32,7 @@ namespace FDT.Gui.ViewModels
             {
                 if (columnName != nameof(ReturnPeriod)) return null;
                 if (!HasReturnPeriod) return null;
-                return HasValidReturnPeriod() ? null : "Return Period should be greater than 0";
+                return HasValidReturnPeriod() ? null : Resources.BaseFloodMap_this_Return_period_should_be_greater_than_0;
             }
         }
 

@@ -5,5 +5,6 @@
         string ConfigurationFilePath { get; }
         string BasinName { get; }
         string ScenarioName { get; }
+        bool SaveOutput { get; }
     }
 }

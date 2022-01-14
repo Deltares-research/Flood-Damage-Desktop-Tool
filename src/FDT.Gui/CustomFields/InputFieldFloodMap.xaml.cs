@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using FDT.Gui.ViewModels;
 using Microsoft.Win32;
 
@@ -39,7 +37,7 @@ namespace FDT.Gui.CustomFields
             const string fileExtension = ".tif";
             // extension = .tif
             openFileDialog.InitialDirectory = FloodMap?.GetDefaultHazardDirectory?.Invoke();
-            openFileDialog.Filter = $"Flood Map File (*{fileExtension}) | *{fileExtension}";
+            openFileDialog.Filter = string.Format(Properties.Resources.InputFieldFloodMap_OnOpenFileDialog_Flood_map_file____0_______1_, fileExtension, fileExtension);
             openFileDialog.DefaultExt = fileExtension;
             bool? showDialog = openFileDialog.ShowDialog();
             if (showDialog != null && (bool) showDialog)

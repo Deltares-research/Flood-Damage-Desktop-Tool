@@ -1,12 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FDT.Backend.DomainLayer.IDataModel;
+using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test
+namespace FDT.Backend.Test
 {
-    public class GuiUtilsTest
+    public class BackendUtilsTest
     {
+        [Test]
+        public void TestConvertBasinGivenInvalidBasin()
+        {
+            TestDelegate testAction = () => BackendUtils.ConvertBasin(null, new List<IScenario>());
+            Assert.That(testAction, Throws.ArgumentNullException.With.Message.Contains("basinData"));
+        }
+
+        [Test]
+        public void TestConvertBasinGivenInvalidScenarios()
+        {
+            TestDelegate testAction = () => BackendUtils.ConvertBasin(Substitute.For<IBasin>(), null);
+            Assert.That(testAction, Throws.ArgumentNullException.With.Message.Contains("scenarios"));
+        }
+
+        [Test]
+        public void TestConvertBasinGivenValidArguments()
+        {
+            // Define test data
+            var testBasin = Substitute.For<IBasin>();
+            var scenario = Substitute.For<IScenario>();
+            IFloodDamageBasin resultBasin = null;
+            testBasin.Projection.Returns("aProjection");
+            testBasin.BasinName.Returns("aBasinName");
+
+            // Define test action
+            TestDelegate testAction = () => resultBasin = BackendUtils.ConvertBasin(testBasin, new[] {scenario});
+
+            // Verify final expectations
+            Assert.That(testAction, Throws.Nothing);
+            Assert.That(resultBasin, Is.Not.Null);
+            Assert.That(resultBasin.Scenarios.Contains(scenario));
+            Assert.That(resultBasin.Projection, Is.EqualTo(testBasin.Projection));
+            Assert.That(resultBasin.BasinName, Is.EqualTo(testBasin.BasinName));
+        }
 
         public static IEnumerable InvalidSubdirectoryNames
         {
@@ -33,7 +69,7 @@ namespace FDT.Gui.Test
         public object TestGetSubDirectoryNamesReturnsNothingWhenNoneGiven(IEnumerable<string> directories)
         {
             IEnumerable<string> result = null;
-            TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(directories?.ToArray()).ToArray();
+            TestDelegate testAction = () => result = BackendUtils.GetSubDirectoryNames(directories?.ToArray()).ToArray();
             Assert.That(testAction, Throws.Nothing);
             return result;
         }
@@ -46,7 +82,7 @@ namespace FDT.Gui.Test
             string[] result = null;
         
             // 2. Define test action.
-            TestDelegate testAction = () => result = GuiUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
+            TestDelegate testAction = () => result = BackendUtils.GetSubDirectoryNames(foundDirectories.ToArray()).ToArray();
         
             // 3. Verify final expectations.
             Assert.That(testAction, Throws.Nothing);

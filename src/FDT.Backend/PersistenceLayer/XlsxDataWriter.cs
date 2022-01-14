@@ -12,6 +12,7 @@ namespace FDT.Backend.PersistenceLayer
 {
     public class XlsxDataWriter : IWriter
     {
+        public bool SaveOutput { get; set; }
         public IEnumerable<IOutputData> WriteData(IFloodDamageDomain domainData)
         {
             if (domainData == null)
@@ -26,16 +27,16 @@ namespace FDT.Backend.PersistenceLayer
             if (!Directory.Exists(domainData.Paths.ResultsPath))
                 Directory.CreateDirectory(domainData.Paths.ResultsPath);
 
-            domainData.BasinData.ValidateBasinData();
+            domainData.FloodDamageBasinData.ValidateFloodDamageBasinData();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            foreach (IScenario scenarioData in domainData.BasinData.Scenarios)
+            foreach (IScenario scenarioData in domainData.FloodDamageBasinData.Scenarios)
             {
                 string scenarioName = scenarioData.ScenarioName.Replace(" ", "_").ToLowerInvariant();
                 string filePath = Path.Combine(domainData.Paths.ResultsPath, $"{scenarioName}_configuration.xlsx");
                 ITabXlsx[] tabs = {
-                    new SettingsTabXlsx(domainData.BasinData, scenarioData.ScenarioName),
-                    new HazardTabXlsx(domainData.BasinData, scenarioData.FloodMaps),
-                    new ExposureTabXlsx(domainData.BasinData, domainData.Paths.ExposurePath)
+                    new SettingsTabXlsx(domainData.FloodDamageBasinData, scenarioData.ScenarioName),
+                    new HazardTabXlsx(domainData.FloodDamageBasinData, scenarioData.FloodMaps),
+                    new ExposureTabXlsx(domainData.FloodDamageBasinData, domainData.Paths.ExposurePath)
                 };
                 using (var stream = File.Open(baseTemplate, FileMode.Open, FileAccess.Read))
                 using (var workbook = new XLWorkbook(stream))
@@ -49,14 +50,15 @@ namespace FDT.Backend.PersistenceLayer
                             .Cell(2, 1)
                             .InsertData(tabXlsx.RowEntries.Select( re => re.GetOrderedColumns(defaultRow)))
                             .Style.Fill.SetBackgroundColor(XLWorkbook.DefaultStyle.Fill.BackgroundColor);
-                        settingsWorksheet.Columns().AdjustToContents();
+                        settingsWorksheet.Columns().AdjustToContents(minWidth:10, maxWidth:100);
                     }
                     workbook.SaveAs(filePath);
                     yield return new OutputData()
                     {
                         ConfigurationFilePath = filePath,
-                        BasinName = domainData.BasinData.BasinName,
-                        ScenarioName = scenarioName
+                        BasinName = domainData.FloodDamageBasinData.BasinName,
+                        ScenarioName = scenarioName,
+                        SaveOutput = SaveOutput
                     };
                     stream.Flush();
                 }

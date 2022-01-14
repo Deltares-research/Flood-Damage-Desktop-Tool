@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FDT.Backend.DomainLayer.IDataModel;
 using Path = System.IO.Path;
 
@@ -7,7 +9,7 @@ namespace FDT.Backend.DomainLayer.DataModel
 {
     public class ApplicationPaths: IApplicationPaths
     {
-        private string _selectedBasin;
+        private string _rootPath;
 
         public ApplicationPaths()
         {
@@ -16,21 +18,33 @@ namespace FDT.Backend.DomainLayer.DataModel
             // We define here the 'default' paths.
             string guiDirectory = Environment.CurrentDirectory;
             DirectoryInfo rootDirectory = Directory.GetParent(guiDirectory)?.Parent;
-            RootPath = rootDirectory?.FullName ?? string.Empty;
+            _rootPath = rootDirectory?.FullName ?? string.Empty;
+            AvailableBasins = new List<IBasin>();
         }
-        public string RootPath { get; set; }
+        public IEnumerable<IBasin> AvailableBasins { get; private set; }
+        public IBasin SelectedBasin { get; set; }
+        public string RootPath => _rootPath;
         public string DatabasePath => Path.Combine(RootPath, "database");
         public string ExposurePath => Path.Combine(DatabasePath, "Exposure");
         public string HazardPath => Path.Combine(DatabasePath, "Hazard");
-
-        public string SelectedBasinPath => Path.Combine(ExposurePath, _selectedBasin);
-
         public string SystemPath => Path.Combine(RootPath, "System");
         public string ResultsPath => Path.Combine(RootPath, "Results");
 
-        public void UpdateSelectedBasin(string selectedBasin)
+        public void ChangeRootDirectory(string rootDirectory)
         {
-            _selectedBasin = selectedBasin;
+            _rootPath = rootDirectory;
+            IEnumerable<string> exposureSubDirs = GetExposureSubDirectories();
+            AvailableBasins = exposureSubDirs.Select(BasinUtils.GetBasin).ToArray();
+        }
+
+        private IEnumerable<string> GetExposureSubDirectories()
+        {
+            if (!Directory.Exists(ExposurePath))
+                throw new DirectoryNotFoundException($"Exposure directory does not exist at {ExposurePath}.");
+            var directories = Directory.GetDirectories(ExposurePath);
+            if (!directories.Any())
+                throw new Exception($"No basin subdirectories found at Exposure directory {ExposurePath}");
+            return directories;
         }
     }
 }

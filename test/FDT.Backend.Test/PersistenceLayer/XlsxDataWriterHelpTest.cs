@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace FDT.Backend.Test.PersistenceLayer
 {
-    public class XlsDataWriterHelpTest
+    public class XlsxDataWriterHelpTest
     {
 
         static object[] GetWorksheetInvalidArgumentsCases =
@@ -22,15 +22,15 @@ namespace FDT.Backend.Test.PersistenceLayer
         [TestCaseSource(nameof(GetWorksheetInvalidArgumentsCases))]
         public void TestGetWorksheetInvalidArgumentsThrowsException(IXLWorkbook workbook, string tabName)
         {
-            TestDelegate testAction = () => XlsDataWriteHelper.GetWorksheet(workbook, tabName);
+            TestDelegate testAction = () => XlsxDataWriteHelper.GetWorksheet(workbook, tabName);
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>());
         }
 
         [Test]
-        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIBasin))]
-        public void TestValidateBasinDataThrowsWhenInvalidIBasin(IBasin testCaseBasin, Type exceptionType, string exceptionMessage)
+        [TestCaseSource(typeof(PersistenceLayerTestData), nameof(PersistenceLayerTestData.InvalidIFloodDamageBasin))]
+        public void TestValidateBasinDataThrowsWhenInvalidIBasin(IFloodDamageBasin testCaseBasin, Type exceptionType, string exceptionMessage)
         {
-            TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(testCaseBasin);
+            TestDelegate testAction = () => XlsxDataWriteHelper.ValidateFloodDamageBasinData(testCaseBasin);
             Assert.That(testAction, Throws.TypeOf(exceptionType).With.Message.Contains(exceptionMessage));
         }
 
@@ -38,7 +38,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void TestValidateBasinDataThrowsNothingWhenValidBasinData()
         {
             // 1. Define test case.
-            IBasin basin = Substitute.For<IBasin>();
+            IFloodDamageBasin basin = Substitute.For<IFloodDamageBasin>();
             IScenario scenario = Substitute.For<IScenario>();
             
             basin.BasinName.Returns("ValidBasinName");
@@ -47,7 +47,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             scenario.ScenarioName.Returns("ValidScenarioName");
 
             // 2. Define test action.
-            TestDelegate testAction = () => XlsDataWriteHelper.ValidateBasinData(basin);
+            TestDelegate testAction = () => XlsxDataWriteHelper.ValidateFloodDamageBasinData(basin);
 
             // 3. Validate final expectations.
             Assert.That(testAction, Throws.Nothing);
@@ -57,7 +57,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void TestValidateFloodMapsWithReturnPeriodThrowsWhenNullCollectionGiven()
         {
             TestDelegate testAction = () =>
-                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(null);
+                XlsxDataWriteHelper.ValidateFloodMapsWithReturnPeriod(null);
             Assert.That(testAction, Throws.TypeOf<ArgumentNullException>().With.Message.Contains("floodMaps"));
         }
 
@@ -65,7 +65,7 @@ namespace FDT.Backend.Test.PersistenceLayer
         public void TestValidateFloodMapsWithReturnPeriodThrowsNothingWhenEmptyCollectionGiven()
         {
             TestDelegate testAction = () =>
-                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(Enumerable.Empty<IFloodMapWithReturnPeriod>());
+                XlsxDataWriteHelper.ValidateFloodMapsWithReturnPeriod(Enumerable.Empty<IFloodMapWithReturnPeriod>());
             Assert.That(testAction, Throws.Nothing);
         }
 
@@ -75,7 +75,7 @@ namespace FDT.Backend.Test.PersistenceLayer
             var testFloodMap = Substitute.For<IFloodMapWithReturnPeriod>();
             testFloodMap.ReturnPeriod.Returns(42);
             TestDelegate testAction = () =>
-                XlsDataWriteHelper.ValidateFloodMapsWithReturnPeriod(new []{ testFloodMap });
+                XlsxDataWriteHelper.ValidateFloodMapsWithReturnPeriod(new []{ testFloodMap });
             Assert.That(testAction, Throws.Nothing);
         }
     }

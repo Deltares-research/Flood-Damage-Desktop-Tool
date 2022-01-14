@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using FDT.Backend.DomainLayer.IDataModel;
+using FDT.Gui.Properties;
 
 namespace FDT.Gui.ViewModels
 {
@@ -13,6 +15,7 @@ namespace FDT.Gui.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public string ScenarioName { get; set; }
+        public FloodMapType ScenarioFloodMapType { get; set; }
         public bool CanAddExtraFloodMaps => typeof(T) == typeof(FloodMapWithReturnPeriod);
         public ObservableCollection<IFloodMap> FloodMaps { get; set; }
         public void AddExtraFloodMap()
@@ -30,7 +33,7 @@ namespace FDT.Gui.ViewModels
             get
             {
                 if (columnName != nameof(ScenarioName)) return null;
-                return string.IsNullOrEmpty(ScenarioName) ? "Scenario Name is required" : null;
+                return string.IsNullOrEmpty(ScenarioName) ? Resources.Scenario_this_Scenario_name_is_required : null;
             }
         }
     }

@@ -10,6 +10,12 @@
     <Compile Update="CustomFields\InputFieldFloodMap.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomFields\ScenarioInputControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomFields\ToggleCheckbox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\BasinRiskScenarioControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +25,12 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomFields\InputFieldFloodMap.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomFields\ScenarioInputControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomFields\ToggleCheckbox.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

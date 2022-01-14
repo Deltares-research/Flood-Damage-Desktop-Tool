@@ -15,12 +15,25 @@ namespace FDT.Gui
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel.ShowWarningMessage = OnBasinSelectionChanged;
+        }
+
+        public string LabelTest => Properties.Resources.MainWindow_SelectAreaOfInterest_Label;
+
+        private void OnBasinSelectionChanged(string warningMessage)
+        {
+            MessageBox.Show(
+                this,
+                warningMessage,
+                Properties.Resources.MainWindow_OnBasinSelectionChanged_Area_of_interest_changed,
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
         }
 
         private void OnSelectRootDirectoryClick(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new FolderBrowserDialog();
-            openFileDialog.Description = "Select the database root directory";
+            openFileDialog.Description = Properties.Resources.MainWindow_OnSelectRootDirectoryClick_Select_the_database_root_directory;
             DialogResult result = openFileDialog.ShowDialog();
 
             if (result != System.Windows.Forms.DialogResult.OK) return;
@@ -33,8 +46,8 @@ namespace FDT.Gui
             {
                 MessageBox.Show(
                     this,
-                    $"It was not possible to find a valid Exposure directory, please check your folder structure.\nDetailed error {exception.Message}",
-                    "Failed to detect directory structure.",
+                    string.Format(Properties.Resources.MainWindow_ExposureDirectoryNotFound_MessageError, exception.Message),
+                    Properties.Resources.MainWindow_ExposureDirectoryNotFound_MessageCaption,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -50,8 +63,8 @@ namespace FDT.Gui
                 ViewModel.RunDamageAssessment.Execute(sender);
                 MessageBox.Show(
                     this,
-                    $"Assessment run finished.\nFor more details check the results directory at {ViewModel.BackendPaths.ResultsPath}",
-                    "Finished run",
+                    string.Format(Properties.Resources.MainWindow_OnAssessmentActionClick_AssessmentFinished_Message, ViewModel.BackendPaths.ResultsPath),
+                    Properties.Resources.MainWindow_OnAssessmentActionClick_AssessmentFinished_Caption,
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
@@ -59,8 +72,8 @@ namespace FDT.Gui
             {
                 MessageBox.Show(
                     this,
-                    $"Assessment run failed, reason: {exception.Message}.\n Contact support for more details.",
-                    "Failed run",
+                    string.Format(Properties.Resources.MainWindow_OnAssessmentActionClick_AssessmentFailed_Message, exception.Message),
+                    Properties.Resources.MainWindow_OnAssessmentActionClick_AssessmentFailed_Caption,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }

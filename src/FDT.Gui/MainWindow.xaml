@@ -6,11 +6,13 @@
         xmlns:userControls="clr-namespace:FDT.Gui.UserControls"
         xmlns:viewModels="clr-namespace:FDT.Gui.ViewModels"
         xmlns:customCommands="clr-namespace:FDT.Gui.Commands"
+        xmlns:customFields="clr-namespace:FDT.Gui.CustomFields"
         mc:Ignorable="d"
         x:Name="ParentControl"
         Title="Deltares Flood Damage Desktop Tool 2021"
         MinWidth="800" MinHeight="600"
-        Width="750" Height="600">
+        Width="750" Height="600"
+        Icon="Styles/Resources/deltares.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -58,7 +60,10 @@
                         Grid.Column="0"
                         Orientation="Horizontal"
                         IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
-                        <TextBlock Text="Select Basin" Width="{StaticResource LabelLength}" VerticalAlignment="Center"/>
+                        <Label 
+                            Content="{Binding SelectAreaOfInterestLabel}"
+                            Width="130"
+                            VerticalAlignment="Center"/>
                         <ComboBox 
                             VerticalContentAlignment="Center"
                             Width="{StaticResource LabelLength}"
@@ -70,12 +75,28 @@
                         <Button 
                             Width="160" 
                             HorizontalAlignment="Left" Click="OnSelectRootDirectoryClick"
-                            Content="Select Root Directory" 
+                            Content="{Binding SelectRootDirectoryButtonText}" 
                             Visibility="{Binding RunStatus, Converter={customCommands:AssessmentStatusVisibilityConverter}}"/>
+                        <!-- <CheckBox  -->
+                        <!--     Width="160" HorizontalAlignment="Center" -->
+                        <!--     VerticalAlignment="Center" -->
+                        <!--     Margin="20,0,0,0" -->
+                        <!--     Content="Save Shapefile" -->
+                        <!--     IsChecked="{Binding SaveShapefile}" -->
+                        <!--     IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/> -->
+                        <StackPanel
+                            Orientation="Horizontal" HorizontalAlignment="Center"
+                            IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}">
+                        <Label Content="{Binding SaveShapefileLabel}"/>
+                            <customFields:ToggleCheckbox
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Toggled="{Binding SaveShapefile, NotifyOnTargetUpdated=True, Mode=OneWayToSource}"/>
+                        </StackPanel>
                         <Button 
-                            Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
-                            Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
-                            IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
+                                Width="160" HorizontalAlignment="Right" Click="OnAssessmentActionClick"
+                                Content="{Binding RunStatus, Converter={customCommands:AssessmentStatusStringConverter}}" 
+                                IsEnabled="{Binding RunStatus, Converter={customCommands:AssessmentStatusBoolConverter}}"/>
 
                     </Grid>
                 </Grid>
