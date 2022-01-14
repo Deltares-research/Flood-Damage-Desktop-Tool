@@ -42,9 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Styles\Resources\DamageDesktopTool_header.png">
+    <Content Include="Styles\Resources\DamageDesktopTool_header.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
