@@ -25,7 +25,7 @@
     <Thickness x:Key="ButtonMargin">2,2,2,2</Thickness>
     
     <!-- Defining Styles -->
-    <BitmapImage x:Key="Banner" UriSource="../Styles/Resources/SFWMD_DesktopTool_header.png" />
+    <BitmapImage x:Key="Banner" UriSource="../Styles/Resources/DamageDesktopTool_header.png" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
