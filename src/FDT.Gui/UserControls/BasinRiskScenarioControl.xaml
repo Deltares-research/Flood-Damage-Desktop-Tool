@@ -42,7 +42,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <Button Content="Add Scenario" 
+            <Button Content="Add scenario" 
                     Click="AddNewScenario"
                     Width="{StaticResource AddExtraInputLength}" 
                     HorizontalAlignment="Left" />

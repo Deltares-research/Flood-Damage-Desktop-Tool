@@ -55,7 +55,7 @@
                 </Grid.ColumnDefinitions>
                 <Label
                     Grid.Column="0"
-                    Content="Flood Map Type"/>
+                    Content="Flood map type"/>
                 <ComboBox Grid.Column="1"
                           Width="140"
                           ItemsSource="{Binding Source={StaticResource enumValues}}"

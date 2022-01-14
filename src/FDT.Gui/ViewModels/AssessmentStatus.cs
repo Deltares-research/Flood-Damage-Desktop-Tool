@@ -4,7 +4,7 @@ namespace FDT.Gui.ViewModels
 {
     public enum AssessmentStatus
     {
-        [Display(Name = "Run Damage Assessment")]
+        [Display(Name = "Run damage assessment")]
         Ready,
         [Display(Name = "Running (please wait)")]
         Running,

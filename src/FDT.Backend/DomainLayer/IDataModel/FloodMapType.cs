@@ -5,9 +5,9 @@ namespace FDT.Backend.DomainLayer.IDataModel
 {
     public enum FloodMapType
     {
-        [Display(Name = "Water Depth")]
+        [Display(Name = "Water depth")]
         WaterDepth,
-        [Display(Name = "Water Level")]
+        [Display(Name = "Water level")]
         WaterLevel
     }
 }

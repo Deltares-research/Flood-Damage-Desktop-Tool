@@ -41,7 +41,7 @@
             Margin="{StaticResource LeftMargin}"/>
         <Label
             Grid.Column="3"
-            Content="Return Period"
+            Content="Return period"
             Visibility="{Binding HasReturnPeriod, Converter={StaticResource BoolToVisibility}}"/>
         <TextBox
             Grid.Column="4"
