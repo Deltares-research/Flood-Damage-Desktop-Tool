@@ -1,4 +1,5 @@
 ﻿using System;
+using FIAT.Gui.Properties;
 using FIAT.Gui.ViewModels;
 
 namespace FIAT.Gui.Commands

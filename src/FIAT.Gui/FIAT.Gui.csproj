@@ -37,10 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FDT.Backend\FDT.Backend.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System.Windows.Forms">
       <HintPath>C:\Windows\assembly\GAC_MSIL\System.Windows.Forms\2.0.0.0__b77a5c561934e089\System.Windows.Forms.dll</HintPath>
     </Reference>
@@ -59,6 +55,10 @@
     <Content Include="Styles\Resources\deltares.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FIAT.Backend\FIAT.Backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.Properties;
 
 namespace FIAT.Backend.PersistenceLayer
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.Properties;
 
 namespace FIAT.Gui.Commands
 {

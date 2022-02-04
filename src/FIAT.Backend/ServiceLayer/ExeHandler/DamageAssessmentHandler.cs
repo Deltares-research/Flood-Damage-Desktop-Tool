@@ -5,6 +5,7 @@ using FIAT.Backend.DomainLayer.IDataModel;
 using FIAT.Backend.PersistenceLayer;
 using FIAT.Backend.PersistenceLayer.FileObjectModel;
 using FIAT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.Properties;
 using FIAT.Backend.ServiceLayer.IExeHandler;
 
 namespace FIAT.Backend.ServiceLayer.ExeHandler

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:backend="clr-namespace:FDT.Backend.DomainLayer.IDataModel;assembly=FDT.Backend"
+             xmlns:backend="clr-namespace:FIAT.Backend.DomainLayer.IDataModel;assembly=FIAT.Backend"
              xmlns:System="clr-namespace:System;assembly=System.Runtime"
              xmlns:commands="clr-namespace:FIAT.Gui.Commands"
              mc:Ignorable="d"

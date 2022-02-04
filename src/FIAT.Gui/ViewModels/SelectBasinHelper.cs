@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.Properties;
 
 namespace FIAT.Gui.ViewModels
 {

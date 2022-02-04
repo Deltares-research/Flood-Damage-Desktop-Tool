@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.Properties;
 
 namespace FIAT.Gui.ViewModels
 {

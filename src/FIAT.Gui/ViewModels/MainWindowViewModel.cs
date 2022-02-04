@@ -11,6 +11,7 @@ using FIAT.Backend.DomainLayer.DataModel;
 using FIAT.Backend.DomainLayer.IDataModel;
 using FIAT.Backend.ServiceLayer.ExeHandler;
 using FIAT.Gui.Commands;
+using FIAT.Gui.Properties;
 
 namespace FIAT.Gui.ViewModels
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using FIAT.Gui.Properties;
 
 namespace FIAT.Gui.ViewModels
 {
