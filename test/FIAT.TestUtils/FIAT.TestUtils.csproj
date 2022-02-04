@@ -1,14 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <IsPackable>false</IsPackable>
+    <UseWPF>true</UseWPF>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>CopyUsed</TrimMode>
     <Configurations>Debug;Release;Deliverable</Configurations>
     <Version>1.1.2</Version>
-    <AssemblyName>FIAT.Gui.Test</AssemblyName>
-    <RootNamespace>FIAT.Gui.Test</RootNamespace>
+    <PackageId>FIAT.TestUtils</PackageId>
+    <Authors>FIAT.TestUtils</Authors>
+    <Product>FIAT.TestUtils</Product>
+    <AssemblyName>FIAT.TestUtils</AssemblyName>
+    <RootNamespace>FIAT.TestUtils</RootNamespace>
     <Company>Deltares</Company>
   </PropertyGroup>
 
@@ -26,18 +31,5 @@
     <OutputPath />
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="4.2.2" />
-    <PackageReference Include="NUnit" Version="3.13.2" />
-    <PackageReference Include="NUnit.ConsoleRunner" Version="3.12.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FDT.TestUtils\FDT.TestUtils.csproj" />
-    <ProjectReference Include="..\FIAT.Backend.Test\FIAT.Backend.Test.csproj" />
-  </ItemGroup>
 
 </Project>

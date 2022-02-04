@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FDT.Backend\FDT.Backend.csproj" />
+    <ProjectReference Include="..\..\src\FIAT.Backend\FIAT.Backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>
