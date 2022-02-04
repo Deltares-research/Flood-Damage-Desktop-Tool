@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
-namespace FDT.Gui.Commands
+namespace FIAT.Gui.Commands
 {
     /// <summary>
     /// Auxiliar Class that we use to define commands in the ViewModel classes. It also helps the testing of the tool.

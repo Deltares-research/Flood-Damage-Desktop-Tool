@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using FDT.Gui.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using FDT.Backend;
-using FDT.Backend.DomainLayer.DataModel;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.ServiceLayer.ExeHandler;
-using FDT.Gui.Properties;
+using FIAT.Backend;
+using FIAT.Backend.DomainLayer.DataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.ServiceLayer.ExeHandler;
+using FIAT.Gui.Commands;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public sealed class MainWindowViewModel: INotifyPropertyChanged
     {

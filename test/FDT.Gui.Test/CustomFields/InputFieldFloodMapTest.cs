@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
-using FDT.Gui.CustomFields;
-using System;
+﻿using System;
 using System.Threading;
-using FDT.Gui.ViewModels;
-using FDT.TestUtils;
+using FIAT.Gui.CustomFields;
+using FIAT.Gui.ViewModels;
+using FIAT.TestUtils;
+using NUnit.Framework;
 
-namespace FDT.Gui.Test.CustomFields
+namespace FIAT.Gui.Test.CustomFields
 {
     [TestFixture, Apartment(ApartmentState.STA)]
     class InputFieldFloodMapTest

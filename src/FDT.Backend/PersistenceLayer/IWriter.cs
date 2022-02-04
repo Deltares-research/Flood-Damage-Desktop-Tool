@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
 
-namespace FDT.Backend.PersistenceLayer
+namespace FIAT.Backend.PersistenceLayer
 {
     public interface IWriter
     {

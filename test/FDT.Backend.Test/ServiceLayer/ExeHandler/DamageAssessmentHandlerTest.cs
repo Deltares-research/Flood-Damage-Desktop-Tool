@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Linq;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer;
-using FDT.Backend.PersistenceLayer.FileObjectModel;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
-using FDT.Backend.ServiceLayer.ExeHandler;
-using FDT.Backend.ServiceLayer.IExeHandler;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer;
+using FIAT.Backend.PersistenceLayer.FileObjectModel;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.ServiceLayer.ExeHandler;
+using FIAT.Backend.ServiceLayer.IExeHandler;
 using NSubstitute;
 using NSubstitute.Extensions;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.ServiceLayer.ExeHandler
+namespace FIAT.Backend.Test.ServiceLayer.ExeHandler
 {
     public class DamageAssessmentHandlerTest
     {

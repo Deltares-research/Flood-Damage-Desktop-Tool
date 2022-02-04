@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FDT.Backend.DomainLayer.IDataModel
+namespace FIAT.Backend.DomainLayer.IDataModel
 {
     public interface IScenario
     {

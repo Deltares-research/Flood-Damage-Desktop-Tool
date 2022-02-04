@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace FDT.Backend.PersistenceLayer.FileObjectModel
+namespace FIAT.Backend.PersistenceLayer.FileObjectModel
 {
     public class ValidationReport
     {

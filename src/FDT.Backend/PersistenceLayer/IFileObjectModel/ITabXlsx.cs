@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FDT.Backend.PersistenceLayer.IFileObjectModel
+namespace FIAT.Backend.PersistenceLayer.IFileObjectModel
 {
     public interface ITabXlsx
     {

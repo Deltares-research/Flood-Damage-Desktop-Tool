@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 
-namespace FDT.Gui.Commands
+namespace FIAT.Gui.Commands
 {
     public class AssessmentStatusBoolConverter: MarkupExtension, IValueConverter
     {

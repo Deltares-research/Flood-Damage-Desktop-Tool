@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using FDT.Backend.DomainLayer.DataModel;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.DomainLayer.DataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.PersistenceLayer
+namespace FIAT.Backend.Test.PersistenceLayer
 {
     public class XlsxDataWriterTest
     {

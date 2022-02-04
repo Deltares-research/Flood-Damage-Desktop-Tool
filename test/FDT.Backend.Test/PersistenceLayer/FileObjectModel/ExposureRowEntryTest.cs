@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer.FileObjectModel;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer.FileObjectModel;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.PersistenceLayer.FileObjectModel
+namespace FIAT.Backend.Test.PersistenceLayer.FileObjectModel
 {
     public class ExposureRowEntryTest
     {

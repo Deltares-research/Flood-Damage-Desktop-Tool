@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer;
 
-namespace FDT.Backend.DomainLayer.DataModel
+namespace FIAT.Backend.DomainLayer.DataModel
 {
     public static class BasinUtils
     {

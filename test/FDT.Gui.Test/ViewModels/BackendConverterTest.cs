@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.ViewModels;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.ViewModels;
 using NSubstitute;
 using NUnit.Framework;
-using FloodMap = FDT.Backend.DomainLayer.DataModel.FloodMap;
-using FloodMapWithReturnPeriod = FDT.Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod;
-using IFloodMap = FDT.Gui.ViewModels.IFloodMap;
-using IScenario = FDT.Gui.ViewModels.IScenario;
+using FloodMap = FIAT.Backend.DomainLayer.DataModel.FloodMap;
+using FloodMapWithReturnPeriod = FIAT.Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod;
+using IFloodMap = FIAT.Gui.ViewModels.IFloodMap;
+using IScenario = FIAT.Gui.ViewModels.IScenario;
 
-namespace FDT.Gui.Test.ViewModels
+namespace FIAT.Gui.Test.ViewModels
 {
     public class BackendConverterTest
     {
@@ -28,7 +28,7 @@ namespace FDT.Gui.Test.ViewModels
             testScenario.ScenarioName.Returns("aName");
 
             testBasinScenario.Scenarios.Returns(new ObservableCollection<IScenario>(new List<IScenario> { testScenario }));
-            Backend.DomainLayer.IDataModel.IScenario[] resultScenarios = null;
+            FIAT.Backend.DomainLayer.IDataModel.IScenario[] resultScenarios = null;
             var basinScenarios = new List<IBasinScenario> {testBasinScenario, testDisabledScenario};
             // Define test action.
             TestDelegate testAction = () => resultScenarios = BackendConverter.ConvertBasinScenarios(basinScenarios).ToArray();

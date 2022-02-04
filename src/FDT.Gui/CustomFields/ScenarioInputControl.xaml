@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="FDT.Gui.CustomFields.ScenarioInputControl"
+﻿<UserControl x:Class="FIAT.Gui.CustomFields.ScenarioInputControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FDT.Gui.CustomFields"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:backend="clr-namespace:FDT.Backend.DomainLayer.IDataModel;assembly=FDT.Backend"
              xmlns:System="clr-namespace:System;assembly=System.Runtime"
-             xmlns:commands="clr-namespace:FDT.Gui.Commands"
+             xmlns:commands="clr-namespace:FIAT.Gui.Commands"
              mc:Ignorable="d"
              x:Name="ParentControl">
     <UserControl.Resources>

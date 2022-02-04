@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Windows;
-using FDT.Gui.Commands;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.Commands;
+using FIAT.Gui.ViewModels;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.Commands
+namespace FIAT.Gui.Test.Commands
 {
     public class AssessmentStatusVisibilityConverterTest
     {

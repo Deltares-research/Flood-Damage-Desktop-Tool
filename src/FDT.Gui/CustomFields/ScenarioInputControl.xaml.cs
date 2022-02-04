@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 
-namespace FDT.Gui.CustomFields
+namespace FIAT.Gui.CustomFields
 {
     /// <summary>
     /// Interaction logic for ScenarioInputControl.xaml

@@ -1,7 +1,7 @@
-﻿using FDT.Backend.PersistenceLayer.FileObjectModel;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
+﻿using FIAT.Backend.PersistenceLayer.FileObjectModel;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
 
-namespace FDT.Backend.ServiceLayer.IExeHandler
+namespace FIAT.Backend.ServiceLayer.IExeHandler
 {
     public interface IExeWrapper
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using ClosedXML.Excel;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.PersistenceLayer;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.PersistenceLayer;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.PersistenceLayer
+namespace FIAT.Backend.Test.PersistenceLayer
 {
     public class XlsxDataWriterHelpTest
     {

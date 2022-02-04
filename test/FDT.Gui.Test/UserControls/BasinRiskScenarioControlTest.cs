@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading;
-using FDT.Gui.UserControls;
-using FDT.Gui.ViewModels;
-using FDT.TestUtils;
+using FIAT.Gui.UserControls;
+using FIAT.Gui.ViewModels;
+using FIAT.TestUtils;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.UserControls
+namespace FIAT.Gui.Test.UserControls
 {
     [TestFixture, Apartment(ApartmentState.STA)]
     public class BasinRiskScenarioControlTest

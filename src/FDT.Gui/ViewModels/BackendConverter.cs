@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FDT.Backend.DomainLayer.DataModel;
-using FDT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.DomainLayer.DataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public static class BackendConverter
     {
-        public static IEnumerable<Backend.DomainLayer.IDataModel.IScenario> ConvertBasinScenarios(this IEnumerable<IBasinScenario> basinScenarios)
+        public static IEnumerable<FIAT.Backend.DomainLayer.IDataModel.IScenario> ConvertBasinScenarios(this IEnumerable<IBasinScenario> basinScenarios)
         {
             if (basinScenarios == null)
                 throw new ArgumentNullException(nameof(basinScenarios));
@@ -18,7 +18,7 @@ namespace FDT.Gui.ViewModels
                 .SelectMany(bs => bs.Scenarios.ConvertScenarios());
         }
 
-        public static IEnumerable<Backend.DomainLayer.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
+        public static IEnumerable<FIAT.Backend.DomainLayer.IDataModel.IScenario> ConvertScenarios(this IEnumerable<IScenario> scenarios)
         {
             if (scenarios == null)
                 throw new ArgumentNullException(nameof(scenarios));
@@ -41,7 +41,7 @@ namespace FDT.Gui.ViewModels
             {
                 if (floodMap.HasReturnPeriod)
                 {
-                    yield return new Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod()
+                    yield return new FIAT.Backend.DomainLayer.DataModel.FloodMapWithReturnPeriod()
                     {
                         Path = floodMap.MapPath,
                         ReturnPeriod = floodMap.ReturnPeriod,
@@ -50,7 +50,7 @@ namespace FDT.Gui.ViewModels
                 }
                 else
                 {
-                    yield return new Backend.DomainLayer.DataModel.FloodMap()
+                    yield return new FIAT.Backend.DomainLayer.DataModel.FloodMap()
                     {
                         Path = floodMap.MapPath,
                         MapType = mapType

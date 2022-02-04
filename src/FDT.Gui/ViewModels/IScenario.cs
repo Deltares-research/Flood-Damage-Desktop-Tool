@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using FDT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public interface IScenario: INotifyPropertyChanged, IDataErrorInfo
     {

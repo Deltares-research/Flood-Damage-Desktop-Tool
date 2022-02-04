@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.Commands;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.Commands;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.Commands
+namespace FIAT.Gui.Test.Commands
 {
     public class FloodMapTypeStringConverterTest
     {

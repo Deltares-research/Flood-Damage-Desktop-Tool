@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 
-namespace FDT.Gui.UserControls
+namespace FIAT.Gui.UserControls
 {
     /// <summary>
     /// Interaction logic for ScenarioEventControl.xaml

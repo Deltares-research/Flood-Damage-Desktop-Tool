@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using FDT.Backend.PersistenceLayer.IFileObjectModel;
+using FIAT.Backend.PersistenceLayer.IFileObjectModel;
 
-namespace FDT.Backend.PersistenceLayer.FileObjectModel
+namespace FIAT.Backend.PersistenceLayer.FileObjectModel
 {
     public class OutputData : IOutputData
     {

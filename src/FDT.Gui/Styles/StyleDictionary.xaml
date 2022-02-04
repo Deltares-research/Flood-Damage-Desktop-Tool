@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:customFields="clr-namespace:FDT.Gui.CustomFields"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:customFields="clr-namespace:FIAT.Gui.CustomFields">
     <sys:Double x:Key ="LabelLength">100</sys:Double>
     <sys:Double x:Key ="FilePathLength">240</sys:Double>
     <sys:Double x:Key ="BrowseButtonLength">40</sys:Double>

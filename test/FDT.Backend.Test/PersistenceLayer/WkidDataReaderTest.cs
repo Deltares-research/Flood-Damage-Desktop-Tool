@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using FDT.Backend.PersistenceLayer;
+using FIAT.Backend.PersistenceLayer;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.PersistenceLayer
+namespace FIAT.Backend.Test.PersistenceLayer
 {
     public class WkidDataReaderTest
     {

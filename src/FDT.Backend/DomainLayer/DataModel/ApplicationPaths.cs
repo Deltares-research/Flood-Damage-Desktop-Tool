@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FDT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
 using Path = System.IO.Path;
 
-namespace FDT.Backend.DomainLayer.DataModel
+namespace FIAT.Backend.DomainLayer.DataModel
 {
     public class ApplicationPaths: IApplicationPaths
     {

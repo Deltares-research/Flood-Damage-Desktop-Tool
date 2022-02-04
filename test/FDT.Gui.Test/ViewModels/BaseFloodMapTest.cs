@@ -1,7 +1,7 @@
-﻿using FDT.Gui.ViewModels;
+﻿using FIAT.Gui.ViewModels;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.ViewModels
+namespace FIAT.Gui.Test.ViewModels
 {
     public class BaseFloodMapTest
     {

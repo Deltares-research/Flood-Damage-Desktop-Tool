@@ -1,10 +1,10 @@
 ﻿using System;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.ViewModels;
+using FIAT.Backend.DomainLayer.IDataModel;
+using FIAT.Gui.ViewModels;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.ViewModels
+namespace FIAT.Gui.Test.ViewModels
 {
     public class SelectedBasinHelperTest
     {

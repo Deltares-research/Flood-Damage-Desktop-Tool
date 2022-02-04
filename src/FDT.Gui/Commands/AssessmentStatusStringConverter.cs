@@ -1,8 +1,7 @@
 ﻿using System;
-using FDT.Gui.Properties;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 
-namespace FDT.Gui.Commands
+namespace FIAT.Gui.Commands
 {
     public class AssessmentStatusStringConverter: EnumToStringConverter
     {

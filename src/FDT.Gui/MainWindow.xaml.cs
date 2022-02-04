@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Forms;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 using MessageBox = System.Windows.MessageBox;
 
 
-namespace FDT.Gui
+namespace FIAT.Gui
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

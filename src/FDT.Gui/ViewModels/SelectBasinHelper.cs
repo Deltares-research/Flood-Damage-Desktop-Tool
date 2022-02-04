@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.Properties;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public class SelectBasinHelper
     {

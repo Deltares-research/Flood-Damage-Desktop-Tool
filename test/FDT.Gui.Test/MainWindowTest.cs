@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test
+namespace FIAT.Gui.Test
 {
     [TestFixture, Apartment(ApartmentState.STA)]
     public class MainWindowTest

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.UserControls;
-using FDT.TestUtils;
+using FIAT.Gui.UserControls;
+using FIAT.TestUtils;
 using NSubstitute;
 using NUnit.Framework;
-using IFloodMap = FDT.Gui.ViewModels.IFloodMap;
-using IScenario = FDT.Gui.ViewModels.IScenario;
+using IFloodMap = FIAT.Gui.ViewModels.IFloodMap;
+using IScenario = FIAT.Gui.ViewModels.IScenario;
 
-namespace FDT.Gui.Test.UserControls
+namespace FIAT.Gui.Test.UserControls
 {
     [TestFixture, Apartment(ApartmentState.STA)]
     public class ScenarioControlTest

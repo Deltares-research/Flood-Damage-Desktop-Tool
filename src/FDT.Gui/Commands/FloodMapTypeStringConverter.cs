@@ -1,8 +1,7 @@
 ﻿using System;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.Properties;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Gui.Commands
+namespace FIAT.Gui.Commands
 {
 
     public class FloodMapTypeStringConverter: EnumToStringConverter

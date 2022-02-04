@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Linq;
-using FDT.Backend.DomainLayer.DataModel;
-using FDT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.DomainLayer.DataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
 using NUnit.Framework;
 
-namespace FDT.Backend.Test.DomainLayer.DataModel
+namespace FIAT.Backend.Test.DomainLayer.DataModel
 {
     public class ApplicationPathsTest
     {

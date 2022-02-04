@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace FDT.Backend.Test
+namespace FIAT.Backend.Test
 {
     public static class TestHelper
     {

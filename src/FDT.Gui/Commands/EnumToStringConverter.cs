@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace FDT.Gui.Commands
+namespace FIAT.Gui.Commands
 {
     public abstract class EnumToStringConverter : MarkupExtension, IValueConverter
     {

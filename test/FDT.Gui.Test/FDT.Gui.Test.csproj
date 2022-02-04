@@ -6,7 +6,10 @@
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>CopyUsed</TrimMode>
     <Configurations>Debug;Release;Deliverable</Configurations>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
+    <AssemblyName>FIAT.Gui.Test</AssemblyName>
+    <RootNamespace>FIAT.Gui.Test</RootNamespace>
+    <Company>Deltares</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

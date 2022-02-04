@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace FDT.Backend.PersistenceLayer
+namespace FIAT.Backend.PersistenceLayer
 {
     public class WkidDataReader: IReader
     {

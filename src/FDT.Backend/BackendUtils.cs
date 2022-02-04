@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using FDT.Backend.DomainLayer.DataModel;
-using FDT.Backend.DomainLayer.IDataModel;
+using FIAT.Backend.DomainLayer.DataModel;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Backend
+namespace FIAT.Backend
 {
     public static class BackendUtils
     {

@@ -5,7 +5,13 @@
 
     <IsPackable>false</IsPackable>
 
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
+
+    <AssemblyName>FIAT.Backend.Test</AssemblyName>
+
+    <RootNamespace>FIAT.Backend.Test</RootNamespace>
+
+    <Company>Deltares</Company>
   </PropertyGroup>
 
   <ItemGroup>

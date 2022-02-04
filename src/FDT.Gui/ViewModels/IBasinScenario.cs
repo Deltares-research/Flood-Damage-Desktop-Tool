@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public interface IBasinScenario
     {

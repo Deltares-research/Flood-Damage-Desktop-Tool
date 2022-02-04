@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.ViewModels;
 using Microsoft.Win32;
 
-namespace FDT.Gui.CustomFields
+namespace FIAT.Gui.CustomFields
 {
     /// <summary>
     /// Interaction logic for InputFieldFloodMap.xaml

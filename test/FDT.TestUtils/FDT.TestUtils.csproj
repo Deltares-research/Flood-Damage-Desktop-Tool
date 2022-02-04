@@ -8,7 +8,13 @@
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>CopyUsed</TrimMode>
     <Configurations>Debug;Release;Deliverable</Configurations>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
+    <PackageId>FIAT.TestUtils</PackageId>
+    <Authors>FIAT.TestUtils</Authors>
+    <Product>FIAT.TestUtils</Product>
+    <AssemblyName>FIAT.TestUtils</AssemblyName>
+    <RootNamespace>FIAT.TestUtils</RootNamespace>
+    <Company>Deltares</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

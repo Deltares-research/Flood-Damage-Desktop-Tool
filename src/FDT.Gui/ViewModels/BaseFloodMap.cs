@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using FDT.Gui.Properties;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public abstract class BaseFloodMap: IFloodMap
     {

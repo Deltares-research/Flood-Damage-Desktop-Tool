@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public interface IFloodMap : INotifyPropertyChanged, IDataErrorInfo
     {

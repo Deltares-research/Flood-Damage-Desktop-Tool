@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public abstract class BasinScenario<T>: IBasinScenario where T: IFloodMap, new()
     {

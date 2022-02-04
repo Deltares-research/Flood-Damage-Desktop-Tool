@@ -1,6 +1,6 @@
-﻿using FDT.Backend.DomainLayer.IDataModel;
+﻿using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Backend.DomainLayer.DataModel
+namespace FIAT.Backend.DomainLayer.DataModel
 {
     public class FloodMap : IFloodMap
     {

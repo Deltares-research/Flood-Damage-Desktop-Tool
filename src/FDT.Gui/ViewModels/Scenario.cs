@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Gui.Properties;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Gui.ViewModels
+namespace FIAT.Gui.ViewModels
 {
     public class Scenario<T>: IScenario where T : IFloodMap, new()
     {

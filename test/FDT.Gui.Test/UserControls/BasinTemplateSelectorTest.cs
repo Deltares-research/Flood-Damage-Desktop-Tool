@@ -1,10 +1,10 @@
 ﻿using System.Windows;
-using FDT.Gui.UserControls;
-using FDT.Gui.ViewModels;
+using FIAT.Gui.UserControls;
+using FIAT.Gui.ViewModels;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace FDT.Gui.Test.UserControls
+namespace FIAT.Gui.Test.UserControls
 {
     public class BasinTemplateSelectorTest
     {

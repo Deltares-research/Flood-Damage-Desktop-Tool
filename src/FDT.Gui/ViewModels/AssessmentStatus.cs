@@ -1,4 +1,4 @@
-﻿namespace FDT.Gui.ViewModels
+﻿namespace FIAT.Gui.ViewModels
 {
     public enum AssessmentStatus
     {

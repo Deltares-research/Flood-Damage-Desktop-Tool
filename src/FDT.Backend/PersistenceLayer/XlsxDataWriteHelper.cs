@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
-using FDT.Backend.DomainLayer.IDataModel;
-using FDT.Backend.Properties;
+using FIAT.Backend.DomainLayer.IDataModel;
 
-namespace FDT.Backend.PersistenceLayer
+namespace FIAT.Backend.PersistenceLayer
 {
     public static class XlsxDataWriteHelper
     {
