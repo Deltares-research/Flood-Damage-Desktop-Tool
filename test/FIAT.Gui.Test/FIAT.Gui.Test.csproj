@@ -36,8 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FDT.TestUtils\FDT.TestUtils.csproj" />
+    <ProjectReference Include="..\..\src\FIAT.Gui\FIAT.Gui.csproj" />
     <ProjectReference Include="..\FIAT.Backend.Test\FIAT.Backend.Test.csproj" />
+    <ProjectReference Include="..\FIAT.TestUtils\FIAT.TestUtils.csproj" />
   </ItemGroup>
 
 </Project>
