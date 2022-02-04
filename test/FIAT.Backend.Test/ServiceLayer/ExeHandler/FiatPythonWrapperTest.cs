@@ -24,7 +24,7 @@ namespace FIAT.Backend.Test.ServiceLayer.ExeHandler
             Assert.That(testWrapper, Is.Not.Null);
             Assert.That(testWrapper, Is.InstanceOf<IExeWrapper>());
             Assert.That(testWrapper.ExeDirectory, Is.Not.Null.Or.Empty);
-            Assert.That(Path.GetFileName(testWrapper.ExeFilePath), Is.EqualTo("fiat_objects.exe"));
+            Assert.That(Path.GetFileName(testWrapper.ExeFilePath), Is.EqualTo("delft_fiat.exe"));
         }
 
         [Test]

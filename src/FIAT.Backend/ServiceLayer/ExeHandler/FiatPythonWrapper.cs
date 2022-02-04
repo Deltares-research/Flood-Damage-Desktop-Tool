@@ -8,7 +8,7 @@ namespace FIAT.Backend.ServiceLayer.ExeHandler
 {
     public class FiatPythonWrapper : IExeWrapper
     {
-        private readonly string _exeFileName = "fiat_objects.exe";
+        private readonly string _exeFileName = "delft_fiat.exe";
         private ValidationReport _exeReport;
         public string ExeDirectory { get; set; }
         public string ExeFilePath => Path.Combine(ExeDirectory, _exeFileName);
