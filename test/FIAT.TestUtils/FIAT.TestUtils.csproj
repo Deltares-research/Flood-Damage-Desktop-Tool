@@ -8,7 +8,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>CopyUsed</TrimMode>
     <Configurations>Debug;Release;Deliverable</Configurations>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <PackageId>FIAT.TestUtils</PackageId>
     <Authors>FIAT.TestUtils</Authors>
     <Product>FIAT.TestUtils</Product>
