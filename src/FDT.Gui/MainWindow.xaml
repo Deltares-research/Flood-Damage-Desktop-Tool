@@ -9,7 +9,7 @@
         xmlns:customFields="clr-namespace:FDT.Gui.CustomFields"
         mc:Ignorable="d"
         x:Name="ParentControl"
-        Title="Deltares Flood Damage Desktop Tool 2021"
+        Title="Flood Impact Assessment Tool"
         MinWidth="800" MinHeight="600"
         Width="750" Height="600"
         Icon="Styles/Resources/deltares.ico">
